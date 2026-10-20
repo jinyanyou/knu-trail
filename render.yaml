@@ -1,0 +1,24 @@
+# Render 배포 설정 (Blueprint) — 화면(React 빌드)과 API(FastAPI)를 한 서비스로 띄운다
+# Render 대시보드 > New > Blueprint 에서 이 저장소를 고르면 아래대로 만들어진다.
+services:
+  - type: web
+    name: knu-trail
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -e . && cd frontend && npm ci && npm run build
+    startCommand: uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/meta
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: NODE_VERSION
+        value: 22.12.0
+      # 화면 빌드 때 들어가는 Supabase 공개 값 (대시보드에서 직접 입력)
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      # 있으면 성적표·시간표 사진 AI 인식이 켜진다 (선택)
+      - key: ANTHROPIC_API_KEY
+        sync: false

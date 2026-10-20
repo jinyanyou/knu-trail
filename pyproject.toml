@@ -1,0 +1,16 @@
+[project]
+name = "knu-trail"
+version = "0.1.0"
+description = "trAIl — 경북대 인공지능전공 졸업요건 계산 엔진과 교육과정 데이터"
+requires-python = ">=3.10"
+dependencies = ["requests", "fastapi", "uvicorn", "python-multipart", "pypdf", "anthropic>=1.6"]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx", "olefile"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.setuptools]
+packages = ["engine", "backend"]

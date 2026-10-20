@@ -1,0 +1,12 @@
+node_modules/
+frontend/dist/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.egg-info/
+.venv/
+.env
+.env.local
+.env.*.local
+*.log
+mobile_check_out/

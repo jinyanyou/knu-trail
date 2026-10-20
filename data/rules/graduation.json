@@ -1,0 +1,414 @@
+{
+  "dept_code": "1O0109",
+  "dept_name": "경북대학교 IT대학 전자공학부 인공지능전공",
+  "updated": "2026-10-13",
+  "usage": "학번(entry_year)으로 rulesets 중 하나를 고른다. extends가 있으면 부모 규칙에 overrides(점 표기 경로)를 덮어쓴다. status가 'provisional'이면 화면에 '확정 전 기준' 경고를 띄운다. 모든 수치에는 sources의 근거 id가 달려 있다.",
+  "sources": {
+    "dept_notice": {
+      "title": "인공지능전공 공지 - 졸업학점 기준 안내 (2025-02-14)",
+      "url": "https://home.knu.ac.kr/HOME/seeai/sub.htm?nav_code=see1667180581",
+      "note": "학번별 졸업학점·교양·전공·전공필수, 복수전공/부전공 시 전공학점, 부산대 공동학위 18학점"
+    },
+    "dept_requirements_page": {
+      "title": "인공지능전공 홈페이지 - 졸업요건",
+      "url": "https://home.knu.ac.kr/HOME/seeai/sub.htm?nav_code=see1667178315",
+      "note": "133/90/51학점, 학년별 전공필수 과목표(2023 입학생 이후)"
+    },
+    "knu_graduation_credits": {
+      "title": "경북대 2026 졸업학점 기준 (2026_credit1.hwp)",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/download/2026_credit1.hwp",
+      "local": "data/sources/knu_2026_graduation_credits.txt"
+    },
+    "knu_major_credits": {
+      "title": "경북대 2026 전공학점 기준 (2026_credit2.hwp)",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/download/2026_credit2.hwp",
+      "local": "data/sources/knu_2026_major_credits.txt"
+    },
+    "knu_liberal_arts_credits": {
+      "title": "경북대 2026 교양학점 기준 (2026_credit3.hwp) — 교육과정 운영 및 이수에 관한 지침 제21조(2024.10.31 개정) 포함",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/download/2026_credit3.hwp",
+      "local": "data/sources/knu_2026_liberal_arts_credits.txt"
+    },
+    "knu_graduation_qualification": {
+      "title": "경북대 학사안내 - 졸업자격인정제",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu/academic03_05&menu_idx=44"
+    },
+    "diagnostic_test_notice": {
+      "title": "전자공학부 공지 - 2025학년도 신입생 기초학력 진단평가",
+      "url": "https://see.knu.ac.kr/mobile/content/notice.html?fidx=103650",
+      "note": "진단평가 A → 첨성인기초 수리·기초과학 3학점 이수 면제(학점 인정 X)"
+    },
+    "curriculum_api": {
+      "title": "knuin 교육과정조회 (전공필수 과목 목록, 교양 영역)",
+      "url": "https://knuin.knu.ac.kr/public/stddm/edu.knu?itttn_cd=1O0109",
+      "local": "data/curriculum/<학번>.json, data/liberal_arts/<연도>.json"
+    },
+    "knu_curriculum_guideline": {
+      "title": "경북대 교육과정 운영 및 이수에 관한 지침 (제18·22·23조)",
+      "url": "https://knu.ac.kr/wbbs/wbbs/contents/curriculum1/html/index_rule.html",
+      "note": "부전공 21학점+부전공 필수, 복수·연계·융합전공은 입학당시 해당 학과 이수학점+전공필수, 다전공 불가 학과, 미완성 시 일반선택"
+    },
+    "knu_double_major_guide": {
+      "title": "경북대 학사안내 - 복수전공",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu%2Facademic03_01_10&menu_idx=44",
+      "note": "복수전공 학과의 전공 이수학점(본인 학번 기준) / 허용 학과: 예술·사범·수의·간호·약학·의·치과대학 전학과, 모바일공학, 농산업학과, 치위생학과, 글로벌인재학부, 산업기계공학과 제외(사범대생·교직과정 이수자는 사범대학 가능) / 같은 과목 중복 인정 안 함"
+    },
+    "knu_convergence_notice": {
+      "title": "경북대 학사공지 - 2026학년도 1학기 융합전공 이수대상자 선발 안내",
+      "url": "https://knu.ac.kr/wbbs/wbbs/bbs/btin/stdViewBtin.action?btin.bltn_no=11763516209198&btin.inpt_nbr=2020597&menu_idx=42",
+      "note": "융합전공 36학점 이상, 주전공 졸업요건과 융합전공 이수학점을 모두 충족해야 졸업"
+    },
+    "programs_api": {
+      "title": "knuin 교육과정조회 (전체 학과·융합전공)",
+      "url": "https://knuin.knu.ac.kr/public/stddm/edu.knu",
+      "local": "data/programs/<학번>.json (scripts/fetch_programs.py)"
+    },
+    "knu_convergence_guide": {
+      "title": "경북대 학사안내 - 융합전공 (선발인원·선발기준·이수학점)",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu%2Facademic03_01_12&menu_idx=44",
+      "local": "data/rules/convergence.json",
+      "note": "공식 융합전공 23개, 36학점 이상(전공별 기준 우선), 융합전공 학점 부족 시 포기하지 않으면 졸업 불가"
+    },
+    "knu_minor_guide": {
+      "title": "경북대 학사안내 - 부전공",
+      "url": "https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu%2Facademic03_01_11&menu_idx=44",
+      "note": "2022학번까지 21학점, 2023학번부터 24학점 / 부전공 필수과목 / 허용 학과(간호·의·치·수의·약학·모바일공학·치위생·산업기계 제외) / 1개 부전공만이면 소속학과 전공 12학점 추가(공학교육인증 학과 등 예외)"
+    }
+  },
+  "rulesets": [
+    {
+      "id": "2023",
+      "entry_years": [
+        2023,
+        2023
+      ],
+      "status": "confirmed",
+      "total_credits": {
+        "min": 133,
+        "source": [
+          "dept_notice",
+          "knu_graduation_credits"
+        ]
+      },
+      "major": {
+        "min_credits": 90,
+        "min_credits_if": [
+          {
+            "when": "double_major_or_convergence_or_transfer",
+            "label": "편입생, 교직과정 이수자, 복수전공·연계전공·융합전공·부전공 이수자",
+            "min_credits": 61
+          },
+          {
+            "when": "single_minor_only",
+            "label": "1개의 부전공만 이수",
+            "min_credits": 73
+          }
+        ],
+        "required": {
+          "min_credits": 51,
+          "courses_from": "curriculum",
+          "course_type": "전공필수",
+          "note": "학번별 data/curriculum/<학번>.json 의 type == '전공필수' 과목을 모두 이수 (16과목 51학점)"
+        },
+        "source": [
+          "dept_notice",
+          "dept_requirements_page",
+          "knu_major_credits"
+        ]
+      },
+      "multi_major": {
+        "max_programs": 3,
+        "kinds": {
+          "double": {
+            "label": "복수전공",
+            "min_credits_from": "program",
+            "required_course_type": "전공필수",
+            "source": [
+              "knu_curriculum_guideline",
+              "knu_double_major_guide"
+            ],
+            "if_incomplete": "졸업 때까지 완성하지 못하면 이미 들은 과목은 일반선택 학점으로 인정 (지침 제18조②)",
+            "note": "복수전공 선발 전에 일반선택으로 들은 과목은 선발 후 소속대학 행정실에 교과목 코드변경을 신청해야 복수전공 학점으로 인정"
+          },
+          "linked": {
+            "label": "연계전공",
+            "min_credits_from": "program",
+            "required_course_type": "전공필수",
+            "source": [
+              "knu_curriculum_guideline"
+            ],
+            "if_incomplete": "완성하지 못할 때의 처리는 학과에 확인 (통합정보시스템 '연계/융합전공 이수포기 신청' 대상)"
+          },
+          "convergence": {
+            "label": "융합전공",
+            "min_credits": 36,
+            "min_credits_from": "program",
+            "required_course_type": "전공필수",
+            "source": [
+              "knu_curriculum_guideline",
+              "knu_convergence_guide"
+            ],
+            "if_incomplete": "졸업 불가 — 주전공 요건을 다 채워도 융합전공 학점이 모자라면 졸업할 수 없음(융합전공을 포기하면 졸업 가능)"
+          },
+          "minor": {
+            "label": "부전공",
+            "min_credits": 24,
+            "required_flag": "minor_required",
+            "source": [
+              "knu_minor_guide"
+            ],
+            "if_incomplete": "졸업 때까지 완성하지 못하면 이미 들은 과목은 일반선택 학점으로 인정 (지침 제18조②)"
+          }
+        },
+        "primary_major_credits": "다전공(복수·연계·융합·부전공) 이수자는 주전공을 major.min_credits_if 기준(61학점, 부전공 1개만이면 73학점)으로 이수",
+        "no_double_counting": true,
+        "incomplete_becomes": "kinds.*.if_incomplete 참조",
+        "notes": [
+          "복수·연계전공 이수학점 = 그 학과의 '다전공 시 이수학점'(입학 당시 학번 기준표) — data/programs/<학번>.json 의 multi_major_credits",
+          "융합전공은 학사공지 기준 36학점 이상 (기준표에 별도 값이 있으면 그 값)",
+          "한 과목은 주전공·다전공 중 한 곳에만 인정 (교양·총학점은 그대로)",
+          "전공필수/부전공필수는 학과 교육과정 표시를 따른다 — 학과가 따로 정한 대체·인정 과목은 반영되지 않음",
+          "미완성 시: 복수전공·부전공은 일반선택으로 인정(지침 제18조②), 융합전공은 포기하지 않으면 졸업 불가(학사안내)",
+          "융합전공은 학교 공식 목록(data/rules/convergence.json)에 있는 것만 고를 수 있고, 학번과 무관하게 신청 가능하므로 입학 뒤 신설된 융합전공도 포함",
+          "부전공은 2023학번부터 24학점 (이수지침 제22조의 21학점은 2022학번까지 기준) — 학사안내 '부전공'",
+          "허용 학과: data/programs 의 allowed.double(True/False/'teaching'), allowed.minor"
+        ],
+        "source": [
+          "knu_curriculum_guideline",
+          "knu_double_major_guide",
+          "knu_convergence_notice",
+          "dept_notice"
+        ]
+      },
+      "liberal_arts": {
+        "min_credits": 30,
+        "sdg_min_credits": 0,
+        "areas": [
+          {
+            "id": "basic_literacy",
+            "label": "첨성인기초 - 독서와토론·사고교육·글쓰기·외국어",
+            "area": "첨성인기초",
+            "sub_areas": [
+              "독서와토론",
+              "사고교육",
+              "글쓰기",
+              "외국어"
+            ],
+            "min_credits": 3
+          },
+          {
+            "id": "basic_math_science",
+            "label": "첨성인기초 - 수리·기초과학",
+            "area": "첨성인기초",
+            "sub_areas": [
+              "수리",
+              "기초과학"
+            ],
+            "min_credits": 3,
+            "waived_if": {
+              "flag": "math_science_waived",
+              "label": "신입생 기초학력 진단평가 A구간 (통합정보시스템 학적세부사항 '수리기초과학 이수면제자' = 예)",
+              "counts_as_credits": false
+            },
+            "source": [
+              "knu_liberal_arts_credits",
+              "diagnostic_test_notice"
+            ]
+          },
+          {
+            "id": "core_humanities",
+            "label": "첨성인핵심 - 인문·사회",
+            "area": "첨성인핵심",
+            "sub_areas": [
+              "인문.사회"
+            ],
+            "min_credits": 3
+          },
+          {
+            "id": "core_science",
+            "label": "첨성인핵심 - 자연과학",
+            "area": "첨성인핵심",
+            "sub_areas": [
+              "자연과학"
+            ],
+            "min_credits": 3
+          }
+        ],
+        "must_be_taken_at_knu": [
+          "첨성인기초",
+          "첨성인핵심"
+        ],
+        "area_is_judged_by": "course_area_in_year_taken",
+        "notes": [
+          "교양 영역은 바뀔 수 있으며, 과목의 영역 인정은 '이수할 당시의 영역'으로 한다 → 수강 연도의 data/liberal_arts/<연도>.json 으로 판정",
+          "첨성인기초의 실용영어·소프트웨어는 영역 이수기준이 아니라 졸업자격인정(graduation_qualification)으로 판정",
+          "현장실습·해외어학연수·해외인턴십 학점은 총 이수학점에는 포함되나 교양/전공 최소학점에는 포함되지 않음"
+        ],
+        "source": [
+          "knu_liberal_arts_credits",
+          "dept_notice"
+        ]
+      },
+      "graduation_qualification": {
+        "note": "미충족 시 졸업이 아니라 '수료' 처리. 졸업 마지막 학기에 통합정보시스템에서 직접 신청.",
+        "items": [
+          {
+            "id": "practical_english",
+            "label": "실용영어",
+            "any_of": [
+              {
+                "type": "credits",
+                "area": "첨성인기초",
+                "sub_areas": [
+                  "실용영어"
+                ],
+                "min_credits": 4
+              },
+              {
+                "type": "english_test",
+                "label": "공인영어시험 (입학 이후 취득, 제출일 기준 2년 이내)",
+                "min_scores": {
+                  "TOEIC": "700",
+                  "TOEIC Speaking": "120",
+                  "TOEFL PBT": "529",
+                  "TOEFL IBT": "71",
+                  "TOEFL CBT": "197",
+                  "TEPS": "600~605",
+                  "New TEPS": "264~265",
+                  "TEPS Speaking": "50",
+                  "OPIc": "IM1",
+                  "G-TELP": "65 (level 2)",
+                  "IELTS": "6.0"
+                },
+                "note": "시험명-점수 대응은 원문 표를 옮긴 것이라 화면에 쓰기 전 원문과 한 번 더 대조할 것"
+              },
+              {
+                "type": "manual",
+                "label": "신입생 실용영어진단평가 700점 이상"
+              },
+              {
+                "type": "manual",
+                "label": "언어교육센터 원어민 영어회화과정 120시간 이상"
+              },
+              {
+                "type": "manual",
+                "label": "영어권 국가 어학연수·인턴십·교환학생으로 3학점 이상"
+              }
+            ],
+            "source": [
+              "knu_graduation_qualification"
+            ]
+          },
+          {
+            "id": "software",
+            "label": "소프트웨어",
+            "any_of": [
+              {
+                "type": "credits",
+                "area": "첨성인기초",
+                "sub_areas": [
+                  "소프트웨어"
+                ],
+                "min_credits": 3
+              },
+              {
+                "type": "dept_substitute",
+                "label": "학과 지정·소프트웨어교육원 인정 대체과목 3학점 이상",
+                "courses": [],
+                "status": "unknown"
+              },
+              {
+                "type": "manual",
+                "label": "정보화본부 교육과정 45시간 이상 / 총장이 인정하는 전산 자격증(입학 이후 취득)"
+              }
+            ],
+            "source": [
+              "knu_graduation_qualification"
+            ]
+          },
+          {
+            "id": "advisor_counseling",
+            "label": "학생상담지도교수 상담",
+            "any_of": [
+              {
+                "type": "manual",
+                "label": "학생상담지도교수제 운영 규정에서 정한 기준 충족"
+              }
+            ],
+            "source": [
+              "knu_graduation_qualification"
+            ]
+          },
+          {
+            "id": "major_assessment",
+            "label": "전공영역 평가",
+            "any_of": [
+              {
+                "type": "manual",
+                "label": "학과가 정한 전공영역 평가 (졸업논문·종합시험·실험실습보고·실기발표 중 택1)"
+              }
+            ],
+            "status": "unknown",
+            "note": "인공지능전공의 구체적 방식(졸업과제, TOPCIT 등)은 공개 자료에서 확인하지 못함 → 학과 사무실 확인 필요",
+            "source": [
+              "knu_graduation_qualification"
+            ]
+          }
+        ]
+      },
+      "joint_degree": {
+        "label": "부산대학교 인공지능전공 공동학위",
+        "pnu_min_credits": 18,
+        "not_eligible": [
+          "타과생 복수전공",
+          "융합전공 이수자"
+        ],
+        "note": "공동학위 여부와 무관하게 졸업학점 기준(133/90/51)은 동일",
+        "source": [
+          "dept_notice"
+        ]
+      }
+    },
+    {
+      "id": "2024-2026",
+      "entry_years": [
+        2024,
+        2026
+      ],
+      "status": "confirmed",
+      "extends": "2023",
+      "overrides": {
+        "liberal_arts.sdg_min_credits": 3
+      },
+      "notes": [
+        "SDG교양 3학점: 교양학점 기준표에서 '2023학년도 입학생'과 '2024학년도 입학생부터' 열이 나뉘고 SDG 행만 값이 다름 → 2024학번부터 적용으로 해석. 교양 데이터에서도 SDG 과목이 2023년 0개, 2024년부터 존재함",
+        "SDG교양은 반드시 본교 개설 과목"
+      ],
+      "source": [
+        "knu_liberal_arts_credits"
+      ]
+    },
+    {
+      "id": "2027",
+      "entry_years": [
+        2027,
+        2027
+      ],
+      "status": "provisional",
+      "extends": "2024-2026",
+      "overrides": {},
+      "notes": [
+        "2027학번 기준은 아직 공지되지 않아 2024~2026 기준을 임시 적용",
+        "2027 교양 개편 확인됨: 실용영어1·2 → '대학영어 R/L/W/S'(각 2학점), 수리·기초과학 과목 다수가 2학점으로 변경 → 수리·기초과학 '3학점 이상' 기준이 바뀔 수 있음",
+        "학과 2027 교육과정(knuin)은 2026과 완전히 동일하고, 2027 교양 목록에 없는 실용영어1·2·기초수학1을 여전히 포함 → 학과 교육과정이 아직 갱신되지 않은 것으로 보임. 2027년 2월 전후 재수집 필요"
+      ]
+    }
+  ],
+  "open_questions": [
+    "인공지능전공 전공영역 평가(졸업과제·TOPCIT 등) 구체 기준",
+    "소프트웨어 영역 학과 대체과목 목록 (예: 프로그래밍 기초와 실습이 인정되는지)",
+    "2027학번 확정 기준 (특히 수리·기초과학 이수학점, 실용영어 4학점 기준 유지 여부)",
+    "공동학위 시 부산대 18학점의 과목 구분(전공만 인정되는지) 및 신청 절차",
+    "복수전공 학과별 전공필수 대체·면제 규정 (학과마다 다름 — 교육과정 표시만 반영)"
+  ]
+}

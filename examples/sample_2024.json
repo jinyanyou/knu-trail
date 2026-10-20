@@ -1,0 +1,251 @@
+{
+ "_comment": "2024학번, 3학년 2학기 수강 중(성적 없는 과목 = 수강 예정). 인공지능수학2는 F 후 재이수.",
+ "entry_year": 2024,
+ "taken": [
+  {
+   "code": "CAIB0227",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CLTR0412",
+   "year": 2024,
+   "semester": "2학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CAIB0229",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "B+"
+  },
+  {
+   "code": "COME0301",
+   "year": 2024,
+   "semester": "2학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CAIB0236",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "B0"
+  },
+  {
+   "code": "COMP0453",
+   "year": 2024,
+   "semester": "2학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CLTR0041",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "B+"
+  },
+  {
+   "code": "ELEC0253",
+   "year": 2024,
+   "semester": "2학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CLTR0045",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CLTR0211",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CLTR0213",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CLTR0411",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "B0"
+  },
+  {
+   "code": "CLTR0820",
+   "year": 2024,
+   "semester": "1학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CAIB0226",
+   "year": 2025,
+   "semester": "1학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CAIB0207",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CAIB0228",
+   "year": 2025,
+   "semester": "1학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CAIB0230",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CAIB0231",
+   "year": 2025,
+   "semester": "1학기",
+   "grade": "F"
+  },
+  {
+   "code": "CAIB0234",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B0"
+  },
+  {
+   "code": "CAIB0237",
+   "year": 2025,
+   "semester": "1학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CAIB0242",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B+"
+  },
+  {
+   "code": "COMP0324",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CROS0216",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CROS0218",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CROS0219",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B0"
+  },
+  {
+   "code": "ITEC0419",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "A+"
+  },
+  {
+   "code": "ITEC0514",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CAIB0221",
+   "year": 2026,
+   "semester": "1학기",
+   "grade": "A+"
+  },
+  {
+   "code": "COMP0325",
+   "year": 2026,
+   "semester": "1학기",
+   "grade": "B0"
+  },
+  {
+   "code": "CAIB0233",
+   "year": 2026,
+   "semester": "2학기"
+  },
+  {
+   "code": "COMP0455",
+   "year": 2026,
+   "semester": "1학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CAIB0238",
+   "year": 2026,
+   "semester": "2학기"
+  },
+  {
+   "code": "ELEC0323",
+   "year": 2026,
+   "semester": "1학기",
+   "grade": "A0"
+  },
+  {
+   "code": "MOBI0224",
+   "year": 2026,
+   "semester": "1학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CAIB0231",
+   "year": 2026,
+   "semester": "1학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CLTR0205",
+   "year": 2024,
+   "semester": "2학기",
+   "grade": "A0"
+  },
+  {
+   "code": "CLTR0074",
+   "year": 2025,
+   "semester": "1학기",
+   "grade": "A+"
+  },
+  {
+   "code": "CLTR0069",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B+"
+  },
+  {
+   "code": "CLTR0171",
+   "year": 2025,
+   "semester": "2학기",
+   "grade": "B+"
+  },
+  {
+   "code": "MATH0101",
+   "name": "미적분학(타학과)",
+   "credits": 3,
+   "year": 2025,
+   "semester": "1학기",
+   "grade": "B0"
+  }
+ ],
+ "profile": {
+  "major_track": "single",
+  "math_science_waived": false,
+  "english_test": null
+ }
+}

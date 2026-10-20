@@ -1,0 +1,195 @@
+/* 수강신청 연습 — 실제 수강신청 화면의 배치·색감을 본뜸. 모든 규칙은 .sim-root 아래에만 적용 */
+.sim-root {
+  --sim-red: #c4161c;
+  --sim-red-dark: #a10f15;
+  --sim-brown: #7b6a58;
+  --sim-line: #d9d9d9;
+  --sim-head: #f3f3f3;
+  --sim-text: #222;
+  --sim-sub: #666;
+  min-height: 100vh;
+  background: #f5f5f5;
+  color: var(--sim-text);
+  font-size: 14px;
+  color-scheme: light;
+}
+.sim-root button { font: inherit; cursor: pointer; }
+.sim-root input, .sim-root select { font: inherit; color: var(--sim-text); background: #fff; border: 1px solid #bbb; border-radius: 0; padding: 6px 8px; min-height: 34px; }
+
+/* 시뮬레이션 표시 — 항상 화면 맨 위에 고정 */
+.sim-banner {
+  position: sticky; top: 0; z-index: 30;
+  background: repeating-linear-gradient(-45deg, #ffd84d 0 14px, #ffcb05 14px 28px);
+  color: #111; padding: 8px 16px; font-size: 13px; text-align: center; border-bottom: 2px solid #111;
+}
+.sim-banner strong { background: #111; color: #ffd84d; padding: 1px 8px; margin-right: 6px; }
+.sim-watermark {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  display: grid; place-items: center; font-size: clamp(48px, 9vw, 120px); font-weight: 900;
+  color: rgb(196 22 28 / 0.06); transform: rotate(-18deg); white-space: nowrap; user-select: none;
+}
+.sim-logo-text { color: #fff; font-size: 20px; letter-spacing: -0.02em; }
+.sim-logo-text b { background: #fff; color: var(--sim-red); padding: 0 6px; margin-left: 4px; border-radius: 2px; }
+.sim-small { font-size: 12px; color: var(--sim-sub); }
+.sim-error { background: #fdecec; color: var(--sim-red-dark); padding: 10px 16px; margin: 0; }
+.sim-loading { padding: 40px; text-align: center; }
+.sim-check { display: flex !important; flex-direction: row !important; align-items: center; gap: 6px; font-size: 13px; }
+.sim-check input { min-height: auto; }
+.sim-banner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.sim-exit { border: 1px solid #111; background: #fff; padding: 3px 10px; font-size: 12px; white-space: nowrap; }
+
+/* 버튼 */
+.sim-btn-red { background: var(--sim-red); color: #fff; border: 1px solid var(--sim-red); padding: 6px 14px; min-height: 34px; }
+.sim-btn-red:hover { background: var(--sim-red-dark); }
+.sim-btn-line { background: #fff; color: var(--sim-red); border: 1px solid var(--sim-red); padding: 6px 14px; min-height: 34px; }
+.sim-btn-line:disabled { opacity: 0.5; cursor: default; }
+.sim-btn-xs { background: var(--sim-red); color: #fff; border: 0; font-size: 12px; padding: 3px 8px; border-radius: 2px; }
+
+/* 1. 연습 설정 (로그인 화면 배치) */
+.sim-login-wrap { position: relative; min-height: calc(100vh - 40px); background: #f5f5f5; }
+.sim-login-band { background: var(--sim-red); height: 58px; width: min(445px, 100%); display: flex; align-items: center; padding: 0 44px; }
+.sim-login-band::after { content: ''; position: absolute; left: 0; top: 58px; width: min(445px, 100%); height: 640px; background: var(--sim-red); z-index: 0; }
+.sim-login-sheet { position: relative; z-index: 1; margin: 0 0 0 31px; background: #fff; border-radius: 0 40px 0 0; min-height: 720px; display: flex; gap: 28px; padding: 44px; flex-wrap: wrap; }
+.sim-login-card { width: 360px; max-width: 100%; box-shadow: 0 4px 14px rgb(0 0 0 / 0.18); background: #fff; align-self: flex-start; }
+.sim-login-head { background: var(--sim-brown); color: #fff; padding: 46px 36px 36px; height: 165px; }
+.sim-login-head p { font-size: 22px; font-weight: 700; line-height: 1.5; margin: 6px 0 0; }
+.sim-dash { display: block; width: 22px; height: 2px; background: #fff; }
+.sim-login-body { padding: 30px 36px; display: flex; flex-direction: column; gap: 14px; }
+.sim-login-body label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: var(--sim-brown); font-size: 13px; }
+.sim-login-body select { height: 42px; }
+.sim-btn-login { background: var(--sim-red); color: #fff; border: 0; height: 50px; font-size: 16px; font-weight: 700; margin-top: 4px; }
+.sim-login-info { flex: 1 1 380px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.08); padding: 28px 32px; align-self: stretch; }
+.sim-login-info h2 { font-size: 18px; margin: 0 0 12px; }
+.sim-login-info li { margin-bottom: 10px; line-height: 1.6; color: #444; }
+
+/* 2. 대기열 */
+.sim-queue { max-width: 420px; margin: 80px auto; background: #fff; border: 1px solid var(--sim-line); padding: 32px; text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.sim-queue-title { font-size: 18px; font-weight: 700; color: var(--sim-red); }
+.sim-queue b { font-size: 28px; color: var(--sim-red); }
+.sim-queue-bar { width: 100%; height: 10px; background: #eee; }
+.sim-queue-bar span { display: block; height: 100%; background: var(--sim-red); transition: width 0.3s; }
+
+/* 3. 신청 화면 */
+.sim-topbar { background: var(--sim-red); color: #fff; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; gap: 12px; }
+.sim-topbar-right { display: flex; align-items: center; gap: 16px; font-size: 13px; }
+.sim-topbar-right button { background: transparent; color: #fff; border: 1px solid rgb(255 255 255 / 0.7); padding: 3px 10px; }
+.sim-clock { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 15px; }
+.sim-sheet { position: relative; max-width: 1180px; margin: 0 auto; background: #fff; padding: 20px 28px 80px; overflow: hidden; }
+.sim-sheet > *:not(.sim-watermark):not(.sim-finder) { position: relative; }
+.sim-profile { display: flex; flex-wrap: wrap; border: 1px solid var(--sim-line); margin-bottom: 14px; }
+.sim-profile span { padding: 9px 14px; border-right: 1px solid var(--sim-line); font-size: 13px; }
+.sim-profile b { color: var(--sim-sub); font-weight: 600; margin-right: 8px; }
+.sim-phase { margin-left: auto; font-weight: 700; color: var(--sim-sub); }
+.sim-phase.open { color: var(--sim-red); }
+.sim-inputbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 2px solid var(--sim-red); padding: 10px 14px; margin-bottom: 18px; }
+.sim-inputbar label { display: flex; align-items: center; gap: 10px; font-weight: 600; flex: 1 1 260px; }
+.sim-inputbar label input { flex: 1; }
+.sim-inputbar > input { flex: 1 1 170px; }
+.sim-captcha-label { font-weight: 600; font-size: 13px; text-align: center; line-height: 1.2; }
+.req { color: var(--sim-red); margin-right: 2px; }
+.sim-captcha { display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bbb; padding: 0 4px 0 0; background: #fff; }
+.sim-refresh { background: var(--sim-red); color: #fff; border: 0; width: 22px; height: 22px; border-radius: 3px; font-size: 13px; line-height: 1; }
+.sim-tabs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.sim-tabs > button:not(.sim-btn-red) { border: 1px solid #ccc; background: #fff; border-radius: 999px; padding: 8px 22px; color: #555; }
+.sim-tabs > button.on { border-color: var(--sim-red); color: var(--sim-red); font-weight: 700; }
+.sim-batch { margin-left: auto; border-radius: 999px; }
+.sim-h { font-size: 18px; margin: 18px 0 8px; }
+.sim-h small { font-size: 13px; font-weight: 400; color: var(--sim-sub); }
+.sim-h small b { color: var(--sim-red); }
+.sim-notice { display: flex; gap: 16px; align-items: center; background: #f6f8fb; padding: 12px 20px; margin-bottom: 12px; font-size: 13px; color: #444; }
+.sim-notice .star { width: 36px; height: 36px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 1px 4px rgb(0 0 0 / 0.1); flex: none; }
+.sim-notice ul { margin: 0; padding-left: 16px; }
+.sim-table-wrap { overflow-x: auto; }
+.sim-table { width: 100%; border-collapse: collapse; border-top: 2px solid #333; font-size: 13px; min-width: 900px; }
+.sim-table th { background: var(--sim-head); font-weight: 600; padding: 8px 6px; border-bottom: 1px solid var(--sim-line); white-space: nowrap; }
+.sim-table td { padding: 7px 6px; border-bottom: 1px solid var(--sim-line); text-align: center; }
+.sim-table td.sim-left { text-align: left; }
+.sim-table td.sim-time { min-width: 200px; }
+.sim-empty { color: var(--sim-sub); padding: 20px !important; }
+.sim-full { color: var(--sim-red); font-weight: 700; }
+
+.sim-finder { position: fixed; right: 16px; bottom: 16px; z-index: 20; width: min(420px, calc(100vw - 32px)); background: #fff; border: 1px solid #999; box-shadow: 0 6px 24px rgb(0 0 0 / 0.2); }
+.sim-finder summary { padding: 10px 14px; cursor: pointer; font-weight: 700; background: #333; color: #fff; }
+.sim-finder summary span { font-weight: 400; font-size: 12px; color: #ffd84d; }
+.sim-finder-body { padding: 10px; display: flex; flex-direction: column; gap: 6px; max-height: 50vh; }
+.sim-finder ul { list-style: none; margin: 0; padding: 0; overflow-y: auto; }
+.sim-finder li button { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid #eee; padding: 7px 4px; display: flex; flex-wrap: wrap; gap: 2px 8px; }
+.sim-finder li button:hover { background: #fafafa; }
+.sim-finder li span { font-size: 12px; color: var(--sim-sub); width: 100%; }
+.sim-finder li em { font-style: normal; font-size: 12px; color: var(--sim-sub); }
+.sim-finder li em.hot { color: var(--sim-red); font-weight: 700; }
+
+.sim-modal-back { position: fixed; inset: 0; background: rgb(0 0 0 / 0.35); display: grid; place-items: center; z-index: 40; padding: 16px; }
+.sim-modal { background: #fff; width: min(400px, 100%); padding: 22px; border-top: 4px solid var(--sim-red); display: flex; flex-direction: column; gap: 12px; text-align: center; }
+.sim-modal.ok { border-top-color: #2b7a2b; }
+.sim-modal-tag { font-size: 11px; color: #fff; background: #111; align-self: center; padding: 1px 8px; margin: 0; }
+.sim-modal .sim-btn-red { align-self: center; min-width: 90px; }
+
+/* 4. 결과 */
+.sim-result { max-width: 900px; margin: 24px auto 80px; background: #fff; padding: 24px; border: 1px solid var(--sim-line); }
+.sim-result h2 { margin: 0; }
+.sim-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
+.sim-stats div { border: 1px solid var(--sim-line); padding: 12px; text-align: center; font-size: 13px; color: var(--sim-sub); }
+.sim-stats b { display: block; font-size: 24px; color: var(--sim-text); }
+.sim-grid { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11px; }
+.sim-grid th, .sim-grid td { border: 1px solid #eee; height: 18px; padding: 0 4px; }
+.sim-grid th { background: var(--sim-head); font-weight: 500; width: 54px; }
+.sim-grid td.on { background: #fde8e8; color: var(--sim-red-dark); }
+.sim-grid td.clash { background: var(--sim-red); color: #fff; }
+.sim-fails { margin-top: 12px; font-size: 13px; }
+.sim-result-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+
+@media (max-width: 640px) {
+  .sim-login-sheet { margin: 0; padding: 16px; border-radius: 0; }
+  .sim-login-band::after { display: none; }
+  .sim-sheet { padding: 14px 16px 90px; }
+  .sim-stats { grid-template-columns: repeat(2, 1fr); }
+  .sim-topbar-right span:not(.sim-clock) { display: none; }
+}
+
+/* 희망 강좌 메모 */
+.sim-memo { border: 1px dashed #999; background: #fffdf2; padding: 10px 14px; margin-top: 18px; }
+.sim-memo-title { font-weight: 700; margin: 0 0 6px; }
+.sim-memo-title span { font-weight: 400; font-size: 12px; color: var(--sim-sub); }
+.sim-memo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.sim-memo li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.sim-memo-secs { display: flex; flex-wrap: wrap; gap: 4px; width: 100%; }
+.sim-memo-secs button { border: 1px solid #bbb; background: #fff; padding: 2px 8px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.sim-memo-secs em { font-style: normal; color: var(--sim-sub); }
+.sim-memo-secs em.hot { color: var(--sim-red); font-weight: 700; }
+.sim-memo-x { border: 0; background: none; color: #999; font-size: 12px; }
+.sim-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sim-new { border-color: var(--sim-red) !important; color: var(--sim-red) !important; }
+.sim-timeline { list-style: none; padding: 0; margin: 12px 0; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+.sim-timeline b { display: inline-block; min-width: 70px; color: var(--sim-red); font-variant-numeric: tabular-nums; }
+.sim-grid td.cont { border-top-color: transparent; }
+
+.sim-modal-actions { display: flex; gap: 8px; justify-content: center; }
+.sim-remark { font-size: 13px; color: #444; background: #fafafa; border-left: 3px solid var(--sim-brown); padding: 6px 10px; margin: 8px 0 0; }
+.sim-remark b { color: var(--sim-red); }
+
+/* 경고 띠: 넓은 화면은 전체 문구, 좁은 화면은 한 줄 */
+.sim-banner-short { display: none; font-weight: 600; }
+@media (max-width: 640px) {
+  .sim-banner { padding: 6px 10px; font-size: 12px; flex-wrap: nowrap; justify-content: space-between; }
+  .sim-banner-long { display: none; }
+  .sim-banner-short { display: inline; }
+  .sim-login-wrap .sim-banner-long { display: inline; }
+  .sim-topbar { padding: 0 12px; }
+  .sim-logo-text { font-size: 17px; }
+  .sim-profile { display: grid; grid-template-columns: 1fr 1fr; }
+  .sim-profile span { border-bottom: 1px solid var(--sim-line); }
+  .sim-phase { grid-column: 1 / -1; margin-left: 0; }
+  .sim-inputbar { flex-direction: column; align-items: stretch; gap: 8px; }
+  .sim-inputbar label { flex-direction: column; align-items: stretch; gap: 4px; flex: none; }
+  .sim-captcha-label br { display: none; }
+  .sim-captcha-label { text-align: left; }
+  .sim-inputbar > .sim-btn-line, .sim-inputbar > .sim-btn-red { width: 100%; }
+  .sim-tabs > button:not(.sim-btn-red) { padding: 7px 16px; }
+  .sim-batch { margin-left: 0; width: 100%; }
+  .sim-notice { padding: 10px 12px; }
+  .sim-notice .star { display: none; }
+  .sim-finder summary span { display: block; }
+  .sim-login-info { padding: 20px; }
+}
+.sim-btn-xs { white-space: nowrap; }

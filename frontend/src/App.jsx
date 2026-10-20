@@ -1,0 +1,303 @@
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import * as api from './api.js'
+import { deleteAccount, displayName, loadUserState, saveUserState, signOut } from './auth.js'
+import { useHash } from './hash.js'
+import { clearPendingConsent, consentRecord, ConsentScreen, hasConsent, hasPendingConsent } from './Privacy.jsx'
+import ProfilePanel from './components/ProfilePanel.jsx'
+import CourseEditor from './components/CourseEditor.jsx'
+import Dashboard from './components/Dashboard.jsx'
+
+// 수강신청 연습은 시간표 데이터가 커서 들어갈 때만 불러온다
+const SimApp = lazy(() => import('./sim/SimApp.jsx'))
+
+const STORAGE_KEY = 'trail:v1'
+const DEFAULT_STATE = { entryYear: 2027, taken: [], profile: { programs: [] }, sim: {} }
+
+function normalize(saved) {
+  const merged = { ...DEFAULT_STATE, ...saved }
+  // 예전 '이수 형태' 선택값은 다전공 목록으로 대체됨
+  const { major_track, ...profile } = merged.profile ?? {}
+  return { ...merged, profile: { programs: [], ...profile } }
+}
+
+function readLocal() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+}
+
+// 수강신청 연습 기록(최고 기록·메모) — 로그인 없이 쓸 때는 이 브라우저에만
+const localSimStore = {
+  get(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(`trail:sim-${key}`)) ?? fallback } catch { return fallback }
+  },
+  set(key, value) {
+    try { localStorage.setItem(`trail:sim-${key}`, JSON.stringify(value)) } catch { /* 저장 불가 환경 */ }
+  },
+}
+
+// 로그인했으면 내 계정 데이터를, 아니면 이 브라우저 데이터를 불러온 뒤 화면을 띄운다
+export default function App({ user }) {
+  const [initial, setInitial] = useState(() => (user ? null : normalize(readLocal())))
+  const [loadError, setLoadError] = useState(null)
+
+  useEffect(() => {
+    if (!user) return
+    let alive = true
+    loadUserState(user.id)
+      .then(async (saved) => {
+        let state = saved
+        if (!state) {
+          // 처음 로그인: 로그인 기능 전에 이 브라우저에 입력해 둔 데이터가 있으면 계정으로 옮긴다
+          const local = readLocal()
+          const sim = { best: localSimStore.get('best', null), memo: localSimStore.get('memo', []) }
+          state = { ...(local ?? {}), sim }
+        }
+        // 로그인 화면에서 방금 동의하고 들어왔으면 그 동의를 계정에 기록
+        const pending = hasPendingConsent() && !hasConsent(state)
+        if (pending) state = { ...state, consent: consentRecord() }
+        if (!saved || pending) await saveUserState(user.id, normalize(state))
+        clearPendingConsent()
+        if (!saved) {
+          try {
+            for (const k of [STORAGE_KEY, 'trail:sim-best', 'trail:sim-memo']) localStorage.removeItem(k)
+          } catch { /* 저장 불가 환경 */ }
+        }
+        if (alive) setInitial(normalize(state))
+      })
+      .catch((e) => alive && setLoadError(e.message))
+    return () => {
+      alive = false
+    }
+  }, [user])
+
+  if (loadError) {
+    return (
+      <div className="app">
+        <div className="banner banner-error" role="alert">내 데이터를 불러오지 못했습니다: {loadError}</div>
+        <button type="button" className="btn" onClick={() => window.location.reload()}>다시 시도</button>
+        <button type="button" className="btn" onClick={signOut}>로그아웃</button>
+      </div>
+    )
+  }
+  if (!initial) return <p className="app">내 데이터 불러오는 중…</p>
+  if (user && !hasConsent(initial)) {
+    const agree = () => {
+      const next = { ...initial, consent: consentRecord() }
+      saveUserState(user.id, next).then(() => setInitial(next)).catch((e) => setLoadError(e.message))
+    }
+    return <ConsentScreen onAgree={agree} onDecline={signOut} />
+  }
+  return <Navi user={user} initial={initial} />
+}
+
+function AccountMenu({ user, saveStatus }) {
+  const leave = () => {
+    if (!window.confirm('회원 탈퇴하면 계정과 저장된 과목·성적·설정이 모두 삭제됩니다. 되돌릴 수 없습니다.')) return
+    deleteAccount().catch((e) => window.alert(`탈퇴하지 못했습니다: ${e.message}`))
+  }
+  return (
+    <details className="account">
+      <summary>
+        {displayName(user)}
+        <small className={`save-status save-${saveStatus}`}>
+          {{ saved: '저장됨', saving: '저장 중…', error: '저장 실패' }[saveStatus]}
+        </small>
+      </summary>
+      <div className="account-menu panel">
+        <p className="account-email">{user.email}</p>
+        <button type="button" className="btn" onClick={signOut}>로그아웃</button>
+        <button type="button" className="btn btn-danger" onClick={leave}>회원 탈퇴</button>
+      </div>
+    </details>
+  )
+}
+
+function Navi({ user, initial }) {
+  const [state, setState] = useState(initial)
+  const [saveStatus, setSaveStatus] = useState('saved')
+  const hash = useHash()
+  const [meta, setMeta] = useState(null)
+  const [programs, setPrograms] = useState([])
+  const [report, setReport] = useState(null)
+  const [error, setError] = useState(null)
+  const { entryYear, taken, profile } = state
+
+  useEffect(() => {
+    api.getMeta().then(setMeta).catch((e) => setError(e.message))
+  }, [])
+
+  useEffect(() => {
+    let alive = true
+    setPrograms([])
+    api.getPrograms(entryYear).then((r) => alive && setPrograms(r.programs)).catch((e) => setError(e.message))
+    return () => {
+      alive = false
+    }
+  }, [entryYear])
+
+  // 학과를 아직 안 골랐거나, 학번을 바꿔 그 해에 없는 학과는 계산에서 뺀다
+  const chosenPrograms = useMemo(() => {
+    const valid = new Set(programs.map((p) => p.code))
+    return (profile.programs ?? []).filter((c) => c.code && valid.has(c.code))
+  }, [profile.programs, programs])
+  const programCodes = useMemo(() => chosenPrograms.map((c) => c.code), [chosenPrograms])
+  const evalProfile = useMemo(() => ({ ...profile, programs: chosenPrograms }), [profile, chosenPrograms])
+
+  // 바뀔 때마다 저장 — 로그인했으면 내 계정(잠깐 모았다가 한 번에), 아니면 이 브라우저
+  const first = useRef(true)
+  useEffect(() => {
+    if (first.current) {
+      first.current = false
+      return
+    }
+    if (!user) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+      } catch {
+        /* 저장 불가(시크릿 모드 등) — 새로고침하면 초기화될 뿐 */
+      }
+      return
+    }
+    setSaveStatus('saving')
+    let alive = true
+    const timer = setTimeout(() => {
+      saveUserState(user.id, state)
+        .then(() => alive && setSaveStatus('saved'))
+        .catch(() => alive && setSaveStatus('error'))
+    }, 800)
+    return () => {
+      alive = false
+      clearTimeout(timer)
+    }
+  }, [state, user])
+
+  // 아직 계정에 저장되지 않은 변경이 있으면 창을 닫기 전에 알린다
+  useEffect(() => {
+    if (saveStatus === 'saved') return
+    const warn = (e) => e.preventDefault()
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [saveStatus])
+
+  // 수강신청 연습 기록 저장소 — 로그인했으면 계정 데이터(state.sim). 값이 바뀌어도 같은 객체를 유지한다
+  const simRef = useRef(state.sim)
+  simRef.current = state.sim
+  const simStore = useMemo(() => (user ? {
+    get: (key, fallback) => simRef.current?.[key] ?? fallback,
+    set: (key, value) => setState((s) => ({ ...s, sim: { ...s.sim, [key]: value } })),
+  } : localSimStore), [user])
+
+  const payload = useMemo(
+    () => taken.map(({ id, ...course }) => course),
+    [taken],
+  )
+
+  useEffect(() => {
+    const ctrl = new AbortController()
+    const timer = setTimeout(() => {
+      api
+        .evaluate(entryYear, payload, evalProfile, ctrl.signal)
+        .then((r) => {
+          setReport(r)
+          setError(null)
+        })
+        .catch((e) => e.name !== 'AbortError' && setError(e.message))
+    }, 150)
+    return () => {
+      clearTimeout(timer)
+      ctrl.abort()
+    }
+  }, [entryYear, payload, evalProfile])
+
+  const update = (patch) => setState((s) => ({ ...s, ...patch }))
+
+  // 대시보드의 '+ 예정' — 권장 학년·학기에 수강 예정으로 넣는다 (다전공 과목은 그 전공에 인정되게)
+  const planCourse = (course, pool) => {
+    const m = /(\d)학년\s*(\d학기)?/.exec(course.recommended ?? '')
+    const grade = course.grade ?? (m ? Number(m[1]) : 1)
+    const semester = (course.semester ?? m?.[2] ?? '1학기').startsWith('2') ? '2학기' : '1학기'
+    const id = Math.random().toString(36).slice(2, 10)
+    setState((s) => ({
+      ...s,
+      taken: [...s.taken, {
+        id, code: course.code, name: course.name, credits: course.credits,
+        year: s.entryYear + grade - 1, semester, grade: null, ...(pool ? { counts_for: pool } : {}),
+      }],
+    }))
+  }
+
+  // 수강신청 연습 결과 → 그 학기 '수강 예정' 과목으로
+  const exportPlanned = (registered, data) => {
+    setState((s) => {
+      const have = new Set(s.taken.map((t) => `${t.code}|${t.year}|${t.semester}`))
+      const added = registered
+        .map((c) => ({ id: Math.random().toString(36).slice(2, 10), code: c.code, name: c.name, credits: c.credits,
+                       year: data.year, semester: data.semester, grade: null }))
+        .filter((t) => !have.has(`${t.code}|${t.year}|${t.semester}`))
+      return { ...s, taken: [...s.taken, ...added] }
+    })
+  }
+
+  if (hash === '#/sim') {
+    return (
+      <Suspense fallback={<p className="app">수강신청 연습 불러오는 중…</p>}>
+        <SimApp taken={taken} programNames={chosenPrograms.map((c) => programs.find((p) => p.code === c.code)?.name).filter(Boolean)}
+          onExportPlanned={exportPlanned} store={simStore} onExit={() => { window.location.hash = '' }} />
+      </Suspense>
+    )
+  }
+
+  return (
+    <div className="app">
+      <header className="topbar">
+        <div>
+          <h1 className="brand" aria-label="trAIl">tr<span className="brand-ai">AI</span>l</h1>
+          <p className="subtitle">졸업까지 따라가는 길 · 경북대 인공지능전공 졸업요건 대시보드</p>
+        </div>
+        <a className="btn sim-link" href="#/sim">수강신청 연습 <small>(시뮬레이션)</small></a>
+        <label className="year-picker">
+          <span>학번</span>
+          <select value={entryYear} onChange={(e) => update({ entryYear: Number(e.target.value) })}>
+            {(meta?.entry_years ?? [{ year: entryYear }]).map((e) => (
+              <option key={e.year} value={e.year}>
+                {e.year}학번{e.status === 'provisional' ? ' (임시 기준)' : ''}
+              </option>
+            ))}
+          </select>
+        </label>
+        {user && <AccountMenu user={user} saveStatus={saveStatus} />}
+      </header>
+
+      {error && <div className="banner banner-error" role="alert">서버와 통신하지 못했습니다: {error}</div>}
+
+      <main className="layout">
+        <a className="jump" href="#input">과목·조건 입력하기 ↓</a>
+        <section id="input" className="panel input-panel" aria-label="입력">
+          <ProfilePanel profile={profile} programs={programs} onChange={(p) => update({ profile: p })} />
+          <CourseEditor
+            entryYear={entryYear}
+            aiEnabled={!!meta?.ai_enabled}
+            programs={programs}
+            programCodes={programCodes}
+            taken={taken}
+            report={report}
+            onChange={(t) => update({ taken: t })}
+          />
+        </section>
+        <section className="dashboard" aria-label="졸업요건 현황">
+          {report ? <Dashboard report={report} onPlan={planCourse} /> : <div className="panel empty">계산 중…</div>}
+        </section>
+      </main>
+
+      <footer className="footer">
+        교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준. 최종 확인은 학과 사무실에서 하세요.
+        {user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}
+        {' '}<a href="#/privacy">개인정보 처리 안내</a>
+      </footer>
+    </div>
+  )
+}
