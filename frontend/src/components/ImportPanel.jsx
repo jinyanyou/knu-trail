@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as api from '../api.js'
 import { GRADES } from './CourseEditor.jsx'
 
@@ -13,6 +13,7 @@ const METHOD_LABEL = {
   'ai+name_contains': 'AI · 이름 포함',
   'ai+name_fuzzy': 'AI · 비슷한 이름',
   ai: 'AI · 교육과정에 없음',
+  other_school: '다른 대학 학점교류',
 }
 const PLACEHOLDER = `예) 포털 성적 조회 화면이나 시간표를 복사해서 붙여넣기
 
@@ -24,7 +25,11 @@ CAIB0227  인공지능수학1  3  A+
 
 const newId = () => Math.random().toString(36).slice(2, 10)
 
-export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], taken, onAdd, onClose }) {
+// 연도 고르기: 학번부터 6년 + 인식된 과목의 연도 (학번을 잘못 골라도 인식한 연도가 사라지지 않게)
+const yearOptions = (entryYear, rows = []) =>
+  [...new Set([...Array.from({ length: 6 }, (_, i) => entryYear + i), ...rows.map((r) => r.year).filter(Boolean)])].sort()
+
+export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], taken, onAdd, onClose, onEntryYear, onAddProgram }) {
   const [mode, setMode] = useState('text')
   const [text, setText] = useState('')
   const [file, setFile] = useState(null)
@@ -46,7 +51,9 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
         ? await api.importText(entryYear, text, d, useAi, programCodes)
         : await api.importFile(entryYear, file, d, programCodes)
       setResult(r)
-      setRows(r.candidates.map((c) => ({ ...c, id: newId(), include: c.matched })))
+      // 성적증명서는 학교가 발급한 기록이라 교육과정에 없는 과목(학점교류·일반선택)도 기본으로 넣는다
+      const certified = r.format === 'certificate'
+      setRows(r.candidates.map((c) => ({ ...c, id: newId(), include: c.matched || certified })))
     } catch (e) {
       setError(e.message)
     } finally {
@@ -54,12 +61,35 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
     }
   }
 
+  // 증명서를 보고 학번을 바꾸거나 다전공을 추가하면, 바뀐 조건의 교육과정으로 다시 인식한다
+  const rerun = useRef(false)
+  const programKey = programCodes.join(',')
+  useEffect(() => {
+    if (rerun.current) {
+      rerun.current = false
+      recognize()
+    }
+  }, [entryYear, programKey]) // eslint-disable-line react-hooks/exhaustive-deps
+  const hint = result?.entry_year_hint
+  const switchYear = () => {
+    rerun.current = true
+    onEntryYear(hint)
+  }
+  const programHints = onAddProgram ? (result?.program_hints ?? []) : []
+  const addPrograms = () => {
+    rerun.current = true
+    onAddProgram(programHints)
+  }
+
   const setRow = (id, patch) => setRows((rs) => rs.map((r) => (r.id === id ? { ...r, ...patch } : r)))
   const chosen = rows.filter((r) => r.include)
   const missingTerm = chosen.filter((r) => !r.year || !r.semester)
 
   const add = () => {
-    const have = new Set(taken.map((t) => `${t.code}|${t.year}|${t.semester}`))
+    // 성적증명서는 공식 기록 — 같은 과목이 이미 있으면(빠르게 채우기·예정 등) 증명서 것으로 바꾼다
+    const certified = result?.format === 'certificate'
+    const replace = new Set(certified ? chosen.filter((r) => r.matched).map((r) => r.code) : [])
+    const have = new Set(taken.filter((t) => !replace.has(t.code)).map((t) => `${t.code}|${t.year}|${t.semester}`))
     const fresh = []
     let skipped = 0
     for (const r of chosen) {
@@ -74,8 +104,13 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
       have.add(key)
       fresh.push(course)
     }
-    onAdd(fresh)
-    setMessage(`${fresh.length}과목을 추가했어요${skipped ? ` (이미 있는 ${skipped}과목은 건너뜀)` : ''}.`)
+    // 증명서를 다시 올려도 교육과정에 없는 과목(ETC)이 쌓이지 않게 같은 이름·학기는 건너뛴다
+    const etcKeys = new Set(taken.filter((t) => t.code.startsWith('ETC-')).map((t) => `${t.name}|${t.year}|${t.semester}`))
+    const deduped = fresh.filter((c) => !c.code.startsWith('ETC-') || !etcKeys.has(`${c.name}|${c.year}|${c.semester}`))
+    skipped += fresh.length - deduped.length
+    const replaced = taken.filter((t) => replace.has(t.code)).length
+    onAdd(deduped, replace)
+    setMessage(`${deduped.length}과목을 추가했어요${replaced ? ` (기존 ${replaced}과목은 증명서 기록으로 바꿈)` : ''}${skipped ? ` (이미 있는 ${skipped}과목은 건너뜀)` : ''}.`)
     setResult(null)
     setRows([])
     setText('')
@@ -146,6 +181,18 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
 
       {result && (
         <div className="preview">
+          {hint && hint !== entryYear && onEntryYear && (
+            <div className="banner banner-warn" role="status">
+              성적증명서의 입학연도는 <b>{hint}년</b>인데 학번이 <b>{entryYear}학번</b>으로 되어 있어요.{' '}
+              <button type="button" className="btn-link" onClick={switchYear}>{hint}학번으로 바꾸고 다시 인식</button>
+            </div>
+          )}
+          {programHints.length > 0 && !(hint && hint !== entryYear) && (
+            <div className="banner banner-warn" role="status">
+              성적증명서에 <b>{programHints.map((h) => h.name).join(', ')}</b>이 있어요. 다전공에 추가하면 그 전공 과목도 인식해요.{' '}
+              <button type="button" className="btn-link" onClick={addPrograms}>다전공에 추가하고 다시 인식</button>
+            </div>
+          )}
           <p className="muted">
             {rows.length}과목 인식
             {rows.some((r) => r.confidence === 'low' || !r.matched) && ' · 표시된 과목은 맞는지 확인해 주세요'}
@@ -159,7 +206,7 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
                     <span className="c-name">{r.name}</span>
                     <span className="c-meta">
                       {r.credits ? `${r.credits}학점 · ` : ''}{r.program ? `다전공 · ${r.program}` : (r.category ?? '직접 입력으로 추가')} ·{' '}
-                      <em className={`method m-${r.confidence}`}>{METHOD_LABEL[r.method] ?? r.method}</em>
+                      <em className={`method m-${r.confidence}`}>{METHOD_LABEL[r.method] ?? '교육과정에 없음'}</em>
                     </span>
                     {r.confidence === 'low' && <span className="c-meta">원문: {r.source}</span>}
                   </span>
@@ -168,7 +215,7 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
                   <select aria-label="연도" value={r.year ?? ''} className={r.include && !r.year ? 'invalid' : ''}
                     onChange={(e) => setRow(r.id, { year: e.target.value ? Number(e.target.value) : null })}>
                     <option value="">연도</option>
-                    {Array.from({ length: 6 }, (_, i) => entryYear + i).map((y) => <option key={y} value={y}>{y}</option>)}
+                    {yearOptions(entryYear, rows).map((y) => <option key={y} value={y}>{y}</option>)}
                   </select>
                   <select aria-label="학기" value={r.semester ?? ''} className={r.include && !r.semester ? 'invalid' : ''}
                     onChange={(e) => setRow(r.id, { semester: e.target.value || null })}>

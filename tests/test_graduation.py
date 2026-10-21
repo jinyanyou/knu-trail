@@ -60,6 +60,47 @@ def test_failed_course_is_excluded_and_retake_counts_once():
     assert reasons == ["성적 F — 학점 미취득", "재이수로 대체됨"]
 
 
+def test_duplicates_are_not_called_retakes():
+    taken = [
+        {"code": "CAIB0227", "year": 2024, "semester": "1학기", "grade": "C+"},
+        {"code": "CAIB0227", "year": 2027, "semester": "1학기", "grade": None},   # 이미 들은 과목을 예정으로 또 넣음
+        {"code": "CAIB0229", "year": 2024, "semester": "1학기", "grade": "A0"},
+        {"code": "CAIB0229", "year": 2024, "semester": "1학기", "grade": "A0"},   # 같은 학기 두 번
+    ]
+    rep = evaluate(2024, taken)
+    assert req(rep, "major")["earned"] == 3 + 4 and req(rep, "major")["planned"] == 0
+    reasons = sorted(x["reason"] for x in rep["excluded"])
+    assert reasons == ["같은 학기에 중복 입력", "이미 이수한 과목 (수강 예정 중복)"]
+    assert next(x for x in rep["excluded"] if x["code"] == "CAIB0227")["year"] == 2027
+
+
+def test_student_can_override_category():
+    taken = [
+        {"code": "ETC-x", "name": "학과 인정 대체과목", "credits": 3, "year": 2024, "semester": "1학기", "grade": "A0",
+         "category": "전공"},
+        {"code": "ETC-y", "name": "학점교류 교양", "credits": 3, "year": 2024, "semester": "1학기", "grade": "B0",
+         "category": "교양", "area": "첨성인기초", "sub_area": "수리"},
+        {"code": "CAIB0227", "year": 2024, "semester": "1학기", "grade": "A0", "category": "일반선택"},
+    ]
+    rep = evaluate(2024, taken)
+    assert req(rep, "major")["earned"] == 3
+    assert req(rep, "liberal_arts")["earned"] == 3 and req(rep, "basic_math_science")["earned"] == 3
+    assert req(rep, "major_required")["earned"] == 0     # 일반선택으로 바꾼 전공필수는 빠진다
+    assert all(c["category_override"] for c in rep["courses"])
+    assert ["첨성인기초", "수리"] in [list(a) for a in rep["liberal_areas"]]
+
+
+def test_student_can_assign_any_course_to_a_chosen_program():
+    taken = [{"code": "ETC-z", "name": "학과 인정 과목", "credits": 3, "year": 2026, "semester": "1학기", "grade": "A0",
+              "counts_for": "1620"}]
+    rep = evaluate(2024, taken, {"programs": [{"kind": "convergence", "code": "1620"}]})
+    assert req(rep, "program:1620:credits")["earned"] == 3
+    assert rep["courses"][0]["counts_for"] == "1620"
+    # 고르지 않은 학과 코드는 무시
+    rep = evaluate(2024, [{**taken[0], "counts_for": "9999"}], {"programs": [{"kind": "convergence", "code": "1620"}]})
+    assert req(rep, "program:1620:credits")["earned"] == 0
+
+
 def test_planned_courses_are_projected_separately():
     taken = [{"code": "CAIB0227", "year": 2027, "semester": "1학기"}]   # 성적 없음 = 수강 예정
     rep = evaluate(2027, taken)

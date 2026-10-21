@@ -160,13 +160,14 @@ def test_manual_counts_for_wins():
     assert req(rep, "program:1O18:credits")["earned"] == shared[0]["credits"]
 
 
-def test_manual_counts_for_ignored_when_not_in_that_program():
+def test_manual_counts_for_honored_even_when_not_in_that_program():
+    """학과에서 인정받은 과목 등 — 학생이 고른 다전공으로 직접 지정하면 교육과정에 없어도 그 전공에 넣는다."""
     ai_only = next(c for c in ai_codes().values()
                    if c["type"] == "전공" and c["code"] not in catalog.program(YEAR, "1403")
                    and c["code"] not in {x["code"] for x in catalog.program(YEAR, "1403")["courses"]})
     rep = evaluate(YEAR, [{"code": ai_only["code"], "year": YEAR, "grade": "A0", "counts_for": "1403"}],
                    {"programs": [{"kind": "double", "code": "1403"}]})
-    assert course(rep, ai_only["code"])["counts_for"] == PRIMARY
+    assert course(rep, ai_only["code"])["counts_for"] == "1403"
 
 
 def test_ai_required_course_stays_in_primary_major():

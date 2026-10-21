@@ -17,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from pypdf import PdfReader
 
-from engine import ai_extract, catalog, importer
+from engine import ai_extract, catalog, daily, importer, roadmap, schedule
 from engine.graduation import evaluate
 from engine.rules import load_rules_doc, supported_entry_years
 
@@ -39,6 +39,10 @@ class TakenCourse(BaseModel):
     external: bool = False
     pnu: bool = False
     counts_for: str | None = Field(default=None, max_length=20)  # "primary" 또는 다전공 학과 코드
+    # 학생이 직접 지정한 분류 (없으면 교육과정 기준 자동 분류). 교양이면 영역도
+    category: Literal["전공필수", "전공", "교양", "일반선택"] | None = None
+    area: str | None = Field(default=None, max_length=30)
+    sub_area: str | None = Field(default=None, max_length=30)
 
 
 class ProgramChoice(BaseModel):
@@ -176,6 +180,26 @@ def evaluate_endpoint(req: EvaluateRequest):
         raise HTTPException(400, str(e.args[0])) from e
 
 
+class RoadmapRequest(EvaluateRequest):
+    max_credits: int = Field(default=18, ge=9, le=24)   # 한 학기에 넣을 최대 학점
+    start_year: int | None = Field(default=None, ge=2000, le=2100)
+    start_semester: Literal["1학기", "2학기"] | None = None
+    exclude: list[str] = Field(default_factory=list, max_length=200)   # 로드맵에서 뺀 과목 코드
+
+
+@app.post("/api/roadmap")
+def roadmap_endpoint(req: RoadmapRequest):
+    """남은 졸업요건을 채우는 학기별 수강 계획 (규칙 기반, 엔진으로 졸업 가능 여부까지 검증)."""
+    _check_year(req.entry_year)
+    start = ((req.start_year, req.start_semester) if req.start_year and req.start_semester
+             else roadmap.first_term(daily.today()))
+    try:
+        return roadmap.plan(req.entry_year, [t.model_dump() for t in req.taken], req.profile.model_dump(),
+                            start=start, max_credits=req.max_credits, exclude=req.exclude)
+    except KeyError as e:
+        raise HTTPException(400, str(e.args[0])) from e
+
+
 class ImportTextRequest(BaseModel):
     entry_year: int
     text: str = Field(min_length=1, max_length=50_000)
@@ -236,6 +260,18 @@ async def import_file(
 
     return _run_ai(entry_year, file_bytes=data, media_type=media_type, programs=codes,
                    default_year=default_year, default_semester=default_semester)
+
+
+@app.get("/api/daily")
+def daily_cards():
+    """오늘의 전공 뉴스(없으면 null)와 퀴즈 — 한국 시간 기준 하루에 하나."""
+    return {"date": daily.today().isoformat(), "news": daily.news(), "quiz": daily.quiz()}
+
+
+@app.get("/api/schedule")
+def academic_schedule():
+    """경북대 학사일정 중 학부생에게 중요한 진행 중·다가오는 일정 (못 가져오면 events 빈 목록)."""
+    return schedule.upcoming() or {"date": daily.today().isoformat(), "events": [], "source": schedule.SOURCE}
 
 
 DIST = Path(__file__).resolve().parent.parent / "frontend" / "dist"

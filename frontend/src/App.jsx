@@ -2,10 +2,17 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import * as api from './api.js'
 import { deleteAccount, displayName, loadUserState, saveUserState, signOut } from './auth.js'
 import { useHash } from './hash.js'
-import { clearPendingConsent, consentRecord, ConsentScreen, hasConsent, hasPendingConsent } from './Privacy.jsx'
-import ProfilePanel from './components/ProfilePanel.jsx'
-import CourseEditor from './components/CourseEditor.jsx'
+import { consentRecord, ConsentScreen, hasConsent } from './Privacy.jsx'
 import Dashboard from './components/Dashboard.jsx'
+import BrandMark from './components/BrandMark.jsx'
+import Setup from './components/Setup.jsx'
+import CourseSheet from './components/CourseSheet.jsx'
+import Daily from './components/Daily.jsx'
+import Roadmap from './components/Roadmap.jsx'
+import Grades from './components/Grades.jsx'
+import Schedule from './components/Schedule.jsx'
+import SimBanner from './components/SimBanner.jsx'
+import { gpa, graded } from './gpa.js'
 
 // 수강신청 연습은 시간표 데이터가 커서 들어갈 때만 불러온다
 const SimApp = lazy(() => import('./sim/SimApp.jsx'))
@@ -14,7 +21,8 @@ const STORAGE_KEY = 'trail:v1'
 const DEFAULT_STATE = { entryYear: 2027, taken: [], profile: { programs: [] }, sim: {} }
 
 function normalize(saved) {
-  const merged = { ...DEFAULT_STATE, ...saved }
+  // 시작 설정 기능 전부터 쓰던 사용자(과목이 이미 있음)는 설정을 끝낸 것으로 본다
+  const merged = { ...DEFAULT_STATE, setupDone: saved?.setupDone ?? (saved?.taken?.length > 0), ...saved }
   // 예전 '이수 형태' 선택값은 다전공 목록으로 대체됨
   const { major_track, ...profile } = merged.profile ?? {}
   return { ...merged, profile: { programs: [], ...profile } }
@@ -51,20 +59,10 @@ export default function App({ user }) {
       .then(async (saved) => {
         let state = saved
         if (!state) {
-          // 처음 로그인: 로그인 기능 전에 이 브라우저에 입력해 둔 데이터가 있으면 계정으로 옮긴다
+          // 처음 로그인: 로그인 기능 전에 이 브라우저에 입력해 둔 데이터가 있으면 동의 후 계정으로 옮긴다
           const local = readLocal()
           const sim = { best: localSimStore.get('best', null), memo: localSimStore.get('memo', []) }
           state = { ...(local ?? {}), sim }
-        }
-        // 로그인 화면에서 방금 동의하고 들어왔으면 그 동의를 계정에 기록
-        const pending = hasPendingConsent() && !hasConsent(state)
-        if (pending) state = { ...state, consent: consentRecord() }
-        if (!saved || pending) await saveUserState(user.id, normalize(state))
-        clearPendingConsent()
-        if (!saved) {
-          try {
-            for (const k of [STORAGE_KEY, 'trail:sim-best', 'trail:sim-memo']) localStorage.removeItem(k)
-          } catch { /* 저장 불가 환경 */ }
         }
         if (alive) setInitial(normalize(state))
       })
@@ -84,14 +82,41 @@ export default function App({ user }) {
     )
   }
   if (!initial) return <p className="app">내 데이터 불러오는 중…</p>
+  // 동의는 계정에 한 번 기록된다 — 처음 로그인했거나 안내 내용(PRIVACY_VERSION)이 바뀌었을 때만 묻는다
   if (user && !hasConsent(initial)) {
     const agree = () => {
       const next = { ...initial, consent: consentRecord() }
-      saveUserState(user.id, next).then(() => setInitial(next)).catch((e) => setLoadError(e.message))
+      saveUserState(user.id, next)
+        .then(() => {
+          // 계정으로 옮겼으니 이 브라우저에 남은 예전 데이터는 지운다
+          try {
+            for (const k of [STORAGE_KEY, 'trail:sim-best', 'trail:sim-memo']) localStorage.removeItem(k)
+          } catch { /* 저장 불가 환경 */ }
+          setInitial(next)
+        })
+        .catch((e) => setLoadError(e.message))
     }
-    return <ConsentScreen onAgree={agree} onDecline={signOut} />
+    // 처음 로그인에서 거부하면 방금 만들어진 계정을 남기지 않는다. 기존 사용자(안내 변경)는 로그아웃만
+    const decline = initial.consent
+      ? signOut
+      : () => deleteAccount().catch((e) => setLoadError(e.message))
+    return <ConsentScreen onAgree={agree} onDecline={decline} />
   }
   return <Navi user={user} initial={initial} />
+}
+
+// 로그인한 서비스(Google·카카오)의 프로필 사진. 없거나 못 불러오면 이름 첫 글자
+function Avatar({ user, size = 36 }) {
+  const m = user?.user_metadata ?? {}
+  const src = m.avatar_url || m.picture
+  const [broken, setBroken] = useState(false)
+  const initial = displayName(user).trim().charAt(0).toUpperCase() || '?'
+  return src && !broken ? (
+    <img className="avatar" src={src} alt="" width={size} height={size} referrerPolicy="no-referrer"
+      onError={() => setBroken(true)} />
+  ) : (
+    <span className="avatar avatar-initial" style={{ width: size, height: size }} aria-hidden="true">{initial}</span>
+  )
 }
 
 function AccountMenu({ user, saveStatus }) {
@@ -102,13 +127,23 @@ function AccountMenu({ user, saveStatus }) {
   return (
     <details className="account">
       <summary>
-        {displayName(user)}
-        <small className={`save-status save-${saveStatus}`}>
-          {{ saved: '저장됨', saving: '저장 중…', error: '저장 실패' }[saveStatus]}
-        </small>
+        <Avatar user={user} />
+        <span className="account-name">
+          {displayName(user)}
+          <small className={`save-status save-${saveStatus}`}>
+            {{ saved: '저장됨', saving: '저장 중…', error: '저장 실패' }[saveStatus]}
+          </small>
+        </span>
       </summary>
       <div className="account-menu panel">
-        <p className="account-email">{user.email}</p>
+        <div className="account-who">
+          <Avatar user={user} size={44} />
+          <div>
+            <p className="account-display">{displayName(user)}</p>
+            <p className="account-email">{user.email}</p>
+          </div>
+        </div>
+        <a className="btn" href="#/profile">프로필 설정</a>
         <button type="button" className="btn" onClick={signOut}>로그아웃</button>
         <button type="button" className="btn btn-danger" onClick={leave}>회원 탈퇴</button>
       </div>
@@ -124,7 +159,13 @@ function Navi({ user, initial }) {
   const [programs, setPrograms] = useState([])
   const [report, setReport] = useState(null)
   const [error, setError] = useState(null)
-  const { entryYear, taken, profile } = state
+  const [sheet, setSheet] = useState(null) // 홈에서 연 요건 id
+  // 졸업 시뮬레이션: 켜면 바꾸는 내용이 draft에만 들어가고 저장되지 않는다. '적용하기'로 계정에 반영
+  const [draft, setDraft] = useState(null)
+  const [baseReport, setBaseReport] = useState(null)
+  const view = draft ?? state
+  const { entryYear, taken, profile } = view
+  const edit = (fn) => (draft ? setDraft(fn) : setState(fn))
 
   useEffect(() => {
     api.getMeta().then(setMeta).catch((e) => setError(e.message))
@@ -213,7 +254,23 @@ function Navi({ user, initial }) {
     }
   }, [entryYear, payload, evalProfile])
 
-  const update = (patch) => setState((s) => ({ ...s, ...patch }))
+  const update = (patch) => edit((s) => ({ ...s, ...patch }))
+  const startSim = () => {
+    setBaseReport(report)
+    setDraft(state)
+  }
+  const endSim = (apply) => {
+    if (apply) setState((s) => ({ ...s, entryYear: draft.entryYear, taken: draft.taken, profile: draft.profile }))
+    setDraft(null)
+    setBaseReport(null)
+  }
+  // 성적증명서에서 찾은 융합·연계전공을 다전공 목록에 넣는다 (최대 3개)
+  const addPrograms = (hints) => edit((s) => {
+    const list = s.profile.programs ?? []
+    const have = new Set(list.map((c) => c.code))
+    const added = hints.filter((h) => !have.has(h.code)).map((h) => ({ kind: h.kind, code: h.code }))
+    return { ...s, profile: { ...s.profile, programs: [...list, ...added].slice(0, 3) } }
+  })
 
   // 대시보드의 '+ 예정' — 권장 학년·학기에 수강 예정으로 넣는다 (다전공 과목은 그 전공에 인정되게)
   const planCourse = (course, pool) => {
@@ -221,7 +278,7 @@ function Navi({ user, initial }) {
     const grade = course.grade ?? (m ? Number(m[1]) : 1)
     const semester = (course.semester ?? m?.[2] ?? '1학기').startsWith('2') ? '2학기' : '1학기'
     const id = Math.random().toString(36).slice(2, 10)
-    setState((s) => ({
+    edit((s) => ({
       ...s,
       taken: [...s.taken, {
         id, code: course.code, name: course.name, credits: course.credits,
@@ -232,7 +289,7 @@ function Navi({ user, initial }) {
 
   // 수강신청 연습 결과 → 그 학기 '수강 예정' 과목으로
   const exportPlanned = (registered, data) => {
-    setState((s) => {
+    edit((s) => {
       const have = new Set(s.taken.map((t) => `${t.code}|${t.year}|${t.semester}`))
       const added = registered
         .map((c) => ({ id: Math.random().toString(36).slice(2, 10), code: c.code, name: c.name, credits: c.credits,
@@ -240,6 +297,29 @@ function Navi({ user, initial }) {
         .filter((t) => !have.has(`${t.code}|${t.year}|${t.semester}`))
       return { ...s, taken: [...s.taken, ...added] }
     })
+  }
+
+  // 처음 로그인한 사용자는 학번·다전공·들은 과목부터 단계별로 설정. 이후엔 #/profile 에서 고친다
+  const firstSetup = user && !state.setupDone
+  if (firstSetup || hash.startsWith('#/profile')) {
+    const done = () => {
+      if (firstSetup) update({ setupDone: true })
+      window.location.hash = ''
+    }
+    return (
+      <Setup meta={meta} state={view} programs={programs} programCodes={programCodes} report={report}
+        editing={!firstSetup} initialStep={hash === '#/profile/courses' ? 2 : 0} onChange={update} onAddProgram={addPrograms} onDone={done} />
+    )
+  }
+
+  if (hash === '#/roadmap') {
+    return (
+      <Roadmap entryYear={entryYear} payload={payload} profile={evalProfile} taken={taken} simulating={!!draft}
+        onAdd={(items) => edit((s) => ({ ...s, taken: [...s.taken, ...items] }))} onBack={() => { window.location.hash = '' }} />
+    )
+  }
+  if (hash === '#/grades') {
+    return report ? <Grades report={report} onBack={() => { window.location.hash = '' }} /> : <p className="app">계산 중…</p>
   }
 
   if (hash === '#/sim') {
@@ -255,43 +335,42 @@ function Navi({ user, initial }) {
     <div className="app">
       <header className="topbar">
         <div>
-          <h1 className="brand" aria-label="trAIl">tr<span className="brand-ai">AI</span>l</h1>
+          <h1 className="brand" aria-label="trAIl"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></h1>
           <p className="subtitle">졸업까지 따라가는 길 · 경북대 인공지능전공 졸업요건 대시보드</p>
         </div>
         <a className="btn sim-link" href="#/sim">수강신청 연습 <small>(시뮬레이션)</small></a>
-        <label className="year-picker">
-          <span>학번</span>
-          <select value={entryYear} onChange={(e) => update({ entryYear: Number(e.target.value) })}>
-            {(meta?.entry_years ?? [{ year: entryYear }]).map((e) => (
-              <option key={e.year} value={e.year}>
-                {e.year}학번{e.status === 'provisional' ? ' (임시 기준)' : ''}
-              </option>
-            ))}
-          </select>
-        </label>
         {user && <AccountMenu user={user} saveStatus={saveStatus} />}
       </header>
 
       {error && <div className="banner banner-error" role="alert">서버와 통신하지 못했습니다: {error}</div>}
 
-      <main className="layout">
-        <a className="jump" href="#input">과목·조건 입력하기 ↓</a>
-        <section id="input" className="panel input-panel" aria-label="입력">
-          <ProfilePanel profile={profile} programs={programs} onChange={(p) => update({ profile: p })} />
-          <CourseEditor
-            entryYear={entryYear}
-            aiEnabled={!!meta?.ai_enabled}
-            programs={programs}
-            programCodes={programCodes}
-            taken={taken}
-            report={report}
-            onChange={(t) => update({ taken: t })}
-          />
-        </section>
-        <section className="dashboard" aria-label="졸업요건 현황">
-          {report ? <Dashboard report={report} onPlan={planCourse} /> : <div className="panel empty">계산 중…</div>}
-        </section>
+      {/* 학번·다전공·들은 과목은 프로필 설정에서 고친다 — 홈에는 요약만 */}
+      <div className="profile-summary panel">
+        <span className="chip">{entryYear}학번</span>
+        <span className="chip">인공지능전공</span>
+        {chosenPrograms.map((c) => programs.find((p) => p.code === c.code)?.name).filter(Boolean).map((n) => <span key={n} className="chip">{n}</span>)}
+        <span className="chip">{taken.length}과목 입력</span>
+        {report && gpa(graded(report)) != null && <a className="chip chip-link" href="#/grades">평점 {gpa(graded(report)).toFixed(2)} ›</a>}
+        <span className="summary-actions">
+          <a className="btn btn-sm btn-primary" href="#/roadmap">졸업 로드맵</a>
+          {!draft && <button type="button" className="btn btn-sm" onClick={startSim}>🧪 졸업 시뮬레이션</button>}
+          <a className="btn-link profile-edit" href="#/profile">프로필 설정 →</a>
+        </span>
+      </div>
+
+      {draft && <SimBanner base={baseReport} now={report} onApply={() => endSim(true)} onCancel={() => endSim(false)} />}
+
+      <Schedule />
+
+      <Daily records={state.daily?.quiz} onChange={(quiz) => setState((s) => ({ ...s, daily: { ...s.daily, quiz } }))} />
+
+      <main className="dashboard" aria-label="졸업요건 현황">
+        {report ? <Dashboard report={report} onPlan={planCourse} onOpen={setSheet} /> : <div className="panel empty">계산 중…</div>}
       </main>
+      {sheet && report?.requirements.some((r) => r.id === sheet) && (
+        <CourseSheet req={report.requirements.find((r) => r.id === sheet)} report={report} taken={taken}
+          onChange={(t) => update({ taken: t })} onClose={() => setSheet(null)} />
+      )}
 
       <footer className="footer">
         교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준. 최종 확인은 학과 사무실에서 하세요.

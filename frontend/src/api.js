@@ -57,3 +57,18 @@ export const importFile = (entryYear, file, defaults, programs = []) => {
   if (programs.length) form.append('programs', programs.join(','))
   return request('/api/import/file', { method: 'POST', body: form })
 }
+
+// 오늘의 전공 뉴스·퀴즈 (한국 시간 하루에 하나)
+export const getDaily = () => request('/api/daily')
+
+// 남은 졸업요건을 채우는 학기별 계획 (규칙 기반, 졸업 가능 여부까지 검증)
+// exclude: 로드맵에서 뺀 과목 코드 — 다시 추천하지 않는다
+export const roadmap = (entryYear, taken, profile, maxCredits, exclude = []) =>
+  request('/api/roadmap', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ entry_year: entryYear, taken, profile, max_credits: maxCredits, exclude }),
+  })
+
+// 경북대 학사일정 중 진행 중·다가오는 학부 일정
+export const getSchedule = () => request('/api/schedule')

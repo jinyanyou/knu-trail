@@ -6,6 +6,7 @@
     CAIB0227	인공지능수학1	3	A+
 - 과목명 나열:  기계학습입문, 신경망개론, 알고리즘 B+
 - 시간표 복사본: 같은 과목이 요일마다 반복돼도 한 번만 인식
+- 성적증명서 PDF(써드피아 발급): <<2024학년도 1학기>> 아래에 '구분 과목명 학점 성적'이 한 줄에 여러 개 붙어 나옴
 
 매칭 순서: 과목 코드 → 과목명 정확 일치 → 줄 안에 과목명 포함 → 비슷한 이름(오타)
 AI(engine.ai_extract)가 사진·PDF에서 뽑은 과목도 같은 매칭을 거쳐야만 교육과정 과목으로 인정된다.
@@ -18,7 +19,7 @@ from functools import lru_cache
 from engine import catalog
 
 CODE_RE = re.compile(r"(?<![A-Z0-9])([A-Z]{4}\d{4})(?:-\d{1,3})?(?!\d)")
-GRADE_RE = re.compile(r"(?<![A-Za-z0-9+])(A\+|A0|B\+|B0|C\+|C0|D\+|D0|NP|A|B|C|D|F|P|S|U|W)(?![A-Za-z0-9+/])")
+GRADE_RE = re.compile(r"(?<![A-Za-z0-9+])(A\+|A0|A-|B\+|B0|B-|C\+|C0|C-|D\+|D0|D-|NP|A|B|C|D|F|P|S|U|W)(?![A-Za-z0-9+/-])")
 TERM_RE = re.compile(
     r"(20\d{2})\s*(?:학년도|년)?\s*[-./]?\s*(?:(1|2)\s*학기|(여름|하계|겨울|동계)\s*(?:계절)?(?:학기)?|(?<=[-./])\s*(1|2)(?!\d))"
 )
@@ -131,7 +132,70 @@ def match_course(entry_year, name=None, code=None, programs=()):
     return None, None
 
 
-CONFIDENCE = {"code": "high", "name_exact": "high", "name_contains": "medium", "name_fuzzy": "low"}
+CONFIDENCE = {"code": "high", "name_exact": "high", "name_contains": "medium", "name_fuzzy": "low", "other_school": "none"}
+
+
+# ── 성적증명서(써드피아) ──
+CERT_TERM_RE = re.compile(r"<<\s*(20\d{2})\s*학년도\s*(?:(1|2)\s*학기|계절\s*학기\s*\(\s*(하계|동계|여름|겨울)\s*\))\s*>>")
+CERT_KINDS = "전필|전선|전공|전기|전심|전교|전반|교양|일선|자선|공학|교직|선수|기공|융합|복수|부전|연계|마크"
+CERT_GRADES = r"A\+|A0|A-|B\+|B0|B-|C\+|C0|C-|D\+|D0|D-|NP|F|P|S|U|W"
+CERT_ROW_RE = re.compile(
+    rf"({CERT_KINDS})\s+(.+?)\s+(\d{{1,2}})\s+({CERT_GRADES})(?=\s*(?:{CERT_KINDS})\s|\s*취득학점|\s*$)"
+)
+OTHER_SCHOOL_RE = re.compile(r"\(([^()]*대학교?)\)\s*$")
+ENTRY_RE = re.compile(r"입학일자\s*:\s*(20\d{2})\s*년")
+
+
+def entry_year_hint(text):
+    """성적증명서의 입학일자로 학번(입학연도)을 짐작한다. 없으면 None."""
+    m = ENTRY_RE.search(text)
+    return int(m.group(1)) if m else None
+
+
+def program_hints(text, entry_year, chosen=()):
+    """증명서 머리말(소속·다전공 칸)에 적힌 융합·연계전공 → [{code, name, kind}]. 이미 고른 것은 뺀다.
+
+    복수·부전공은 머리말에 소속 학과 이름도 함께 있어 헷갈리므로 융합·연계전공만 찾는다.
+    """
+    header = normalize(text.split("<<", 1)[0])
+    hints = []
+    for code, p in catalog.programs(entry_year).items():
+        if code in chosen or p["kind"] not in ("convergence", "convergence_unlisted", "linked"):
+            continue
+        if normalize(p["name"]) in header:
+            hints.append({"code": code, "name": p["name"],
+                          "kind": "linked" if p["kind"] == "linked" else "convergence"})
+    return hints
+
+
+def parse_certificate(text, entry_year, programs=()):
+    """써드피아 성적증명서 텍스트 → 후보 목록. 이 형식이 아니면 None.
+
+    학기 제목(<<2024학년도 계절학기(하계)>>) 사이의 줄을 이어 붙인 뒤 '구분 과목명 학점 성적'을 차례로 뽑는다.
+    과목명이 줄바꿈으로 잘려도('…(서울시립' / '대학교) 3 B+') 이어 붙이면 복원된다.
+    """
+    heads = list(CERT_TERM_RE.finditer(text))
+    if not heads:
+        return None
+    cands = []
+    for i, h in enumerate(heads):
+        year = int(h.group(1))
+        semester = f"{h.group(2)}학기" if h.group(2) else SEASON[h.group(3)]
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(text)
+        block = "".join(text[h.end():end].splitlines())
+        for kind, name, credits, grade in CERT_ROW_RE.findall(block):
+            name = name.strip()
+            source = f"{kind} {name} {credits} {grade}"
+            extra = {"name": name, "credits": int(credits)}
+            # 다른 대학교에서 들은 학점교류 과목은 우리 학교 과목에 억지로 맞추지 않는다
+            if OTHER_SCHOOL_RE.search(name):
+                cands.append(candidate(None, "other_school", year, semester, grade, source, extra))
+                continue
+            course, method = match_course(entry_year, name=re.sub(r"\(\*[^)]*\)\s*$", "", name), programs=programs)
+            cands.append(candidate(course, method, year, semester, grade, source, extra))
+    return {"candidates": dedupe(cands), "unmatched_lines": [], "format": "certificate",
+            "needs_term": False, "entry_year_hint": entry_year_hint(text),
+            "program_hints": program_hints(text, entry_year, programs)}
 
 
 def candidate(course, method, year, semester, grade, source, extra=None):
@@ -166,6 +230,9 @@ def dedupe(cands):
 def parse_text(text, entry_year, default_year=None, default_semester=None, programs=()):
     """programs: 학생이 고른 다전공 학과 코드 — 그 학과 과목도 인식한다."""
     programs = tuple(programs)
+    cert = parse_certificate(text, entry_year, programs)
+    if cert is not None:
+        return cert
     courses = catalog.recognizable(entry_year, programs)
     cur_term = (default_year, default_semester) if default_year or default_semester else None
     cands, unmatched = [], []
@@ -202,4 +269,5 @@ def parse_text(text, entry_year, default_year=None, default_semester=None, progr
         "candidates": cands,
         "unmatched_lines": unmatched[:50],
         "needs_term": any(c["year"] is None or c["semester"] is None for c in cands),
+        "entry_year_hint": entry_year_hint(text),
     }
