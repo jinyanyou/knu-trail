@@ -19,6 +19,24 @@ C/C++프로그래밍기초\t3\tA+
 평점평균 3.85"""
 
 
+# 써드피아 성적증명서 PDF에서 뽑은 글자 모양 (내용은 지어낸 예시)
+CERTIFICATE = """소    속 : 입학일자 : 2024년 3월 4일
+복수전공 :
+공과대학 AI로봇융합전공:연계·융합전공 부전공 ***** :
+<<2024학년도 1학기>>
+전필 인공지능수학1 3 C+전필 프로그래밍 기초와 실습 4 A0교양 한국사 3 A-취득학점: 10
+평점평균: 3.40/4.3 백분율: 89.00/100
+----------------------------------<<2024학년도 계절학기(하계)>>
+교양 인공지능수학기초(서울시립
+대학교) 3 B+취득학점: 3
+----------------------------------<<2024학년도 2학기>>
+전필 이산수학 3 S일선 우리지역 탐방(*KNU미래설계) 3 S
+전공 없는과목이름입니다 3 B-취득학점: 9
+----------------------------------<<2024학년도 계절학기(동계)>>
+교양 물리학 I 3 B0취득학점: 3
+----------------------------------총 취득학점: 25"""
+
+
 def by_name(result):
     return {c["name"]: c for c in result["candidates"]}
 
@@ -29,6 +47,30 @@ def test_transcript_with_codes_terms_and_grades():
     assert r["인공지능수학1"]["method"] == "code"
     assert r["이산수학"]["semester"] == "2학기" and r["이산수학"]["method"] == "name_exact"
     assert r["물리학 I"]["grade"] == "F"
+
+
+def test_certificate_pdf_terms_grades_and_wrapped_names():
+    result = parse_text(CERTIFICATE, 2027)
+    assert result["format"] == "certificate" and result["entry_year_hint"] == 2024
+    rows = by_name(result)
+    assert sum(c["credits"] for c in result["candidates"]) == 25
+    assert (rows["인공지능수학1"]["year"], rows["인공지능수학1"]["semester"], rows["인공지능수학1"]["grade"]) == (2024, "1학기", "C+")
+    assert rows["한국사"]["grade"] == "A-"
+    other = rows["인공지능수학기초(서울시립대학교)"]  # 줄바꿈으로 잘린 이름 복원, 학점교류는 직접 입력으로
+    assert (other["semester"], other["method"], other["matched"]) == ("여름계절", "other_school", False)
+    assert rows["이산수학"]["grade"] == "S" and rows["이산수학"]["semester"] == "2학기"
+    assert rows["없는과목이름입니다"]["grade"] == "B-" and not rows["없는과목이름입니다"]["matched"]
+    assert rows["물리학 I"]["semester"] == "겨울계절"
+    # 머리말의 융합전공 → 다전공 추가 제안 (2026 신설이지만 2024학번도 고를 수 있음)
+    assert [h["name"] for h in parse_text(CERTIFICATE, 2024)["program_hints"]] == ["AI로봇융합전공"]
+
+
+def test_certificate_recognizes_courses_of_chosen_convergence_major():
+    text = "<<2026학년도 1학기>>\n일선 계측공학 3 B+취득학점: 3"
+    assert not parse_text(text, 2024)["candidates"][0]["matched"]
+    with_program = parse_text(text, 2024, programs=["1620"])
+    assert with_program["candidates"][0]["program"] == "AI로봇융합전공"
+    assert with_program["program_hints"] == []
 
 
 def test_grade_is_not_confused_with_letters_in_course_name():

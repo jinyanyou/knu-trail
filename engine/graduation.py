@@ -59,8 +59,14 @@ def _status(earned, planned, required):
 
 
 def _normalize_taken(taken, entry_year):
-    """낙제 과목 제외, 같은 과목을 여러 번 들었으면 가장 최근 것만 남김(재이수 시 이전 학점 무효)."""
+    """낙제 과목 제외, 같은 과목이 여러 번 있으면 하나만 남긴다.
+
+    - 둘 다 성적 있음(실제 재이수) → 가장 최근 것 (재이수 시 이전 학점 무효)
+    - 이수 + 수강 예정 → 이수한 것 (예정은 이미 들은 과목)
+    - 같은 학기에 두 번 → 중복 입력
+    """
     latest, dropped = {}, []
+    order = lambda t: (t["year"], SEMESTER_ORDER.get(t.get("semester"), 0))
     for t in taken:
         t = {**t, "year": t.get("year") or entry_year}
         grade = (t.get("grade") or "").strip().upper() or None
@@ -69,16 +75,22 @@ def _normalize_taken(taken, entry_year):
             continue
         t["planned"] = grade is None
         key = t["code"]
-        order = (t["year"], SEMESTER_ORDER.get(t.get("semester"), 0))
-        if key in latest:
-            old = latest[key]
-            if (old["year"], SEMESTER_ORDER.get(old.get("semester"), 0)) <= order:
-                dropped.append((old, "재이수로 대체됨"))
-                latest[key] = t
-            else:
-                dropped.append((t, "재이수로 대체됨"))
-        else:
+        old = latest.get(key)
+        if old is None:
             latest[key] = t
+            continue
+        newer, older = (t, old) if order(old) <= order(t) else (old, t)
+        if old["planned"] != t["planned"]:
+            keep, drop = (t, old) if old["planned"] else (old, t)  # 성적 있는 쪽
+            why = "같은 학기에 중복 입력" if order(old) == order(t) else "이미 이수한 과목 (수강 예정 중복)"
+        elif order(old) == order(t):
+            keep, drop, why = old, t, "같은 학기에 중복 입력"
+        elif t["planned"]:
+            keep, drop, why = older, newer, "수강 예정 중복"
+        else:
+            keep, drop, why = newer, older, "재이수로 대체됨"
+        latest[key] = keep
+        dropped.append((drop, why))
     return list(latest.values()), dropped
 
 
@@ -92,6 +104,11 @@ def _tally(items, pred):
     return earned, planned
 
 
+def _counted(items, pred):
+    """요건에 들어간 과목 — 화면에서 그 요건을 눌러 과목을 고칠 때 쓴다 (코드·연도·학기로 입력과 맞춘다)."""
+    return [{"code": i["code"], "year": i["year"], "semester": i.get("semester")} for i in items if pred(i)]
+
+
 def _req(rid, group, label, required, earned, planned, unit="학점", status=None, **extra):
     return {
         "id": rid, "group": group, "label": label, "unit": unit,
@@ -102,6 +119,7 @@ def _req(rid, group, label, required, earned, planned, unit="학점", status=Non
 
 
 PRIMARY = "primary"
+CATEGORIES = (MAJOR_REQUIRED, MAJOR, LIBERAL_ARTS, GENERAL_ELECTIVE)
 
 
 def _major_track(profile):
@@ -179,7 +197,7 @@ def _load_programs(entry_year, rs, profile, warnings):
 def _allocate(items, progs, major_min, required_names):
     """각 과목을 주전공(PRIMARY)·다전공 학과 중 한 곳에 배정한다 (같은 과목 중복 인정 금지).
 
-    1) 학생이 counts_for로 지정했고 그 전공 교육과정에 있으면 그대로
+    1) 학생이 counts_for로 지정했으면 그대로 (고른 다전공이면 교육과정에 없어도)
     2) 해당하는 곳이 하나뿐이면 거기
     3) 어느 한 곳의 필수 과목이면 그곳 (주전공 우선)
     4) 나머지 겹치는 과목은 이수 → 예정 순으로, 그 시점에 학점이 가장 많이 부족한 곳
@@ -195,7 +213,8 @@ def _allocate(items, progs, major_min, required_names):
         pools += [] if cat == LIBERAL_ARTS else matches
         want = i.get("counts_for_request")
         i["counts_for"], i["auto"] = None, True
-        if want and (want in pools or want in matches):
+        # 학생이 고른 다전공으로 직접 지정하면 그 교육과정에 없는 과목(학과 인정 과목 등)도 그 전공에 넣는다
+        if want and (want in pools or want in matches or want in by_code):
             i["counts_for"], i["auto"] = want, False
             pools = pools if want in pools else pools + [want]
         elif len(pools) == 1:
@@ -254,6 +273,14 @@ def _options(courses, items, skip_codes=()):
     return sorted(out, key=lambda c: (c["grade"] or 9, c["semester"] or "", c["name"]))
 
 
+def _excluded(t, why, entry_year):
+    """계산에서 뺀 입력 — 평점(F 포함) 계산·화면 표시용으로 이름·학점·학기도 함께."""
+    info = catalog.classify(t["code"], entry_year, t.get("year"), t.get("credits"), t.get("name"))
+    credits = info.credits if info.credits is not None else t.get("credits")
+    return {"code": t["code"], "name": info.name, "credits": credits, "year": t.get("year"),
+            "semester": t.get("semester"), "grade": t.get("grade"), "reason": why}
+
+
 def evaluate(entry_year, taken, profile=None):
     profile = profile or {}
     rs = load_ruleset(entry_year)
@@ -270,6 +297,12 @@ def evaluate(entry_year, taken, profile=None):
             pc = next((p["by_code"][t["code"]] for p in progs if t["code"] in p["by_code"]), None)
             if pc:  # 인공지능전공 교육과정엔 없지만 다전공 학과 과목 → 이름·학점을 그 교육과정에서
                 info = catalog.CourseInfo(t["code"], pc["name"], pc["credits"], GENERAL_ELECTIVE)
+        override = t.get("category")
+        if override in CATEGORIES:  # 학생이 분류를 직접 지정 (학과 인정·대체 과목 등)
+            la = override == LIBERAL_ARTS
+            info = catalog.CourseInfo(t["code"], info.name, info.credits, override,
+                                      t.get("area") if la else None, t.get("sub_area") if la else None,
+                                      sdg=info.sdg and la, known=True)
         want = t.get("counts_for")
         t = {k: v for k, v in t.items() if k != "counts_for"}
         items.append({**t, "counts_for_request": want, "info": info})
@@ -287,7 +320,7 @@ def evaluate(entry_year, taken, profile=None):
     # ── 총 이수학점 ─────────────────────────────────────────────
     e, p = _tally(items, lambda i: True)
     reqs.append(_req("total", "졸업학점", "총 이수학점", rs["total_credits"]["min"], e, p,
-                     source=rs["total_credits"]["source"]))
+                     source=rs["total_credits"]["source"], counted=_counted(items, lambda i: True)))
 
     # ── 전공 ────────────────────────────────────────────────────
     major = rs["major"]
@@ -306,6 +339,7 @@ def evaluate(entry_year, taken, profile=None):
                   "single_minor": "부전공 1개만 이수할 때 기준 (다전공 기준 + 12학점)"}.get(track)
     electives = [c for c in catalog.curriculum(entry_year)["courses"] if c["type"] == MAJOR]
     reqs.append(_req("major", "전공", "전공 학점 (전공필수 포함)", major_min, e, p, source=major["source"],
+                     counted=_counted(items, counts_for(PRIMARY)), pick={"categories": [MAJOR_REQUIRED, MAJOR]},
                      options=_options(electives, items), options_label="들을 수 있는 전공선택 과목",
                      **({"note": track_note} if track_note else {})))
 
@@ -315,7 +349,10 @@ def evaluate(entry_year, taken, profile=None):
 
     done, planned_n, missing = _required_progress(required, [i for i in items if i["counts_for"] == PRIMARY], standard)
     reqs.append(_req("major_required", "전공", "전공필수 과목", len(required), done, planned_n,
-                     unit="과목", missing=missing, source=major["source"],
+                     unit="과목", missing=missing, source=major["source"], pick={"categories": [MAJOR_REQUIRED]},
+                     counted=_counted(items, lambda i: i["counts_for"] == PRIMARY and (
+                         i["code"] in {c["code"] for c in required}
+                         or i["info"].name.replace(" ", "") in {c["name"].replace(" ", "") for c in required})),
                      note=f"전공필수 {major['required']['min_credits']}학점 = 아래 과목 전부"))
 
     # ── 다전공 ──────────────────────────────────────────────────
@@ -330,12 +367,14 @@ def evaluate(entry_year, taken, profile=None):
                 note += " — 융합전공에서 따로 정한 학점이 더 많으면 그 기준"
                 note += f" (주관학과 {prog['host']}에 확인)" if prog["host"] else ""
             reqs.append(_req(f"{rid}:credits", group, f"{prog['label']} 학점", prog["min_credits"], e, p,
+                             counted=_counted(mine, lambda i: True), pick={"program": prog["code"]},
                              note=note, if_incomplete=prog["rule"]["if_incomplete"],
                              options=_options(prog["courses"], items, prog["required_codes"]),
                              options_label=f"들을 수 있는 {prog['name']} 과목",
                              source=prog["rule"]["source"]))
         else:
             reqs.append(_req(f"{rid}:credits", group, f"{prog['label']} 학점", None, e, p, status=UNKNOWN,
+                             counted=_counted(mine, lambda i: True), pick={"program": prog["code"]},
                              options=_options(prog["courses"], items, prog["required_codes"]),
                              options_label=f"들을 수 있는 {prog['name']} 과목",
                              source=prog["rule"]["source"],
@@ -360,7 +399,8 @@ def evaluate(entry_year, taken, profile=None):
     ref_year = max([i["year"] for i in items] + [entry_year])
     in_la = lambda i: i["info"].category == LIBERAL_ARTS and i["counts_for"] is None  # 다전공으로 옮긴 교양은 제외
     e, p = _tally(items, in_la)
-    reqs.append(_req("liberal_arts", "교양", "교양 학점", la["min_credits"], e, p, source=la["source"]))
+    reqs.append(_req("liberal_arts", "교양", "교양 학점", la["min_credits"], e, p, source=la["source"],
+                     counted=_counted(items, in_la), pick={"categories": [LIBERAL_ARTS]}))
 
     for area in la["areas"]:
         in_area = lambda i, a=area: (in_la(i) and at_knu(i)
@@ -369,7 +409,8 @@ def evaluate(entry_year, taken, profile=None):
         waiver = area.get("waived_if")
         status = WAIVED if waiver and profile.get(waiver["flag"]) and e < area["min_credits"] else None
         r = _req(area["id"], "교양", area["label"], area["min_credits"], e, p, status=status,
-                 source=area.get("source", la["source"]))
+                 source=area.get("source", la["source"]), counted=_counted(items, in_area),
+                 pick={"categories": [LIBERAL_ARTS], "area": area["area"], "sub_areas": area["sub_areas"]})
         if r["status"] in (UNMET, MET_WITH_PLANNED):
             r["examples"] = catalog.area_examples(area["area"], area["sub_areas"], ref_year)
         if waiver:
@@ -377,8 +418,10 @@ def evaluate(entry_year, taken, profile=None):
         reqs.append(r)
 
     if la["sdg_min_credits"]:
-        e, p = _tally(items, lambda i: in_la(i) and i["info"].sdg and at_knu(i))
-        r = _req("sdg", "교양", "SDG 교양", la["sdg_min_credits"], e, p, source=la["source"])
+        in_sdg = lambda i: in_la(i) and i["info"].sdg and at_knu(i)
+        e, p = _tally(items, in_sdg)
+        r = _req("sdg", "교양", "SDG 교양", la["sdg_min_credits"], e, p, source=la["source"],
+                 counted=_counted(items, in_sdg), pick={"categories": [LIBERAL_ARTS], "sdg": True})
         if r["status"] == UNMET:
             _, pool = catalog.liberal_arts(ref_year)
             r["examples"] = [f"{c['name']} ({c['credits']}학점)" for c in pool.values() if c["sdg"]][:5]
@@ -391,11 +434,12 @@ def evaluate(entry_year, taken, profile=None):
                     "advisor_counseling": "counseling_done", "major_assessment": "major_assessment_done"}.get(q["id"])
         alternatives = [a["label"] for a in q["any_of"] if a["type"] != "credits"]
         if credit_rule:
-            e, p = _tally(items, lambda i, a=credit_rule: (in_la(i) and at_knu(i)
-                                                           and i["info"].area == a["area"]
-                                                           and i["info"].sub_area in a["sub_areas"]))
+            in_rule = lambda i, a=credit_rule: (in_la(i) and at_knu(i)
+                                                and i["info"].area == a["area"] and i["info"].sub_area in a["sub_areas"])
+            e, p = _tally(items, in_rule)
             r = _req(q["id"], "졸업자격인정", q["label"], credit_rule["min_credits"], e, p,
-                     alternatives=alternatives, source=q["source"])
+                     alternatives=alternatives, source=q["source"], counted=_counted(items, in_rule),
+                     pick={"categories": [LIBERAL_ARTS], "area": credit_rule["area"], "sub_areas": credit_rule["sub_areas"]})
             if alt_flag and profile.get(alt_flag) and r["status"] != MET:
                 r["status"] = MET
                 r["note"] = f"대체 인정: {profile[alt_flag] if isinstance(profile[alt_flag], str) else '본인 입력'}"
@@ -438,12 +482,15 @@ def evaluate(entry_year, taken, profile=None):
                      "area": i["info"].area, "sub_area": i["info"].sub_area, "year": i["year"],
                      "semester": i.get("semester"), "grade": i.get("grade"), "planned": i["planned"],
                      "counts_for": i["counts_for"], "counts_for_auto": i["auto"], "eligible": i["pools"],
+                     "category_override": i.get("category") in CATEGORIES,
                      "program": prog_names.get(i["counts_for"])}
                     for i in items],
         "programs": [{"code": p["code"], "name": p["name"], "kind": p["kind"], "label": p["label"],
                       "min_credits": p["min_credits"], "basis": p["basis"]} for p in progs],
-        "excluded": [{"code": t["code"], "year": t.get("year"), "grade": t.get("grade"), "reason": why}
-                     for t, why in dropped],
+        # 분류 직접 지정에서 고를 수 있는 교양 영역 (수강 연도 교양 목록 기준)
+        "liberal_areas": sorted({(c["area"], c["sub_area"]) for c in catalog.liberal_arts(ref_year)[1].values()
+                                 if c["area"] and c["sub_area"]}),
+        "excluded": [_excluded(t, why, entry_year) for t, why in dropped],
         "warnings": warnings,
     }
 

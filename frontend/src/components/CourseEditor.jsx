@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import * as api from '../api.js'
 import ImportPanel from './ImportPanel.jsx'
 import BrowsePanel from './BrowsePanel.jsx'
+import CategoryPicker from './CategoryPicker.jsx'
 
-export const GRADES = ['A+', 'A0', 'B+', 'B0', 'C+', 'C0', 'D+', 'D0', 'P', 'F', 'NP', '이수']
+export const GRADES = ['A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'P', 'S', 'F', 'U', 'NP', '이수']
 const PLANNED = '' // 성적 없음 = 수강 예정
 const SEMESTERS = ['1학기', '여름계절', '2학기', '겨울계절']
 const SLOTS = [1, 2, 3, 4].flatMap((g) => ['1학기', '2학기'].map((s) => ({ grade: g, semester: s })))
@@ -18,22 +19,7 @@ function categoryLabel(c) {
   return c.category
 }
 
-const PRIMARY = 'primary'
-
-// 주전공·다전공 양쪽에 해당하는 과목: 어느 쪽에 인정할지 고르게 한다 (한 과목은 한 곳에만 인정)
-function CountsFor({ info, course, programNames, onChange }) {
-  if (!info || info.eligible.length < 2) return null
-  const name = (pool) => (pool === PRIMARY ? '인공지능전공' : programNames[pool] ?? pool)
-  return (
-    <select className="counts-for" aria-label={`${info.name} 인정 전공`} value={course.counts_for ?? ''}
-      onChange={(e) => onChange(e.target.value || null)}>
-      <option value="">자동 ({name(info.counts_for)})</option>
-      {info.eligible.map((pool) => <option key={pool} value={pool}>{name(pool)}</option>)}
-    </select>
-  )
-}
-
-export default function CourseEditor({ entryYear, aiEnabled, programs = [], programCodes = [], taken, report, onChange }) {
+export default function CourseEditor({ entryYear, aiEnabled, programs = [], programCodes = [], taken, report, onChange, onEntryYear, onAddProgram }) {
   const [showImport, setShowImport] = useState(false)
   const [year, setYear] = useState(entryYear)
   const [semester, setSemester] = useState('1학기')
@@ -65,7 +51,9 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
       .slice(0, 8)
   }, [catalog, query, picked])
 
-  const add = (courses) => onChange([...taken, ...courses.map((c) => ({ id: newId(), ...c }))])
+  // replaceCodes: 이 과목 코드의 기존 입력은 지우고 새로 넣는다 (성적증명서 가져오기)
+  const add = (courses, replaceCodes = new Set()) =>
+    onChange([...taken.filter((t) => !replaceCodes.has(t.code)), ...courses.map((c) => ({ id: newId(), ...c }))])
 
   const addPicked = (e) => {
     e.preventDefault()
@@ -109,7 +97,6 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
   const remove = (id) => onChange(taken.filter((t) => t.id !== id))
 
   const infoByCode = useMemo(() => Object.fromEntries((report?.courses ?? []).map((c) => [c.code, c])), [report])
-  const programNames = useMemo(() => Object.fromEntries((report?.programs ?? []).map((p) => [p.code, p.name])), [report])
   const excluded = report?.excluded ?? []
   const isExcluded = (t) =>
     excluded.find((x) => x.code === t.code && x.year === t.year && (x.grade ?? null) === (t.grade ?? null))
@@ -131,7 +118,7 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
 
       {showImport ? (
         <ImportPanel entryYear={entryYear} aiEnabled={aiEnabled} programCodes={programCodes} taken={taken}
-          onAdd={add} onClose={() => setShowImport(false)} />
+          onAdd={add} onEntryYear={onEntryYear} onAddProgram={onAddProgram} onClose={() => setShowImport(false)} />
       ) : (
         <button type="button" className="btn btn-import" onClick={() => setShowImport(true)}>
           성적표·시간표 붙여넣어 한 번에 가져오기
@@ -244,8 +231,8 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
                           {(info?.credits ?? t.credits ?? '?')}학점 · {categoryLabel(info) || '…'}
                           {ex && <em> · 제외: {ex.reason}</em>}
                         </span>
-                        <CountsFor info={info} course={t} programNames={programNames}
-                          onChange={(v) => setRow(t.id, { counts_for: v })} />
+                        <CategoryPicker course={t} info={info} areas={report?.liberal_areas} programs={report?.programs}
+                          onChange={(patch) => setRow(t.id, patch)} />
                       </div>
                       <select aria-label="성적" value={t.grade ?? PLANNED} onChange={(e) => setRow(t.id, { grade: e.target.value || null })}>
                         {GRADES.map((g) => <option key={g} value={g}>{g}</option>)}

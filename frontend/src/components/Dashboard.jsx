@@ -1,4 +1,5 @@
 import Meter from './Meter.jsx'
+import TrailPath from './TrailPath.jsx'
 
 export const STATUS = {
   met: { icon: '✓', label: '충족', tone: 'good' },
@@ -81,11 +82,17 @@ function Options({ r, onPlan, planned }) {
   )
 }
 
-function Requirement({ r, onPlan, planned }) {
+function Requirement({ r, onPlan, planned, onOpen }) {
   return (
     <li className="req">
       <div className="req-head">
-        <span className="req-label">{r.label}</span>
+        {r.counted ? (
+          <button type="button" className="req-label req-open" onClick={() => onOpen(r.id)}>
+            {r.label} <span className="req-count">과목 {r.counted.length}개 ›</span>
+          </button>
+        ) : (
+          <span className="req-label">{r.label}</span>
+        )}
         <Progress r={r} />
         <Badge status={r.status} />
       </div>
@@ -119,13 +126,16 @@ function Requirement({ r, onPlan, planned }) {
   )
 }
 
-export default function Dashboard({ report, onPlan }) {
+export default function Dashboard({ report, onPlan, onOpen }) {
   const planned = new Set(report.courses.map((c) => c.code))
   const byId = Object.fromEntries(report.requirements.map((r) => [r.id, r]))
   const total = byId.total
   const groups = [...new Set(report.requirements.map((r) => r.group))].filter((g) => g !== '졸업학점')
   const blocking = report.requirements.filter((r) => r.status === 'unmet')
   const remaining = Math.max(total.required - total.earned, 0)
+  // 홈 카드: 주전공·교양 + 고른 다전공마다 하나씩
+  const kpiIds = ['major', 'major_required', 'liberal_arts',
+    ...report.programs.map((p) => `program:${p.code}:credits`).filter((id) => byId[id])]
 
   return (
     <>
@@ -138,7 +148,10 @@ export default function Dashboard({ report, onPlan }) {
       <div className="panel hero">
         <div className="hero-top">
           <div>
-            <p className="eyebrow">총 이수학점</p>
+            <p className="eyebrow">
+              총 이수학점{' '}
+              <button type="button" className="btn-link req-count" onClick={() => onOpen('total')}>전체 과목 {total.counted?.length ?? 0}개 ›</button>
+            </p>
             <p className="hero-figure">
               {total.earned}<span className="hero-of">/{total.required}학점</span>
             </p>
@@ -155,11 +168,11 @@ export default function Dashboard({ report, onPlan }) {
             )}
           </div>
         </div>
-        <Meter earned={total.earned} planned={total.planned} required={total.required} unit="학점" label="총 이수학점" large />
+        <TrailPath earned={total.earned} planned={total.planned} required={total.required} />
         <div className="legend" aria-hidden="true">
-          <span><i className="sw sw-earned" />이수</span>
-          <span><i className="sw sw-planned" />수강 예정</span>
-          <span><i className="sw sw-track" />남은 학점</span>
+          <span><i className="sw sw-earned" />걸어온 길 (이수)</span>
+          <span><i className="sw sw-planned-solid" />수강 예정</span>
+          <span><i className="sw sw-rest" />남은 길</span>
         </div>
         {blocking.length > 0 && (
           <p className="blocking">
@@ -168,19 +181,32 @@ export default function Dashboard({ report, onPlan }) {
         )}
       </div>
 
-      <div className="kpis">
-        {['major', 'major_required', 'liberal_arts'].map((id) => {
+      {/* 카드 수에 맞춰 한 줄에 고르게 (6개면 3개씩 두 줄) */}
+      <div className="kpis" style={{ '--kpi-cols': kpiIds.length === 6 ? 3 : kpiIds.length }}>
+        {kpiIds.map((id) => {
           const r = byId[id]
+          // 다전공 카드: 'program:<코드>:credits' — 이름은 그 학과·융합전공, 필수 과목이 있으면 함께
+          const prog = id.startsWith('program:') ? report.programs.find((p) => id === `program:${p.code}:credits`) : null
+          const req = prog && byId[`program:${prog.code}:required`]
+          const title = prog ? `${prog.label} · ${prog.name}` : id === 'major_required' ? '전공필수' : r.label.replace(' (전공필수 포함)', '')
           return (
-            <div key={id} className="panel kpi">
-              <p className="eyebrow">{id === 'major_required' ? '전공필수' : r.label.replace(' (전공필수 포함)', '')}</p>
+            // 카드 안에 막대(div)가 있어 <button> 대신 역할만 버튼으로
+            <div key={id} role="button" tabIndex={0} className={`panel kpi kpi-open${prog ? ' kpi-program' : ''}`} onClick={() => onOpen(id)}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onOpen(id))}
+              aria-label={`${title} 과목 보기·고치기`}>
+              <p className="eyebrow">{title}</p>
               <p className="kpi-value">
                 {r.earned}
                 {r.planned > 0 && <span className="plus">+{r.planned}</span>}
-                <span className="of">/{r.required}{r.unit}</span>
+                <span className="of">{r.required != null ? `/${r.required}${r.unit}` : `${r.unit} (기준 확인 필요)`}</span>
               </p>
-              <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={r.label} />
-              <Badge status={r.status} />
+              {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={title} />}
+              {req && (
+                <p className="muted">
+                  {req.label} {req.earned}{req.planned > 0 ? `+${req.planned}` : ''}/{req.required}{req.unit}
+                </p>
+              )}
+              <span className="kpi-foot"><Badge status={r.status} /><span className="req-count">과목 {r.counted?.length ?? 0}개 ›</span></span>
             </div>
           )
         })}
@@ -190,7 +216,7 @@ export default function Dashboard({ report, onPlan }) {
         <div key={g} className="panel">
           <h2>{g}</h2>
           <ul className="reqs">
-            {report.requirements.filter((r) => r.group === g).map((r) => <Requirement key={r.id} r={r} onPlan={onPlan} planned={planned} />)}
+            {report.requirements.filter((r) => r.group === g).map((r) => <Requirement key={r.id} r={r} onPlan={onPlan} planned={planned} onOpen={onOpen} />)}
           </ul>
         </div>
       ))}

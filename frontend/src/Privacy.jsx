@@ -1,33 +1,21 @@
 import { useState } from 'react'
 
 // 내용을 바꾸면 버전을 올린다 → 기존 사용자도 다음 접속 때 다시 동의를 받는다
-export const PRIVACY_VERSION = '2026-10-20'
+export const PRIVACY_VERSION = '2026-10-22'
 // TODO: 배포 전 개인정보 보호책임자(팀 대표) 이름·연락처로 채우기
 const OFFICER = { name: 'trAIl 팀 대표', contact: '(연락처를 입력하세요)' }
 
-const PENDING_KEY = 'trail:consent-pending'
-
-// 로그인 화면에서 동의 → 소셜 로그인으로 다른 사이트에 다녀오는 동안 기억해 둔다
-export function rememberPendingConsent() {
-  try { localStorage.setItem(PENDING_KEY, PRIVACY_VERSION) } catch { /* 저장 불가 환경 */ }
-}
-export function hasPendingConsent() {
-  try { return localStorage.getItem(PENDING_KEY) === PRIVACY_VERSION } catch { return false }
-}
-export function clearPendingConsent() {
-  try { localStorage.removeItem(PENDING_KEY) } catch { /* 저장 불가 환경 */ }
-}
 export const consentRecord = () => ({ version: PRIVACY_VERSION, agreedAt: new Date().toISOString() })
 export const hasConsent = (state) => state?.consent?.version === PRIVACY_VERSION
 
 const ITEMS = [
-  ['수집 항목', '(로그인) 카카오·Google 계정 식별값, 이메일, 이름(닉네임) / (직접 입력) 학번(입학연도), 들은·들을 과목과 성적, 다전공·영어 성적 등 졸업요건 조건, 수강신청 연습 기록'],
+  ['수집 항목', '(로그인) 카카오·Google 계정 식별값, 이메일, 이름(닉네임) / (직접 입력) 학번(입학연도), 들은·들을 과목과 성적, 다전공·영어 성적 등 졸업요건 조건, 수강신청 연습 기록, 오늘의 퀴즈 풀이 기록'],
   ['이용 목적', '로그인, 졸업요건 계산 결과와 입력 내용의 저장·제공(다른 기기에서 이어 보기)'],
   ['보유 기간', '회원 탈퇴 시 즉시 삭제. 서비스를 종료하면 모든 데이터를 파기합니다.'],
   ['동의 거부', '동의하지 않을 수 있으나, 이 경우 로그인과 서비스 이용이 불가합니다.'],
 ]
 
-// 로그인 전·후 공통 동의 요약 (필수 항목 표 + 체크박스)
+// 동의 요약 (필수 항목 표 + 체크박스)
 export function ConsentSummary({ agreed, onChange }) {
   return (
     <div className="consent">
@@ -49,7 +37,7 @@ export function ConsentSummary({ agreed, onChange }) {
   )
 }
 
-// 로그인했지만 (새 버전) 동의가 없는 사용자
+// 로그인했지만 동의 기록이 없는 사용자 (처음 로그인, 또는 안내 내용이 바뀜)
 export function ConsentScreen({ onAgree, onDecline }) {
   const [agreed, setAgreed] = useState(false)
   return (
@@ -58,7 +46,7 @@ export function ConsentScreen({ onAgree, onDecline }) {
         <h2>개인정보 처리 안내가 필요합니다</h2>
         <ConsentSummary agreed={agreed} onChange={setAgreed} />
         <button type="button" className="btn btn-primary" disabled={!agreed} onClick={onAgree}>동의하고 시작하기</button>
-        <button type="button" className="btn-link" onClick={onDecline}>동의하지 않고 로그아웃</button>
+        <button type="button" className="btn-link" onClick={onDecline}>동의하지 않음 (계정이 삭제됩니다)</button>
       </div>
     </div>
   )
@@ -75,7 +63,7 @@ export function PrivacyPage() {
       <h2>1. 수집하는 항목과 방법</h2>
       <ul>
         <li>카카오·Google 로그인 시 해당 서비스에서 받는 정보: 계정 식별값, 이메일, 이름(닉네임)</li>
-        <li>이용자가 직접 입력하는 정보: 학번(입학연도), 들은·들을 과목과 성적, 다전공, 영어 성적 등 졸업요건 조건, 수강신청 연습 기록(최고 기록·희망 과목 메모)</li>
+        <li>이용자가 직접 입력하는 정보: 학번(입학연도), 들은·들을 과목과 성적, 다전공, 영어 성적 등 졸업요건 조건, 수강신청 연습 기록(최고 기록·희망 과목 메모), 오늘의 퀴즈 풀이 기록(최근 90일)</li>
         <li>학교 포털(knuin 등) 아이디·비밀번호는 수집하지 않습니다.</li>
       </ul>
 
