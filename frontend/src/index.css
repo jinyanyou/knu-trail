@@ -583,3 +583,13 @@ h3.with-mascot { gap: 8px; }
   .trail-me.at-start .trail-me-img { transform: translateX(4px); }
   .trail-me.at-start .trail-me-label { transform: translateX(6px); }
 }
+
+/* 로그인 / 회원가입 탭 */
+.login-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--border); margin-top: 4px; }
+.login-tabs button { border: 0; background: none; padding: 10px 0; font: inherit; font-weight: 700; font-size: 16px; color: var(--text-3); cursor: pointer; margin-bottom: -2px; border-bottom: 3px solid transparent; }
+.login-tabs button.on { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.login-lead { font-size: 14px; color: var(--text-2); }
+.login-wait { padding: 8px 0 16px; }
+.consent-heading { font-size: 18px; margin: 4px 0 0; }
+.login-card .consent { text-align: left; }
+.login-note .btn-link { padding: 0; font-size: inherit; vertical-align: baseline; color: var(--accent-ink); text-decoration: underline; font-weight: 600; }

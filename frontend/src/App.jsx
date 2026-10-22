@@ -1,11 +1,12 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import * as api from './api.js'
-import { deleteAccount, displayName, loadUserState, saveUserState, signOut } from './auth.js'
+import { deleteAccount, displayName, dropSignupConsent, loadUserState, saveUserState, signOut, takeSignupConsent } from './auth.js'
 import { useHash } from './hash.js'
-import { consentRecord, ConsentScreen, hasConsent } from './Privacy.jsx'
+import { consentRecord, ConsentScreen, hasConsent, PRIVACY_VERSION } from './Privacy.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import BrandMark from './components/BrandMark.jsx'
 import Mascot from './components/Mascot.jsx'
+import LoginShell from './components/LoginShell.jsx'
 import Setup from './components/Setup.jsx'
 import CourseSheet from './components/CourseSheet.jsx'
 import Daily from './components/Daily.jsx'
@@ -64,6 +65,15 @@ export default function App({ user }) {
           const local = readLocal()
           const sim = { best: localSimStore.get('best', null), memo: localSimStore.get('memo', []) }
           state = { ...(local ?? {}), sim }
+          // 회원가입 탭에서 동의하고 들어왔으면 그 동의로 가입을 마친다
+          const signup = takeSignupConsent(PRIVACY_VERSION)
+          if (signup) {
+            state = { ...state, consent: signup }
+            await saveUserState(user.id, state)
+            clearLocal()
+          }
+        } else {
+          dropSignupConsent() // 이미 가입한 계정 — 맡겨 둔 동의는 쓸 일이 없다
         }
         if (alive) setInitial(normalize(state))
       })
@@ -82,17 +92,14 @@ export default function App({ user }) {
       </div>
     )
   }
-  if (!initial) return <p className="app">내 데이터 불러오는 중…</p>
+  if (!initial) return <LoginShell pose="search"><p className="muted login-wait">내 데이터 불러오는 중…</p></LoginShell>
   // 동의는 계정에 한 번 기록된다 — 처음 로그인했거나 안내 내용(PRIVACY_VERSION)이 바뀌었을 때만 묻는다
   if (user && !hasConsent(initial)) {
     const agree = () => {
       const next = { ...initial, consent: consentRecord() }
       saveUserState(user.id, next)
         .then(() => {
-          // 계정으로 옮겼으니 이 브라우저에 남은 예전 데이터는 지운다
-          try {
-            for (const k of [STORAGE_KEY, 'trail:sim-best', 'trail:sim-memo']) localStorage.removeItem(k)
-          } catch { /* 저장 불가 환경 */ }
+          clearLocal()
           setInitial(next)
         })
         .catch((e) => setLoadError(e.message))
@@ -101,7 +108,7 @@ export default function App({ user }) {
     const decline = initial.consent
       ? signOut
       : () => deleteAccount().catch((e) => setLoadError(e.message))
-    return <ConsentScreen onAgree={agree} onDecline={decline} />
+    return <ConsentScreen mode={initial.consent ? 'updated' : 'signup'} onAgree={agree} onDecline={decline} />
   }
   return <Navi user={user} initial={initial} />
 }
@@ -151,6 +158,13 @@ function AccountMenu({ user, saveStatus }) {
       </div>
     </details>
   )
+}
+
+// 계정으로 옮긴 뒤 이 브라우저에 남은 예전(로그인 기능 전) 데이터를 지운다
+function clearLocal() {
+  try {
+    for (const k of [STORAGE_KEY, 'trail:sim-best', 'trail:sim-memo']) localStorage.removeItem(k)
+  } catch { /* 저장 불가 환경 */ }
 }
 
 function Navi({ user, initial }) {

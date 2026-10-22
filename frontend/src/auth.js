@@ -8,9 +8,48 @@ export const supabase = url && anonKey ? createClient(url, anonKey) : null
 export const authEnabled = supabase != null
 
 export const PROVIDERS = [
-  { id: 'kakao', label: '카카오로 시작하기' },
-  { id: 'google', label: 'Google로 시작하기' },
+  { id: 'kakao', name: '카카오' },
+  { id: 'google', name: 'Google' },
 ]
+
+// 회원가입 탭에서 동의하고 카카오·Google로 넘어갈 때, 돌아올 때까지 동의 기록을 이 브라우저에 잠깐 맡겨 둔다
+// (OAuth는 처음 로그인하는 순간 계정을 만들므로, 돌아온 뒤 새 계정이면 이 동의로 가입을 마친다)
+const SIGNUP_KEY = 'trail:signup-consent'
+const SIGNUP_TTL_MS = 60 * 60 * 1000
+
+export function holdSignupConsent(record) {
+  try {
+    localStorage.setItem(SIGNUP_KEY, JSON.stringify(record))
+  } catch {
+    // 저장이 막혀 있으면 돌아온 뒤 동의 화면을 한 번 더 본다
+  }
+}
+
+// 맡겨 둔 동의를 꺼낸다 (브라우저에서는 지우고, 이 페이지에서는 기억 — 개발 모드에서 두 번 불려도 같은 값).
+// 안내 버전이 다르거나 1시간이 지났으면 무효
+let takenSignup
+export function takeSignupConsent(version) {
+  if (takenSignup === undefined) {
+    try {
+      const raw = localStorage.getItem(SIGNUP_KEY)
+      localStorage.removeItem(SIGNUP_KEY)
+      takenSignup = raw ? JSON.parse(raw) : null
+    } catch {
+      takenSignup = null
+    }
+  }
+  const rec = takenSignup
+  if (!rec || rec.version !== version || Date.now() - Date.parse(rec.agreedAt) > SIGNUP_TTL_MS) return null
+  return rec
+}
+
+export function dropSignupConsent() {
+  try {
+    localStorage.removeItem(SIGNUP_KEY)
+  } catch {
+    // 무시
+  }
+}
 
 export function signIn(provider) {
   return supabase.auth.signInWithOAuth({

@@ -139,9 +139,13 @@ pytest
 4. **Authentication > Providers**
    - Google: Google Cloud Console에서 OAuth 클라이언트(웹) 만들고, 승인된 리디렉션 URI에
      `https://<프로젝트>.supabase.co/auth/v1/callback` → Client ID·Secret 입력
-   - Kakao: developers.kakao.com에서 앱 만들기 → 카카오 로그인 켜기, Redirect URI에 위 callback 주소,
-     REST API 키(Client ID)·Client Secret 입력. 동의항목(닉네임·이메일) 설정 — 이메일 동의항목은
-     비즈 앱 전환이 필요할 수 있다.
+   - Kakao (2026-10 개편된 콘솔 기준, developers.kakao.com → 앱 관리 페이지):
+     - [앱] > [플랫폼 키] > [REST API 키]: **카카오 로그인 리다이렉트 URI**에 위 callback 주소,
+       같은 화면의 REST API 키 = Client ID, **클라이언트 시크릿** = Client Secret
+     - [카카오 로그인] > [사용 설정] 상태 ON
+     - [카카오 로그인] > [동의항목]: 닉네임 필수, 프로필 사진 선택. 이메일은 비즈 앱 전환이 필요해 받지 않는다
+       → Supabase Kakao 설정에서 **Allow users without an email**을 켠다
+     - 사이트 도메인(JavaScript SDK 도메인)은 필요 없다 (카카오 JS SDK를 쓰지 않음)
 
 구조: 로그인·저장은 화면이 Supabase에 직접 한다(`frontend/src/auth.js`, `AuthGate.jsx`). 표 `user_state`에
 사용자당 한 줄(JSON)로 저장하고, 행 단위 보안(RLS)으로 본인 줄만 읽고 쓸 수 있다. FastAPI는 계산만 하고 저장하지 않는다.
