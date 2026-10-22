@@ -44,10 +44,11 @@ function Quiz({ quiz, records, onAnswer }) {
   const days = streak(records, quiz.date)
   return (
     <div className="panel daily-card quiz">
-      <p className="eyebrow">
-        오늘의 전공 퀴즈 <span className="quiz-topic">{quiz.topic}</span>
-        {(days > 0 || solved > 0) && <span className="quiz-stats">🔥 {days}일 연속 · 맞힌 문제 {solved}개</span>}
-      </p>
+      {/* 제목 줄과 기록 줄을 나눠, 좁은 칸에서는 기록이 제목 아래 왼쪽에 온다 */}
+      <div className="quiz-head">
+        <p className="eyebrow">오늘의 전공 퀴즈 <span className="quiz-topic">{quiz.topic}</span></p>
+        {(days > 0 || solved > 0) && <p className="quiz-stats">🔥 {days}일 연속 · 맞힌 문제 {solved}개</p>}
+      </div>
       <p className="quiz-q">{quiz.question}</p>
       <ol className="quiz-choices">
         {quiz.choices.map((c, i) => {

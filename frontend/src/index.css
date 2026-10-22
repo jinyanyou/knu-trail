@@ -390,8 +390,9 @@ select.category-pick.is-set { border-color: var(--accent); color: var(--accent-i
 .news-link { font-weight: 600; color: var(--accent-ink); text-decoration: none; padding: 4px 0; }
 .news-link:hover { text-decoration: underline; }
 .news-summary { font-size: 14px; color: var(--text-2); line-height: 1.6; }
-.quiz-topic { font-size: 12px; font-weight: 600; color: var(--accent-ink); background: var(--surface-2); border-radius: 999px; padding: 1px 8px; }
-.quiz-stats { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--text-2); }
+.eyebrow > .quiz-topic, .quiz-topic { font-size: 12px; font-weight: 600; color: var(--accent-ink); background: var(--surface-2); border-radius: 999px; padding: 1px 8px; }
+.quiz-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 10px; }
+.quiz-stats { font-size: 12px; font-weight: 600; color: var(--text-2); white-space: nowrap; }
 .quiz-q { font-weight: 700; font-size: 15px; line-height: 1.5; }
 .quiz-choices { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 @media (max-width: 560px) { .quiz-choices { grid-template-columns: minmax(0, 1fr); } }
