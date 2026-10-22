@@ -1,5 +1,7 @@
 import Meter from './Meter.jsx'
 import TrailPath from './TrailPath.jsx'
+import Mascot from './Mascot.jsx'
+import { RgBadge, RgNote, useRelativeGrading } from './RelativeGrading.jsx'
 
 export const STATUS = {
   met: { icon: '✓', label: '충족', tone: 'good' },
@@ -54,7 +56,7 @@ function PlanButton({ course, r, onPlan, planned }) {
 }
 
 // 들어야 하는 선택 과목 — 학년별로 묶어 접어 둔다
-function Options({ r, onPlan, planned }) {
+function Options({ r, onPlan, planned, rg }) {
   const byGrade = new Map()
   for (const c of r.options) {
     const key = c.grade ? `${c.grade}학년` : '학년 무관'
@@ -70,7 +72,7 @@ function Options({ r, onPlan, planned }) {
           <ul>
             {list.map((c) => (
               <li key={c.code}>
-                <span>{c.name}</span>
+                <span>{c.name} <RgBadge rg={rg} code={c.code} /></span>
                 <span className="muted">{c.credits}학점{c.semester ? ` · ${c.semester}` : ''}</span>
                 <PlanButton course={c} r={r} onPlan={onPlan} planned={planned} />
               </li>
@@ -82,7 +84,7 @@ function Options({ r, onPlan, planned }) {
   )
 }
 
-function Requirement({ r, onPlan, planned, onOpen }) {
+function Requirement({ r, onPlan, planned, onOpen, rg }) {
   return (
     <li className="req">
       <div className="req-head">
@@ -102,14 +104,14 @@ function Requirement({ r, onPlan, planned, onOpen }) {
         <ul className="missing">
           {r.missing.map((m) => (
             <li key={m.code}>
-              <span>{m.name}</span>
+              <span>{m.name} <RgBadge rg={rg} code={m.code} /></span>
               <span className="muted">{m.credits}학점{m.recommended ? ` · 권장 ${m.recommended}` : ''}</span>
               <PlanButton course={m} r={r} onPlan={onPlan} planned={planned} />
             </li>
           ))}
         </ul>
       )}
-      {r.options?.length > 0 && r.status !== 'met' && <Options r={r} onPlan={onPlan} planned={planned} />}
+      {r.options?.length > 0 && r.status !== 'met' && <Options r={r} onPlan={onPlan} planned={planned} rg={rg} />}
       {r.examples?.length > 0 && <p className="hint">추천: {r.examples.slice(0, 3).join(', ')}</p>}
       {r.note && r.status !== 'met' && <p className="hint">※ {r.note}</p>}
       {r.if_incomplete && r.status !== 'met' && <p className="hint hint-strong">못 채우면: {r.if_incomplete}</p>}
@@ -128,6 +130,7 @@ function Requirement({ r, onPlan, planned, onOpen }) {
 
 export default function Dashboard({ report, onPlan, onOpen }) {
   const planned = new Set(report.courses.map((c) => c.code))
+  const rg = useRelativeGrading(report.entry_year, report.programs.map((p) => p.code))
   const byId = Object.fromEntries(report.requirements.map((r) => [r.id, r]))
   const total = byId.total
   const groups = [...new Set(report.requirements.map((r) => r.group))].filter((g) => g !== '졸업학점')
@@ -140,8 +143,9 @@ export default function Dashboard({ report, onPlan, onOpen }) {
   return (
     <>
       {report.ruleset.status !== 'confirmed' && (
-        <div className="banner banner-warn" role="status">
-          <strong>{report.entry_year}학번 졸업요건은 아직 확정 공지 전이라</strong> 이전 학번 기준으로 계산했어요. 바뀔 수 있습니다.
+        <div className="banner banner-warn with-mascot" role="status">
+          <Mascot pose="surprise" size={44} />
+          <span><strong>{report.entry_year}학번 졸업요건은 아직 확정 공지 전이라</strong> 이전 학번 기준으로 계산했어요. 바뀔 수 있습니다.</span>
         </div>
       )}
 
@@ -162,7 +166,7 @@ export default function Dashboard({ report, onPlan, onOpen }) {
           </div>
           <div className="hero-status">
             {report.summary.graduation_ready ? (
-              <Badge status="met" />
+              <span className="hero-done"><Mascot pose="cheer" size={56} /><Badge status="met" /></span>
             ) : (
               <p className="count"><strong>{report.summary.met}</strong> / {report.summary.total} 요건 충족</p>
             )}
@@ -181,8 +185,8 @@ export default function Dashboard({ report, onPlan, onOpen }) {
         )}
       </div>
 
-      {/* 카드 수에 맞춰 한 줄에 고르게 (6개면 3개씩 두 줄) */}
-      <div className="kpis" style={{ '--kpi-cols': kpiIds.length === 6 ? 3 : kpiIds.length }}>
+      {/* 카드 수에 맞춰 한 줄에 고르게 (5~6개면 3개씩 두 줄) */}
+      <div className="kpis" style={{ '--kpi-cols': kpiIds.length >= 5 ? 3 : kpiIds.length }}>
         {kpiIds.map((id) => {
           const r = byId[id]
           // 다전공 카드: 'program:<코드>:credits' — 이름은 그 학과·융합전공, 필수 과목이 있으면 함께
@@ -214,12 +218,14 @@ export default function Dashboard({ report, onPlan, onOpen }) {
 
       {groups.map((g) => (
         <div key={g} className="panel">
-          <h2>{g}</h2>
+          <h2 className="display">{g}</h2>
           <ul className="reqs">
-            {report.requirements.filter((r) => r.group === g).map((r) => <Requirement key={r.id} r={r} onPlan={onPlan} planned={planned} onOpen={onOpen} />)}
+            {report.requirements.filter((r) => r.group === g).map((r) => <Requirement key={r.id} r={r} onPlan={onPlan} planned={planned} onOpen={onOpen} rg={rg} />)}
           </ul>
         </div>
       ))}
+
+      {report.summary.met < report.summary.total && <RgNote rg={rg} />}
 
       {report.warnings.length > 0 && (
         <div className="panel">

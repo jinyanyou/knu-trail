@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: light; /* 다크 모드는 지원하지 않음 — 시스템 설정과 상관없이 밝은 화면 */
   /* 산길 팔레트: 종이·흙빛 바탕, 숲 초록 강조 */
   --bg: #f2f0e8;
   --surface: #fbfaf5;
@@ -25,31 +25,6 @@
   --error-bg: #fbe9e5;
   --radius: 14px;
   --shadow: 0 1px 2px rgb(40 36 20 / 0.06);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --bg: #0f1411;
-    --surface: #161d18;
-    --surface-2: #1f2821;
-    --border: #2e3a31;
-    --text: #f1f3ec;
-    --text-2: #c2c9bd;
-    --text-3: #9ba394;
-    --accent: #4fb376;
-    --accent-ink: #8fd3a8;
-    --meter-track: #1d3326;
-    --meter-earned: #4fb376;
-    --meter-planned: #24804a;
-    --meter-hatch: #8fd3a8;
-    --ridge-far: #18221b;
-    --ridge-near: #1c2a20;
-    --trail-rest: #7d735f;
-    --warn-bg: #3a2f12;
-    --error-bg: #3b1d18;
-    --shadow: none;
-  }
 }
 
 * { box-sizing: border-box; }
@@ -290,7 +265,7 @@ select.invalid { border-color: var(--critical); }
 .account-who > div { min-width: 0; }
 .account-who { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; margin-bottom: 2px; border-bottom: 1px solid var(--border); }
 .account-display { font-weight: 700; }
-.account-menu .btn { text-align: center; text-decoration: none; color: var(--text); }
+.account-menu .btn { text-align: center; justify-content: center; text-decoration: none; color: var(--text); }
 .profile-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 10px 14px; margin-bottom: 16px; }
 .chip { font-size: 13px; font-weight: 600; background: var(--surface-2); border-radius: 999px; padding: 3px 10px; }
 .profile-edit { margin-left: auto; font-weight: 600; text-decoration: none; font-size: 14px; }
@@ -322,25 +297,30 @@ select.invalid { border-color: var(--critical); }
 .privacy ul { padding-left: 20px; }
 
 /* ── 산길 진행 표시 (총 이수학점) ── */
-.trail { position: relative; margin: 4px 0 0; }
+.trail { position: relative; margin: 6px -18px 0; border-block: 2px solid #1b1a17; background: #e6f2e4; }
 .trail-plot { position: relative; }
-.trail-plot > svg:first-child { display: block; width: 100%; height: 150px; overflow: visible; }
-@media (max-width: 560px) { .trail-plot > svg:first-child { height: 110px; } }
-.trail-ridge.far { fill: var(--ridge-far); }
-.trail-ridge.near { fill: var(--ridge-near); }
-.trail-rest, .trail-planned, .trail-earned { fill: none; stroke-linecap: round; }
-.trail-rest { stroke: var(--trail-rest); stroke-width: 2.5; stroke-dasharray: 0.4 1.6; }
-.trail-planned { stroke: var(--meter-planned); stroke-width: 5; }
-.trail-earned { stroke: var(--meter-earned); stroke-width: 5; }
-.trail-post { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--surface); border: 2px solid var(--trail-rest); }
-.trail-post.passed { border-color: var(--meter-earned); background: var(--meter-earned); }
-.trail-flag { position: absolute; width: 14px; height: 18px; margin: -18px 0 0 -2px; overflow: visible; }
-.trail-flag path { fill: var(--critical); stroke: var(--text-2); stroke-width: 1.5; stroke-linejoin: round; }
-.trail-me { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--surface); border: 4px solid var(--accent); box-shadow: 0 0 0 3px rgb(42 122 75 / 0.2); }
-.trail-me-label { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; }
-.trail-me.at-start .trail-me-label { left: -4px; transform: none; }
-.trail-me.at-end .trail-me-label { left: auto; right: -4px; transform: none; }
-.trail-ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.trail-scene, .trail-road { display: block; width: 100%; height: auto; }
+.trail-road { position: absolute; inset: 0; height: 100%; overflow: visible; }
+.road-edge, .road-bed, .road-dash, .road-planned, .road-earned { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.road-edge { stroke: #1b1a17; stroke-width: 14; }
+.road-bed { stroke: #f6f2e7; stroke-width: 9; }
+.road-dash { stroke: #1b1a17; stroke-width: 2.4; stroke-dasharray: 2 10; }
+.road-planned { stroke: #8fd3a8; stroke-width: 9; }
+.road-earned { stroke: #167a43; stroke-width: 9; }
+.flag-pole { stroke: #1b1a17; stroke-width: 3; stroke-linecap: round; }
+.flag-cloth { fill: #167a43; stroke: #1b1a17; stroke-width: 2.6; stroke-linejoin: round; }
+/* 말풍선: 그림이 작아져도 글씨는 읽히는 크기로 */
+.trail-goal, .trail-me-label { position: absolute; white-space: nowrap; font-size: 13px; font-weight: 700; color: #1b1a17; background: #fff; border: 2px solid #1b1a17; border-radius: 999px; padding: 1px 10px; line-height: 1.5; }
+.trail-goal { transform: translateY(-50%); }
+.trail-me { position: absolute; width: 0; height: 0; }
+.trail-me-img { position: absolute; left: 0; bottom: -8px; transform: translateX(-50%); width: clamp(36px, 7vw, 64px); height: auto; }
+.trail-me-label { bottom: clamp(34px, 6.6vw, 62px); left: 0; transform: translateX(-50%); }
+.trail-me.at-start .trail-me-label { transform: translateX(-20%); }
+.trail-me.at-end .trail-me-label { transform: translateX(-80%); }
+@media (max-width: 560px) {
+  .trail-goal, .trail-me-label { font-size: 11px; padding: 0 7px; border-width: 1.5px; }
+  .trail-goal { left: auto !important; right: 6px; top: 8px !important; transform: none; }
+}
 .sw-planned-solid { background: var(--meter-planned); }
 .sw-rest { background: repeating-linear-gradient(90deg, var(--trail-rest) 0 2px, transparent 2px 4px); height: 3px; }
 .login { background: linear-gradient(180deg, var(--bg) 55%, var(--ridge-far)); }
@@ -501,3 +481,84 @@ a.btn.btn-primary { color: #fff; }
 .retake-list select { width: auto; }
 .retake-result { font-size: 16px; margin-top: 10px; }
 .retake-result .up { color: var(--good); }
+
+/* 상대평가 권장 과목 (A 최대 50%) — 내 학과 개설 분반이면 강조, 다른 학과 분반만이면 흐리게 */
+.rg-badge { display: inline-block; font-size: 11px; font-weight: 700; line-height: 1.5; padding: 0 7px; border-radius: 999px; white-space: nowrap;
+  color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 13%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); vertical-align: 1px; }
+.rg-badge small { font-size: 11px; font-weight: 500; }
+.rg-other { color: var(--text-3); background: none; border-style: dashed; border-color: var(--border); white-space: normal; border-radius: 6px; }
+.rg-note { margin: 12px 4px 0; line-height: 1.6; }
+.sim-finder li .rg-badge { width: auto; color: #1f5c39; background: #e6f2ea; border-color: #8fc4a0; }
+
+/* ── 팀 디자인 초안 반영: 제목 글꼴(제주돌담체)·다람쥐·과목 색 ───────────── */
+@font-face { font-family: 'JejuStoneWall'; src: url('./assets/fonts/JejuStoneWall.woff2') format('woff2'); font-display: swap; }
+/* 제목·로고에만. 숫자 7이 1처럼 보여서 학점 같은 숫자에는 쓰지 않는다 */
+.brand > span:last-child, .display { font-family: 'JejuStoneWall', 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400; letter-spacing: 0; }
+.display .muted { font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 500; }
+.brand > span:last-child { font-size: 1.25em; line-height: 1; }
+.brand-mark { width: 1.9em; height: 1.9em; margin: -0.35em 0; }
+h2.display { font-size: 19px; }
+
+.mascot { flex: none; display: block; user-select: none; }
+.with-mascot { display: flex; align-items: center; gap: 12px; }
+.with-mascot > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.panel.empty.with-mascot { justify-content: center; flex-direction: column; text-align: center; padding: 28px 16px; }
+h3.with-mascot { gap: 8px; }
+.hero-done { display: inline-flex; align-items: center; gap: 6px; }
+
+
+/* 과목 분류 색 (로드맵) */
+.roadmap-courses li { border-left: 4px solid var(--k, var(--border)); }
+.k-req { --k: #3d6fd8; --k-bg: #e6ecff; }
+.k-major { --k: #6b7a8f; --k-bg: #eef0f3; }
+.k-prog { --k: #d9822b; --k-bg: #fff0df; }
+.k-la { --k: #8a5cc8; --k-bg: #f1eafb; }
+.k-free { --k: #9a958a; --k-bg: transparent; }
+.k-tag { font-size: 11px; font-weight: 700; color: var(--k); background: var(--k-bg); border-radius: 4px; padding: 0 5px; margin-right: 2px; }
+.kind-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.chip-btn { font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; }
+.chip-btn[class*='k-'] { border-color: var(--k); color: var(--k); }
+.chip-btn.on { background: var(--text); color: var(--surface); border-color: var(--text); }
+.chip-btn[class*='k-'].on { background: var(--k); color: #fff; border-color: var(--k); }
+
+/* 요건 체크 표 */
+.req-check { margin-top: 16px; }
+.req-check-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+.req-check-head h2 { margin-bottom: 2px; }
+.table-wrap { overflow-x: auto; }
+.req-check table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.req-check th { text-align: left; font-size: 12px; font-weight: 600; color: var(--text-3); padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.req-check td { padding: 9px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.req-check tr:last-child td { border-bottom: 0; }
+.req-check td:nth-child(2) { white-space: nowrap; font-weight: 600; }
+.ok-text { color: var(--good); }
+.short-text { color: var(--critical); }
+.when { display: inline-block; white-space: nowrap; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--accent); color: #fff; }
+.when-now { background: none; color: var(--good); border: 1px solid var(--good); }
+.when-no { background: none; color: var(--critical); border: 1px solid var(--critical); }
+@media (max-width: 560px) { .req-check table { font-size: 13px; } .req-check td, .req-check th { padding: 7px 4px; } }
+.setup-head .brand { margin-bottom: 6px; }
+
+/* 소제목도 제목 글꼴 (안에 든 버튼·꼬리표는 본문 글꼴 그대로) */
+.eyebrow, .schedule-title { font-family: 'JejuStoneWall', 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400; font-size: 15px; color: var(--text); letter-spacing: 0; }
+.eyebrow > *, .schedule-title > * { font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 600; font-size: 13px; }
+.sw-planned-solid { background: #8fd3a8; }
+.sw-earned { background: #167a43; }
+.sw-rest { background: repeating-linear-gradient(90deg, #1b1a17 0 2px, transparent 2px 6px); height: 3px; }
+
+/* ── 홈 배치: 넓은 화면은 왼쪽 졸업 현황 + 오른쪽 좁은 칸(프로필·학사일정·뉴스·퀴즈) ── */
+.home-side { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; min-width: 0; }
+.home-side > * { margin-bottom: 0; }
+.home-main { min-width: 0; }
+@media (min-width: 1024px) {
+  .home-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
+  .home-main { grid-column: 1; grid-row: 1; }
+  .home-side { grid-column: 2; grid-row: 1; margin-bottom: 0; }
+  /* 좁은 칸에서는 위아래로 쌓는다 */
+  .home-side .profile-summary .summary-actions { margin-left: 0; width: 100%; }
+  .home-side .schedule { flex-direction: column; align-items: stretch; overflow: visible; padding: 14px; }
+  .home-side .schedule-list { flex-direction: column; }
+  .home-side .schedule-list li { min-width: 0; }
+  .home-side .schedule-name { white-space: normal; }
+  .home-side .daily { grid-template-columns: minmax(0, 1fr); margin-bottom: 0; }
+}

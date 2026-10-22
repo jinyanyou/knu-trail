@@ -57,3 +57,28 @@ def test_alternatives_and_exclude():
     again = roadmap.plan(2027, [], {}, start=(2027, "1학기"), exclude=[flexible["code"]])
     assert flexible["code"] not in {c["code"] for t in again["terms"] for c in t["courses"]}
     assert again["verified"]
+
+
+def test_planned_courses_carry_a_kind_for_colour_coding():
+    out = roadmap.plan(2027, [], {"programs": [{"kind": "convergence", "code": "1620"}]}, start=(2027, "1학기"))
+    kinds = {c["kind"] for t in out["terms"] for c in t["courses"]}
+    assert {"전공필수", "교양", "다전공"} <= kinds and kinds <= {"전공필수", "전공", "교양", "다전공", "자유선택", "일반선택"}
+
+
+def test_timeline_reports_the_term_each_requirement_is_met():
+    out = roadmap.plan(2025, [], {}, start=(2025, "1학기"))
+    planned = [{k: c[k] for k in ("code", "name", "credits", "year", "semester")} | {"grade": None}
+               for t in out["terms"] for c in t["courses"]]
+    tl = roadmap.timeline(2025, planned, {})
+    assert tl["met_at"]["total"] == "2028-2"                      # 총 학점은 마지막 학기에 채워짐
+    assert all(v is None or v == "now" or v[:4].isdigit() for v in tl["met_at"].values())
+    assert not [r for r in tl["report"]["requirements"] if r["status"] == "unmet"]
+    # 이미 들은 과목만으로 채운 요건은 'now'
+    done = [dict(c, grade="A0") for c in planned]
+    assert roadmap.timeline(2025, done, {})["met_at"]["total"] == "now"
+
+
+def test_timeline_api():
+    res = TestClient(app).post("/api/roadmap/timeline", json={"entry_year": 2025, "taken": [
+        {"code": "CAIB0227", "year": 2025, "semester": "1학기", "grade": None}]})
+    assert res.status_code == 200 and "major_required" in res.json()["met_at"]

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import * as api from '../api.js'
 import { GRADES } from './CourseEditor.jsx'
+import { RgBadge, termKey, useRelativeGrading } from './RelativeGrading.jsx'
 
 const SEMESTERS = ['1학기', '여름계절', '2학기', '겨울계절']
 const newId = () => Math.random().toString(36).slice(2, 10)
@@ -37,6 +38,7 @@ export default function AddCourse({ req, report, taken, onAdd }) {
   const [manual, setManual] = useState(null) // { name, credits }
   const [courses, setCourses] = useState([])
   const [added, setAdded] = useState(null)
+  const rg = useRelativeGrading(entryYear, programCodes)
 
   useEffect(() => {
     let alive = true
@@ -116,7 +118,7 @@ export default function AddCourse({ req, report, taken, onAdd }) {
             {list.map((c) => (
               <li key={c.code}>
                 <span className="c-main">
-                  <span className="c-name">{c.name}</span>
+                  <span className="c-name">{c.name} {!have.has(c.code) && <RgBadge rg={rg} code={c.code} term={termKey(year, semester)} />}</span>
                   <span className="c-meta">
                     {c.credits}학점{c.grade ? ` · ${c.grade}학년` : ''}{c.sub_area ? ` · ${c.sub_area}` : ''}
                     {c.program ? ` · ${c.program}` : ''}{missing.has(c.code) ? ' · 아직 안 들은 필수' : ''}

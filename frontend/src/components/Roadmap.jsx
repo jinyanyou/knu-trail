@@ -1,12 +1,29 @@
 import { useEffect, useMemo, useState } from 'react'
 import * as api from '../api.js'
 import BrandMark from './BrandMark.jsx'
+import Mascot from './Mascot.jsx'
+import { RgBadge, RgNote, termKey, useRelativeGrading } from './RelativeGrading.jsx'
 
 const CREDIT_LIMITS = [15, 18, 19, 21]
 const TERM_COUNT = 10 // 학기 옮기기에서 고를 수 있는 학기 수 (계획 시작부터)
 const newId = () => Math.random().toString(36).slice(2, 10)
 const key = (t) => `${t.year}|${t.semester}`
 const sumCredits = (courses) => courses.reduce((s, c) => s + (c.credits || 0), 0)
+
+// 과목 색 구분 (엔진이 붙여 주는 kind) — 필터 칩도 이 순서
+const KINDS = [
+  { kind: '전공필수', label: '전필', cls: 'req' },
+  { kind: '전공', label: '전공', cls: 'major' },
+  { kind: '다전공', label: '다전공', cls: 'prog' },
+  { kind: '교양', label: '교양', cls: 'la' },
+  { kind: '자유선택', label: '자유', cls: 'free' },
+  { kind: '일반선택', label: '일선', cls: 'free' },
+]
+const kindOf = (c) => KINDS.find((k) => k.kind === c.kind) ?? KINDS[5]
+const termName = (key, entryYear) => {
+  const [y, s] = key.split('-').map(Number)
+  return `${y - entryYear + 1}학년 ${s}학기`
+}
 
 // 계획 과목 → 들은 과목 목록에 넣을 '수강 예정' 항목 (특정 과목이 없는 자유 선택은 직접 입력 과목으로)
 function toPlanned(c) {
@@ -45,13 +62,14 @@ function mergeTerms(terms, extra) {
   return [...map.values()].sort((a, b) => a.year - b.year || a.semester.localeCompare(b.semester))
 }
 
-function CourseRow({ c, terms, used, onMove, onSwap, onRemove }) {
+function CourseRow({ c, terms, used, rg, onMove, onSwap, onRemove }) {
   const alts = (c.alternatives ?? []).filter((a) => !used.has(a.code))
+  const k = kindOf(c)
   return (
-    <li>
+    <li className={`k-${k.cls}`}>
       <div className="roadmap-course-main">
-        <span className="c-name">{c.name}</span>
-        <span className="c-meta">{c.credits}학점 · {c.reason}</span>
+        <span className="c-name">{c.name} <RgBadge rg={rg} code={c.code} term={termKey(c.year, c.semester)} /></span>
+        <span className="c-meta"><b className="k-tag">{k.label}</b> {c.credits}학점 · {c.reason}</span>
       </div>
       <div className="roadmap-course-edit">
         <select aria-label={`${c.name} 학기 옮기기`} value={key(c)} onChange={(e) => onMove(e.target.value)}>
@@ -77,10 +95,13 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
   const [removed, setRemoved] = useState([])   // 계획에서 뺀 과목 (다시 채울 때 추천하지 않음)
   const [base, setBase] = useState({})         // 학기별로 이미 넣어 둔 수강 예정 학점
   const [check, setCheck] = useState(null)     // 고친 계획으로 다시 계산한 졸업요건
+  const [metAt, setMetAt] = useState({})       // 요건별로 채워지는 학기 ('now' / '2027-1' / null)
+  const [filter, setFilter] = useState(null)   // 과목 분류 필터 (null = 전체)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [reload, setReload] = useState(0)
+  const rg = useRelativeGrading(entryYear, (profile.programs ?? []).map((p) => p.code))
 
   useEffect(() => {
     let alive = true
@@ -108,8 +129,11 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
     if (!plan) return undefined
     const ctrl = new AbortController()
     const timer = setTimeout(() => {
-      api.evaluate(entryYear, [...payload, ...planned.map(forEval)], profile, ctrl.signal)
-        .then((r) => setCheck(r))
+      api.roadmapTimeline(entryYear, [...payload, ...planned.map(forEval)], profile, ctrl.signal)
+        .then((r) => {
+          setCheck(r.report)
+          setMetAt(r.met_at)
+        })
         .catch(() => {})
     }, 200)
     return () => {
@@ -190,6 +214,8 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
   const manual = check ? check.requirements.filter((r) => r.status === 'manual' || r.status === 'unknown') : []
   const edited = plan && JSON.stringify(terms.map((t) => t.courses.map((c) => `${key(c)}${c.code}`)))
     !== JSON.stringify(plan.terms.map((t) => t.courses.map((c) => `${key(c)}${c.code}`)))
+  const kindsHere = [...new Map(KINDS.filter((k) => planned.some((c) => kindOf(c) === k)).map((k) => [k.cls, k])).values()]
+  const shown = (courses) => (filter ? courses.filter((c) => kindOf(c).cls === filter) : courses)
   const lastRegular = { year: entryYear + 3, semester: '2학기' }
   const overflow = terms.filter((t) => t.courses.length && (t.year > lastRegular.year)).length
 
@@ -229,10 +255,12 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
       )}
       {message && <p className="ok" role="status">{message}</p>}
       {error && <div className="banner banner-error" role="alert">계획을 만들지 못했어요: {error}</div>}
-      {!plan && !error && <div className="panel empty">계획 짜는 중…</div>}
+      {!plan && !error && <div className="panel empty with-mascot"><Mascot pose="search" size={64} />계획 짜는 중…</div>}
 
       {plan && check && (
-        <div className={`banner ${unmet.length ? 'banner-warn' : 'banner-ok'}`} role="status">
+        <div className={`banner with-mascot ${unmet.length ? 'banner-warn' : 'banner-ok'}`} role="status">
+          <Mascot pose={unmet.length ? 'think' : 'cheer'} size={56} />
+          <div>
           {unmet.length === 0
             ? <><b>✓ 이 계획대로면 학점·과목 졸업요건을 모두 채워요.</b>{overflow > 0 && ` 다만 4학년 2학기를 넘는 학기가 ${overflow}개 있어요 — 학기당 학점을 늘리거나 계절학기를 고려해 보세요.`}</>
             : (
@@ -251,26 +279,37 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
               </>
             )}
           {manual.length > 0 && <p className="muted">과목으로 채울 수 없는 요건(직접 확인): {manual.map((r) => r.label).join(' · ')}</p>}
+          </div>
         </div>
       )}
 
-      {plan && terms.length === 0 && unmet.length === 0 && <div className="panel empty">더 들어야 할 과목이 없어요. 🎉</div>}
+      {plan && kindsHere.length > 1 && (
+        <div className="kind-filter" role="group" aria-label="과목 분류로 보기">
+          <button type="button" className={`chip-btn${filter ? '' : ' on'}`} aria-pressed={!filter} onClick={() => setFilter(null)}>전체</button>
+          {kindsHere.map((k) => (
+            <button key={k.cls} type="button" className={`chip-btn k-${k.cls}${filter === k.cls ? ' on' : ''}`} aria-pressed={filter === k.cls}
+              onClick={() => setFilter(filter === k.cls ? null : k.cls)}>{k.cls === 'free' ? '자유·일반선택' : k.kind}</button>
+          ))}
+        </div>
+      )}
+
+      {plan && terms.length === 0 && unmet.length === 0 && <div className="panel empty with-mascot"><Mascot pose="cheer" size={64} />더 들어야 할 과목이 없어요.</div>}
       {plan && (
         <ol className="roadmap-terms">
-          {terms.map((t) => {
+          {terms.filter((t) => !filter || shown(t.courses).length > 0).map((t) => {
             const credits = (base[key(t)] ?? 0) + sumCredits(t.courses)
             return (
               <li key={key(t)} className="panel roadmap-term">
                 <div className="roadmap-term-head">
-                  <h2>{t.grade}학년 {t.semester} <span className="muted">{t.year}년</span></h2>
+                  <h2 className="display">{t.grade}학년 {t.semester} <span className="muted">{t.year}년</span></h2>
                   <span className={`chip${credits > maxCredits ? ' chip-over' : ''}`}>{credits}학점{credits > maxCredits ? ` · ${maxCredits}학점 초과` : ''}</span>
                 </div>
                 {base[key(t)] > 0 && <p className="muted">이미 넣어 둔 수강 예정 {base[key(t)]}학점 포함</p>}
                 {t.courses.length > 0 ? (
                   <>
                     <ul className="roadmap-courses">
-                      {t.courses.map((c) => (
-                        <CourseRow key={c.code} c={c} terms={allTerms} used={used}
+                      {shown(t.courses).map((c) => (
+                        <CourseRow key={c.code} c={c} terms={allTerms} used={used} rg={rg}
                           onMove={(to) => move(c, to)} onSwap={(code) => swap(c, code)} onRemove={() => remove(c)} />
                       ))}
                     </ul>
@@ -282,11 +321,47 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
           })}
         </ol>
       )}
+      {plan && check && (
+        <section className="panel req-check" aria-label="요건 체크">
+          <div className="req-check-head">
+            <div>
+              <h2 className="display">요건 체크</h2>
+              <p className="muted">지금 상태와, 이 계획대로 들으면 몇 학기에 채워지는지예요.</p>
+            </div>
+            <Mascot pose="think" size={52} />
+          </div>
+          <div className="table-wrap">
+            <table>
+              <thead><tr><th>요건</th><th>지금</th><th>로드맵 충족</th></tr></thead>
+              <tbody>
+                {check.requirements.map((r) => {
+                  const at = metAt[r.id]
+                  const hand = r.status === 'manual' || r.status === 'unknown'
+                  return (
+                    <tr key={r.id}>
+                      <td>{r.label}</td>
+                      <td className={at === 'now' ? 'ok-text' : 'short-text'}>
+                        {r.required != null ? `${r.earned} / ${r.required}${r.unit}` : at === 'now' ? '충족' : hand ? '확인 필요' : '미충족'}
+                      </td>
+                      <td>
+                        {at === 'now' ? <span className="when when-now">이미 충족</span>
+                          : at ? <span className="when">{termName(at, entryYear)}</span>
+                            : <span className="when when-no">{hand ? '직접 확인' : '못 채움'}</span>}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
       {plan && (
         <p className="muted roadmap-note">
           규칙으로 짠 추천이에요. 실제 개설 여부·시간표·선수과목은 수강신청 전에 꼭 확인하세요.
         </p>
       )}
+      {plan && <RgNote rg={rg} />}
     </div>
   )
 }
