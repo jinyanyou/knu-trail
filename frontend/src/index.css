@@ -51,7 +51,7 @@ button, input, select { font: inherit; color: inherit; }
 .app { max-width: 1200px; margin: 0 auto; padding: 20px 16px 40px; }
 
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-.topbar h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.topbar h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
 .brand { display: inline-flex; align-items: center; gap: 8px; }
 .brand-mark { width: 1.1em; height: 1.1em; color: var(--accent); flex: none; }
 .brand-ai { color: var(--accent); }
@@ -497,7 +497,7 @@ a.btn.btn-primary { color: #fff; }
 .brand > span:last-child, .display { font-family: 'JejuStoneWall', 'Pretendard Variable', Pretendard, sans-serif; font-weight: 400; letter-spacing: 0; }
 .display .muted { font-family: 'Pretendard Variable', Pretendard, sans-serif; font-weight: 500; }
 .brand > span:last-child { font-size: 1.25em; line-height: 1; }
-.brand-mark { width: 1.9em; height: 1.9em; margin: -0.35em 0; }
+.brand-mark { width: 2em; height: 2em; margin: -0.4em 0; }
 h2.display { font-size: 19px; }
 
 .mascot { flex: none; display: block; user-select: none; }
