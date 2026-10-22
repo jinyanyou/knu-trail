@@ -123,6 +123,14 @@ class _Planner:
         for row in (item, next(t for t in self.taken if t is item["_taken"])):
             row["year"], row["semester"] = dest
 
+    def kind(self, code, counts_for=None):
+        """화면 색 구분용 분류: 전공필수 / 전공 / 교양 / 다전공 / 자유선택 / 일반선택"""
+        if counts_for and counts_for != "primary":
+            return "다전공"
+        if code.startswith(FREE):
+            return "자유선택"
+        return catalog.classify(code, self.entry_year).category
+
     def add(self, course, reason, term, counts_for=None, flexible=False, alternatives=(), **extra):
         item = {"code": course["code"], "name": course["name"], "credits": course["credits"],
                 "year": term[0], "semester": term[1], "grade": None, **extra}
@@ -130,7 +138,8 @@ class _Planner:
             item["counts_for"] = counts_for
         self.taken.append(item)
         self.load[term] += course["credits"]
-        self.added.append({**item, "reason": reason, "alternatives": list(alternatives),
+        self.added.append({**item, "reason": reason, "kind": self.kind(course["code"], counts_for),
+                           "alternatives": list(alternatives),
                            "flexible": flexible, "_taken": item})
 
     # ── 후보 ──
@@ -236,3 +245,31 @@ def plan(entry_year, taken, profile=None, start=None, max_credits=18, exclude=()
         "manual": [r["label"] for r in report["requirements"] if r["status"] in ("manual", "unknown")],
         "summary_after": report["summary"],
     }
+
+
+def timeline(entry_year, taken, profile=None):
+    """요건마다 언제 채워지는지: 지금(이수한 과목만) 이미 충족이면 "now", 수강 예정 과목을 학기 순으로
+    더해 가다 처음 충족되는 학기 "2027-1", 끝까지 못 채우면 None. 계절학기 예정은 그 해 앞 학기에 붙인다.
+    → {report (전체 반영), met_at: {요건 id: ...}}"""
+    done = [t for t in taken if t.get("grade")]
+    planned = [t for t in taken if not t.get("grade") and t.get("year")]
+    undated = [t for t in taken if not t.get("grade") and not t.get("year")]
+    met = (MET, MET_WITH_PLANNED)
+    now = evaluate(entry_year, done + undated, profile)
+    met_at = {r["id"]: ("now" if r["status"] == MET else None) for r in now["requirements"]}
+
+    def key(t):  # 여름계절 → 1학기 뒤, 겨울계절 → 2학기 뒤로 묶는다
+        sem = t.get("semester") or "1학기"
+        return t["year"], "2학기" if sem in ("2학기", "겨울계절") else "1학기"
+
+    terms = sorted({key(t) for t in planned}, key=lambda k: (k[0], k[1] == "2학기"))
+    report = now
+    for term in terms:
+        upto = [t for t in planned if (key(t)[0], key(t)[1] == "2학기") <= (term[0], term[1] == "2학기")]
+        report = evaluate(entry_year, done + undated + upto, profile)
+        for r in report["requirements"]:
+            if met_at.get(r["id"]) is None and r["status"] in met:
+                met_at[r["id"]] = f"{term[0]}-{term[1][0]}"
+    if not terms:
+        report = evaluate(entry_year, taken, profile)
+    return {"report": report, "met_at": met_at}

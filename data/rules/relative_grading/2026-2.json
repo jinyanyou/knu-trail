@@ -1,0 +1,8290 @@
+{
+ "term": "2026-2",
+ "notice_date": "2026-07-10",
+ "source": "knu_2026-2_relative_grading.xlsx",
+ "courses": [
+  {
+   "code": "ARAN0329",
+   "name": "관광과 문화",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "ARAN0412",
+   "name": "신라고고학",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARAN0415",
+   "name": "박물관학",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARAN0418",
+   "name": "한국고대의 이해",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARAN0433",
+   "name": "다문화사회론",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARAN0434",
+   "name": "글로벌시대의 문화",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARAN0531",
+   "name": "동아시아고고학",
+   "college": "인문대학",
+   "dept": "고고인류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1108"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHIL0364",
+   "name": "중국소설의세계",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHIL0372",
+   "name": "중국어작문 2",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHIL0396",
+   "name": "중국어문법2",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "CHIL0434",
+   "name": "현대중국의탐색",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHIL0454",
+   "name": "중국역사철학텍스트 읽기와 토론2",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHIL0566",
+   "name": "중국어 주제발표와 토론",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "CHTR0302",
+   "name": "한중문화콘텐츠",
+   "college": "인문대학",
+   "dept": "중어중문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "1105"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CUCD0304",
+   "name": "독일언어 문화콘텐츠",
+   "college": "인문대학",
+   "dept": "독어독문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "ENGL0249",
+   "name": "서사와 문화적 상상력",
+   "college": "인문대학",
+   "dept": "영어영문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENGL0575",
+   "name": "20세기미국희곡",
+   "college": "인문대학",
+   "dept": "영어영문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GERL0422",
+   "name": "독일시",
+   "college": "인문대학",
+   "dept": "독어독문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1104"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GERL0423",
+   "name": "독일드라마",
+   "college": "인문대학",
+   "dept": "독어독문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1104"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GERL0544",
+   "name": "독일의지리와풍속",
+   "college": "인문대학",
+   "dept": "독어독문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1104"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIST0528",
+   "name": "국제관계사",
+   "college": "인문대학",
+   "dept": "사학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1106"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "JPNL0407",
+   "name": "일본어의 역사",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "JPNL0408",
+   "name": "현대일본어 문법의   이론과 실제",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "JPNL0420",
+   "name": "일본문화사",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "JPNL0522",
+   "name": "일본학개론",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "JPNL0527",
+   "name": "일본대외관계론",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "JPNL0529",
+   "name": "일본경제특강2",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "JPNL0531",
+   "name": "일본사회문화",
+   "college": "인문대학",
+   "dept": "일어일문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KLCC0301",
+   "name": "중국역사서읽기",
+   "college": "인문대학",
+   "dept": "한문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KLCC0310",
+   "name": "한문고전의논리와사유",
+   "college": "인문대학",
+   "dept": "한문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KLCC0314",
+   "name": "한문학작가의이해2",
+   "college": "인문대학",
+   "dept": "한문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "KLCC0330",
+   "name": "한문학비평",
+   "college": "인문대학",
+   "dept": "한문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "110A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KLCC0432",
+   "name": "한국한문학사2",
+   "college": "인문대학",
+   "dept": "한문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "KLCC0553",
+   "name": "한국한문학특강",
+   "college": "인문대학",
+   "dept": "한문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0446",
+   "name": "방언학",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0451",
+   "name": "현대문학사",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0468",
+   "name": "한국노래문화사",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0501",
+   "name": "훈민정음과 한글문헌학",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0505",
+   "name": "국어정보처리론",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0549",
+   "name": "한국어교육론",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0556",
+   "name": "현대비평론",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공심화",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KORL0596",
+   "name": "영상문학론",
+   "college": "인문대학",
+   "dept": "국어국문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "NOCT0213",
+   "name": "북방지역 경제분석",
+   "college": "인문대학",
+   "dept": "북방문화통상융합전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "110J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHIL0306",
+   "name": "철학과 실존치료",
+   "college": "인문대학",
+   "dept": "철학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1107"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHIL0425",
+   "name": "독일관념론",
+   "college": "인문대학",
+   "dept": "철학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1107"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHIL0451",
+   "name": "인식론",
+   "college": "인문대학",
+   "dept": "철학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1107"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHIL0522",
+   "name": "문화와 매체철학",
+   "college": "인문대학",
+   "dept": "철학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1107"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHIL0585",
+   "name": "한국철학사",
+   "college": "인문대학",
+   "dept": "철학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1107"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PPEC0201",
+   "name": "합리적 의사결정 이론",
+   "college": "인문대학",
+   "dept": "정치-경제-철학(PPE)융합전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "110K"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PPEC0203",
+   "name": "정치 경제 철학 연습",
+   "college": "인문대학",
+   "dept": "정치-경제-철학(PPE)융합전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "110K"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0246",
+   "name": "고급 러시아어 회화2",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0247",
+   "name": "러시아문학과 혁명",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0248",
+   "name": "러시아어의 쟁점들",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0249",
+   "name": "극동-시베리아 지역연구",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0255",
+   "name": "졸업논문",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 1,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0526",
+   "name": "다매체 시대와 러시아문학",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "RUSS0527",
+   "name": "러시아의 시와 노래",
+   "college": "인문대학",
+   "dept": "노어노문학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "110B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMM0466",
+   "name": "PR홍보론",
+   "college": "사회과학대학",
+   "dept": "미디어커뮤니케이션학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "120D"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMM0626",
+   "name": "매체사회학",
+   "college": "사회과학대학",
+   "dept": "미디어커뮤니케이션학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "120D"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LIBR0423",
+   "name": "독서지도론",
+   "college": "사회과학대학",
+   "dept": "문헌정보학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1204"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLI0466",
+   "name": "정치제도론",
+   "college": "사회과학대학",
+   "dept": "정치외교학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1201"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLI0531",
+   "name": "외교정책론",
+   "college": "사회과학대학",
+   "dept": "정치외교학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1201"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PSYC0216",
+   "name": "발달정신병리학",
+   "college": "사회과학대학",
+   "dept": "심리학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PSYC0423",
+   "name": "상담심리학",
+   "college": "사회과학대학",
+   "dept": "심리학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOCI0215",
+   "name": "도시공간과 사회",
+   "college": "사회과학대학",
+   "dept": "사회학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1202"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOCI0217",
+   "name": "사회운동의 사회학",
+   "college": "사회과학대학",
+   "dept": "사회학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1202"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOCI0493",
+   "name": "젠더사회학",
+   "college": "사회과학대학",
+   "dept": "사회학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1202"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOCI0496",
+   "name": "사회학적 시대진단",
+   "college": "사회과학대학",
+   "dept": "사회학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1202"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOCI0541",
+   "name": "과학기술과사회",
+   "college": "사회과학대학",
+   "dept": "사회학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1202"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOCI0543",
+   "name": "북한사회",
+   "college": "사회과학대학",
+   "dept": "사회학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1202"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0213",
+   "name": "장애인복지론",
+   "college": "사회과학대학",
+   "dept": "사회복지학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1209"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0247",
+   "name": "학교사회복지론",
+   "college": "사회과학대학",
+   "dept": "사회복지학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1209"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0309",
+   "name": "사회복지 경영론",
+   "college": "사회과학대학",
+   "dept": "사회복지학부 사회복지거시전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "120902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0310",
+   "name": "빈곤론",
+   "college": "사회과학대학",
+   "dept": "사회복지학부 사회복지거시전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "120902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0314",
+   "name": "사회복지와 문화다양성",
+   "college": "사회과학대학",
+   "dept": "사회복지학부 사회복지미시전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "120901"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0346",
+   "name": "사회복지정책론",
+   "college": "사회과학대학",
+   "dept": "사회복지학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1209"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "WELF0382",
+   "name": "가족복지론",
+   "college": "사회과학대학",
+   "dept": "사회복지학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1209"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0438",
+   "name": "사회복지법제와 실천",
+   "college": "사회과학대학",
+   "dept": "사회복지학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1209"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ASAT0371",
+   "name": "중규모기상학 및 실습",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0387",
+   "name": "대기역학2",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0395",
+   "name": "기초레이더기상학",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0426",
+   "name": "우리은하와 외부은하",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0455",
+   "name": "대기오염",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0515",
+   "name": "현대천문학",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0524",
+   "name": "실용천문학 및 실습(캡스톤 디자인)",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0555",
+   "name": "대기복사학",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ASAT0601",
+   "name": "천체물리학 1",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 천문대기과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BIOC0432",
+   "name": "생화학2",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BIOL0378",
+   "name": "기관발생학",
+   "college": "자연과학대학",
+   "dept": "생물학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1309"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0207",
+   "name": "물리화학3",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0302",
+   "name": "무기화학2",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0354",
+   "name": "기기분석2",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0356",
+   "name": "화학공학",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0454",
+   "name": "유기합성",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0456",
+   "name": "고체 및 재료화학",
+   "college": "자연과학대학",
+   "dept": "화학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0302",
+   "name": "복소함수론2",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0327",
+   "name": "함수해석학개론",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0332",
+   "name": "현대대수학2",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0352",
+   "name": "위상수학2",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0372",
+   "name": "미분기하학1",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0420",
+   "name": "기초그래프이론",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0427",
+   "name": "수치해석학입문",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MATH0429",
+   "name": "기하학특론",
+   "college": "자연과학대학",
+   "dept": "수학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "OECA0248",
+   "name": "생물해양학특론 II",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "OECA0251",
+   "name": "물리해양학특론 II",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "OECA0257",
+   "name": "물리해양수조실습 II(캡스톤디자인)",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "OECA0258",
+   "name": "화학해양학특론 II(캡스톤디자인)",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "OECA0262",
+   "name": "실용해양물리 II",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "OECA0266",
+   "name": "해양생태학 및 실험",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "OECA0267",
+   "name": "해양빅데이터 분석",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "OECA0268",
+   "name": "화학빅데이터 활용",
+   "college": "자연과학대학",
+   "dept": "지구시스템과학부 해양학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130Q03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHYS0239",
+   "name": "AI기반 전산물리",
+   "college": "자연과학대학",
+   "dept": "물리학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHYS0243",
+   "name": "양자정보입문",
+   "college": "자연과학대학",
+   "dept": "물리학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHYS0499",
+   "name": "반도체 및 디스플레이 물리",
+   "college": "자연과학대학",
+   "dept": "물리학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "130A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BUIN0211",
+   "name": "경영데이터시각화",
+   "college": "경상대학",
+   "dept": "비즈니스인텔리전스융합전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "1407"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BUIN0213",
+   "name": "데이터분석 세미나",
+   "college": "경상대학",
+   "dept": "비즈니스인텔리전스융합전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "1407"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0352",
+   "name": "근대경제사",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003"
+   ]
+  },
+  {
+   "code": "ECON0424",
+   "name": "국제금융론",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ECON0442",
+   "name": "노동경제학",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0472",
+   "name": "경제통합론",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0473",
+   "name": "경제성장과 경기변동",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ECON0474",
+   "name": "다국적기업경제학",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0482",
+   "name": "국제물류론",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "ECON0544",
+   "name": "경제민주주의",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0563",
+   "name": "경제윤리",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0571",
+   "name": "국제경제정책",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ECON0612",
+   "name": "산업조직론",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ECON0642",
+   "name": "게임이론과 응용",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECON0662",
+   "name": "경제발전론",
+   "college": "경상대학",
+   "dept": "경제통상학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1404"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INPR0207",
+   "name": "지식재산 경영",
+   "college": "경상대학",
+   "dept": "지식재산융합전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "융합전공",
+   "dept_codes": [
+    "1409"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0201",
+   "name": "경영조직론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "MGMT0202",
+   "name": "인적자원관리론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "MGMT0207",
+   "name": "벤처창업론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MGMT0210",
+   "name": "경영과 신기술",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0213",
+   "name": "금융파생상품론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "MGMT0220",
+   "name": "자산운용",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0224",
+   "name": "소비자행동론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004",
+    "005"
+   ]
+  },
+  {
+   "code": "MGMT0232",
+   "name": "경영과학",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "005"
+   ]
+  },
+  {
+   "code": "MGMT0237",
+   "name": "유통관리",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "MGMT0258",
+   "name": "기술사업화론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0260",
+   "name": "보험과 위험관리",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MGMT0308",
+   "name": "원가회계연습",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MGMT0311",
+   "name": "회계감사",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0322",
+   "name": "회계학세미나",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0327",
+   "name": "경영데이터분석",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003"
+   ]
+  },
+  {
+   "code": "MGMT0408",
+   "name": "경영컨설팅",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0410",
+   "name": "글로벌경영",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "MGMT0419",
+   "name": "세무회계 2",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MGMT0420",
+   "name": "재무회계연습",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MGMT0432",
+   "name": "연결재무제표론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MGMT0434",
+   "name": "자본시장론",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MGMT0435",
+   "name": "IT프로젝트관리",
+   "college": "경상대학",
+   "dept": "경영학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1403"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "APCH0221",
+   "name": "정밀화학소재",
+   "college": "공과대학",
+   "dept": "응용화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1603"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "APCH0227",
+   "name": "배터리소재공학",
+   "college": "공과대학",
+   "dept": "응용화학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1603"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "APCH0228",
+   "name": "반도체공정개론",
+   "college": "공과대학",
+   "dept": "응용화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1603"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "APCH0409",
+   "name": "응용전기화학개론",
+   "college": "공과대학",
+   "dept": "응용화학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "APCH0419",
+   "name": "응용화학계산",
+   "college": "공과대학",
+   "dept": "응용화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1603"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0214",
+   "name": "인공지능과 건축",
+   "college": "공과대학",
+   "dept": "건축학부 건축학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0215",
+   "name": "경관과 장소성",
+   "college": "공과대학",
+   "dept": "건축학부 건축학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0422",
+   "name": "한국건축사",
+   "college": "공과대학",
+   "dept": "건축학부 건축학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0434",
+   "name": "건축구조동역학",
+   "college": "공과대학",
+   "dept": "건축학부 건축공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0446",
+   "name": "건축설계론",
+   "college": "공과대학",
+   "dept": "건축학부 건축학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I02"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ARCH0461",
+   "name": "건축시공",
+   "college": "공과대학",
+   "dept": "건축학부 건축학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0482",
+   "name": "현장인턴쉽교육",
+   "college": "공과대학",
+   "dept": "건축학부 건축공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ARCH0486",
+   "name": "건축전기및조명",
+   "college": "공과대학",
+   "dept": "건축학부 건축공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEN0355",
+   "name": "화공열역학2",
+   "college": "공과대학",
+   "dept": "화학공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1604"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEN0357",
+   "name": "분리공정",
+   "college": "공과대학",
+   "dept": "화학공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1604"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEN0467",
+   "name": "화학공학실험",
+   "college": "공과대학",
+   "dept": "화학공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1604"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "CHEN0471",
+   "name": "화공반응공학",
+   "college": "공과대학",
+   "dept": "화학공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1604"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEN0502",
+   "name": "에너지공정공학",
+   "college": "공과대학",
+   "dept": "화학공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "CHEN0513",
+   "name": "재료화학공학",
+   "college": "공과대학",
+   "dept": "화학공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1604"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIME0325",
+   "name": "결정결함",
+   "college": "공과대학",
+   "dept": "신소재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1618"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIME0341",
+   "name": "전자세라믹공학",
+   "college": "공과대학",
+   "dept": "신소재공학부 전자재료공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160904"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIME0416",
+   "name": "반도체공학",
+   "college": "공과대학",
+   "dept": "신소재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1618"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIME0418",
+   "name": "세라믹공정",
+   "college": "공과대학",
+   "dept": "신소재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1618"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIME0429",
+   "name": "디스플레이공학",
+   "college": "공과대학",
+   "dept": "신소재공학부 전자재료공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160904"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIME0431",
+   "name": "재료박막공학",
+   "college": "공과대학",
+   "dept": "신소재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1618"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CVLE0314",
+   "name": "강구조공학",
+   "college": "공과대학",
+   "dept": "건축학부 건축공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160I01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DYFI0236",
+   "name": "섬유가공",
+   "college": "공과대학",
+   "dept": "섬유시스템공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1607"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DYFI0255",
+   "name": "컬러과학",
+   "college": "공과대학",
+   "dept": "섬유시스템공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1607"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DYFI0257",
+   "name": "섬유재료공정",
+   "college": "공과대학",
+   "dept": "섬유시스템공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1607"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DYFI0261",
+   "name": "유기전자재료공학",
+   "college": "공과대학",
+   "dept": "섬유시스템공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1607"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENVI0221",
+   "name": "수질관리",
+   "college": "공과대학",
+   "dept": "환경공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1606"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENVI0339",
+   "name": "생물처리공정",
+   "college": "공과대학",
+   "dept": "환경공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1606"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENVI0363",
+   "name": "대기오염제어2",
+   "college": "공과대학",
+   "dept": "환경공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1606"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENVI0384",
+   "name": "소음진동학",
+   "college": "공과대학",
+   "dept": "환경공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1606"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENVI0471",
+   "name": "유해폐기물관리",
+   "college": "공과대학",
+   "dept": "환경공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1606"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENVI0473",
+   "name": "환경 상하수도공학",
+   "college": "공과대학",
+   "dept": "환경공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1606"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDC0213",
+   "name": "기기분석",
+   "college": "공과대학",
+   "dept": "응용화학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1603"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0236",
+   "name": "소음 및 음향학",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0237",
+   "name": "친환경배터리공학",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0358",
+   "name": "메카트로닉스",
+   "college": "공과대학",
+   "dept": "기계공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1601001",
+    "1601002"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MECH0358",
+   "name": "메카트로닉스",
+   "college": "공과대학",
+   "dept": "기계공학부",
+   "track": "B",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1601001",
+    "1601002"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MECH0424",
+   "name": "유체기계",
+   "college": "공과대학",
+   "dept": "기계공학부 기계공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0427",
+   "name": "전산열유체공학",
+   "college": "공과대학",
+   "dept": "기계공학부 기계공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0486",
+   "name": "마이크로컨트롤러",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0489",
+   "name": "품질 및 신뢰성공학개론",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0543",
+   "name": "냉동 및 공기조화",
+   "college": "공과대학",
+   "dept": "기계공학부 기계공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160101"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0583",
+   "name": "로봇시스템",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0585",
+   "name": "최적설계기초",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0591",
+   "name": "마이크로/나노기계공학",
+   "college": "공과대학",
+   "dept": "기계공학부 기계설계학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160102"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0230",
+   "name": "금속재료학",
+   "college": "공과대학",
+   "dept": "금속재료공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1617"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0234",
+   "name": "재료제조공학",
+   "college": "공과대학",
+   "dept": "신소재공학부 금속신소재공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0315",
+   "name": "전달현상",
+   "college": "공과대학",
+   "dept": "금속재료공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1617"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0316",
+   "name": "재료의기계적성질",
+   "college": "공과대학",
+   "dept": "신소재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1618"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "META0317",
+   "name": "표면처리공학",
+   "college": "공과대학",
+   "dept": "금속재료공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1617"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0357",
+   "name": "재료확산",
+   "college": "공과대학",
+   "dept": "금속재료공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1617"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0410",
+   "name": "재료조직 및 물성평가",
+   "college": "공과대학",
+   "dept": "신소재공학부 금속신소재공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "160903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0216",
+   "name": "고분자기반소자",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0311",
+   "name": "고분자합성실험",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0325",
+   "name": "고분자화학2",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0335",
+   "name": "고분자물리 2",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0356",
+   "name": "유변학",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0364",
+   "name": "생체고분자",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0411",
+   "name": "합성섬유",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0461",
+   "name": "기능성고분자",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "POLY0463",
+   "name": "계면접착",
+   "college": "공과대학",
+   "dept": "고분자공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1605"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CAIB0208",
+   "name": "학부연구프로젝트 1 (인공지능전공)",
+   "college": "IT대학",
+   "dept": "전자공학부 인공지능전공",
+   "track": null,
+   "grade": 3,
+   "credits": 6,
+   "type": "전공",
+   "dept_codes": [
+    "1O0109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CAIB0211",
+   "name": "자연어처리개론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 플랫폼소프트웨어전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CAIB0216",
+   "name": "강화학습개론",
+   "college": "IT대학",
+   "dept": "전자공학부 인공지능전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CAIB0216",
+   "name": "강화학습개론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 인공지능컴퓨팅전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0208"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "CAIB0225",
+   "name": "음성인식",
+   "college": "IT대학",
+   "dept": "전자공학부 인공지능전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "CAIB0233",
+   "name": "영상이해",
+   "college": "IT대학",
+   "dept": "전자공학부 인공지능전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CAIB0240",
+   "name": "비지도학습",
+   "college": "IT대학",
+   "dept": "전자공학부 인공지능전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0109"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COME0368",
+   "name": "정보보호론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 플랫폼소프트웨어전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0311",
+   "name": "논리회로설계",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "COMP0323",
+   "name": "데이타통신",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0411",
+   "name": "컴퓨터구조",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "COMP0414",
+   "name": "컴퓨터망",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 글로벌소프트웨어융합전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0204"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0421",
+   "name": "영상처리",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0423",
+   "name": "프로그래밍언어론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0428",
+   "name": "IT기술경영개론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 플랫폼소프트웨어전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "기본소양",
+   "dept_codes": [
+    "1O0205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0436",
+   "name": "증강현실",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 플랫폼소프트웨어전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0455",
+   "name": "지능HCI",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 데이터과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0206"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "COMP0458",
+   "name": "모바일네트워크",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 플랫폼소프트웨어전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EECS0324",
+   "name": "전자회로설계",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003"
+   ]
+  },
+  {
+   "code": "ELEC0202",
+   "name": "기초광전자소자",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0301",
+   "name": "기초RF공학",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0331",
+   "name": "통신이론",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0332",
+   "name": "자동제어",
+   "college": "IT대학",
+   "dept": "전기공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0334",
+   "name": "전력전자",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "002",
+    "003",
+    "004",
+    "005"
+   ]
+  },
+  {
+   "code": "ELEC0421",
+   "name": "집적회로공정",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ELEC0432",
+   "name": "전기기계",
+   "college": "IT대학",
+   "dept": "전기공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O03"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ELEC0436",
+   "name": "전력계통공학",
+   "college": "IT대학",
+   "dept": "전기공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O03"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "ELEC0437",
+   "name": "응용전력전자",
+   "college": "IT대학",
+   "dept": "전기공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0447",
+   "name": "생체전자공학",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0449",
+   "name": "의료광학영상시스템",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "ELEC0469",
+   "name": "데이터마이닝응용",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "H",
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01007"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0475",
+   "name": "이동통신",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0477",
+   "name": "암호공학",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0522",
+   "name": "현대제어시스템",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0550",
+   "name": "화합물반도체공학",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ELEC0557",
+   "name": "SK하이닉스반도체공정기술",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "GLSO0227",
+   "name": "클라우드컴퓨팅",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 플랫폼소프트웨어전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0205"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ITEC0417",
+   "name": "기계학습개론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ITEC0417",
+   "name": "기계학습개론",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 글로벌소프트웨어융합전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0204"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "ITEC0418",
+   "name": "대규모병렬컴퓨팅",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 글로벌소프트웨어융합전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0204"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ITEC0424",
+   "name": "컴퓨터비전",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 인공지능컴퓨팅전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0208"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ITEC0424",
+   "name": "컴퓨터비전",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 데이터과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1O0206"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "MOBI0224",
+   "name": "딥러닝",
+   "college": "IT대학",
+   "dept": "전자공학부 모바일공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "MOBI0224",
+   "name": "딥러닝",
+   "college": "IT대학",
+   "dept": "컴퓨터학부 인공지능컴퓨팅전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O0208"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "STAT0452",
+   "name": "수치해석",
+   "college": "IT대학",
+   "dept": "전자공학부",
+   "track": "A",
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1O01001"
+   ],
+   "sections": [
+    "003",
+    "004",
+    "005"
+   ]
+  },
+  {
+   "code": "STAT0452",
+   "name": "수치해석",
+   "college": "IT대학",
+   "dept": "컴퓨터학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공기반",
+   "dept_codes": [
+    "1O02"
+   ],
+   "sections": [
+    "006"
+   ]
+  },
+  {
+   "code": "STAT0452",
+   "name": "수치해석",
+   "college": "IT대학",
+   "dept": "전기공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공기반",
+   "dept_codes": [
+    "1O03"
+   ],
+   "sections": [
+    "007"
+   ]
+  },
+  {
+   "code": "AGEC0510",
+   "name": "경제발전의이론과실제",
+   "college": "농업생명과학대학",
+   "dept": "식품자원경제학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Z"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AGEC0514",
+   "name": "농촌개발의 이론과 실제",
+   "college": "농업생명과학대학",
+   "dept": "식품자원경제학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Z"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AGEC0524",
+   "name": "농식품마케팅",
+   "college": "농업생명과학대학",
+   "dept": "식품자원경제학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Z"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AGEC0527",
+   "name": "식품자원경제학세미나",
+   "college": "농업생명과학대학",
+   "dept": "식품자원경제학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Z"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AGEC0531",
+   "name": "식품자원경제학연습2",
+   "college": "농업생명과학대학",
+   "dept": "식품자원경제학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Z"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AGEC0532",
+   "name": "식품산업조직론",
+   "college": "농업생명과학대학",
+   "dept": "식품자원경제학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Z"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AMEN0268",
+   "name": "농업정보 및 인공지능",
+   "college": "농업생명과학대학",
+   "dept": "농업토목.생물산업공학부 생물산업기계공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "170T02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ANSC0463",
+   "name": "발효유가공학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BIOF0418",
+   "name": "식품영양학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품생물공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0635",
+   "name": "천연물화학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "CVLE0410",
+   "name": "구조역학2",
+   "college": "농업생명과학대학",
+   "dept": "농업토목공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1703"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAB0325",
+   "name": "식물보호학",
+   "college": "농업생명과학대학",
+   "dept": "식물의학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Y"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAB0444",
+   "name": "분자생물학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품생물공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DPBS0319",
+   "name": "기초식물유전체학",
+   "college": "농업생명과학대학",
+   "dept": "응용생명과학부 식물생명과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170B01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DPBS0345",
+   "name": "국제농업개발학",
+   "college": "농업생명과학대학",
+   "dept": "응용생명과학부 식물생명과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "DPBS0402",
+   "name": "식물소재학",
+   "college": "농업생명과학대학",
+   "dept": "응용생명과학부 식물생명과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170B01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DPBS0408",
+   "name": "IT와 식물산업",
+   "college": "농업생명과학대학",
+   "dept": "응용생명과학부 식물생명과학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170B01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FIER0493",
+   "name": "섬유고분자물리학론",
+   "college": "농업생명과학대학",
+   "dept": "바이오섬유소재학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Q"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FIER0511",
+   "name": "메디컬융합소재공학",
+   "college": "농업생명과학대학",
+   "dept": "바이오섬유소재학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170Q"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOAT0243",
+   "name": "식품응용발효공학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품응용공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "170P03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOAT0245",
+   "name": "식품응용분자생물학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품응용공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOAT0246",
+   "name": "식품생리활성학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품응용공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOAT0268",
+   "name": "공장 및 HACCP 설계",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품응용공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "FOAT0272",
+   "name": "디지털식품품질관리와 실습",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품응용공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOAT0275",
+   "name": "식품안전 및 법규",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품응용공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOBI0202",
+   "name": "실험동물기능성식품평가",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOBI0216",
+   "name": "식품소재물성학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOBI0225",
+   "name": "식품소재산업세미나",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "FOBI0348",
+   "name": "기능성 식품과 면역",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOBI0455",
+   "name": "식품안전관리학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품생물공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOOD0461",
+   "name": "발효공학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품생물공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOOD0575",
+   "name": "기능성식품학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품생물공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HORT0549",
+   "name": "농산물 마케팅 및 유통관리",
+   "college": "농업생명과학대학",
+   "dept": "원예과학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170O"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MECH0474",
+   "name": "진동공학",
+   "college": "농업생명과학대학",
+   "dept": "스마트생물산업기계공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "공학전공",
+   "dept_codes": [
+    "1711"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PHAR0252",
+   "name": "건강기능식품학",
+   "college": "농업생명과학대학",
+   "dept": "식품공학부 식품소재공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170P02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0261",
+   "name": "경관생태학",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0265",
+   "name": "환경설계스튜디오(캡스톤디자인)",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0331",
+   "name": "조경관리학",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0352",
+   "name": "식재계획 및 기법",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0362",
+   "name": "조경지리정보시스템 및 실습",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0264",
+   "name": "경관생태계획론",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "LARC0356",
+   "name": "도시재생 및 단지계획론",
+   "college": "농업생명과학대학",
+   "dept": "산림과학.조경학부 조경학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170S03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DPBS0301",
+   "name": "정밀농업의 이해와 실제",
+   "college": "농업생명과학대학",
+   "dept": "응용생명과학부 식물생명과학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "170B01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KMUS0602",
+   "name": "국악개론 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0236",
+   "name": "현대화성 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0254",
+   "name": "피아노반주법 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0347",
+   "name": "영어딕션 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 4,
+   "credits": 1,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0354",
+   "name": "프랑스어딕션",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 1,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0428",
+   "name": "전공대위법 4",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0432",
+   "name": "형식과 분석2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MUSI0456",
+   "name": "성악문헌2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0466",
+   "name": "피아노문헌 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0474",
+   "name": "작곡클래스 4",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0484",
+   "name": "관현악법 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MUSI0490",
+   "name": "관현악문헌2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0492",
+   "name": "서양음악사4",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0494",
+   "name": "컴퓨터음악 4",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "MUSI0496",
+   "name": "현대음악론2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0554",
+   "name": "예술가곡연구 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0564",
+   "name": "피아노교수법 2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MUSI0607",
+   "name": "지휘법2",
+   "college": "예술대학",
+   "dept": "음악학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1801"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ACHE0631",
+   "name": "분자생물학",
+   "college": "사범대학",
+   "dept": "생물교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190J"
+   ],
+   "sections": [
+    "004"
+   ]
+  },
+  {
+   "code": "BIED0459",
+   "name": "생명과학교육 세미나",
+   "college": "사범대학",
+   "dept": "생물교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BIED0631",
+   "name": "발생학",
+   "college": "사범대학",
+   "dept": "생물교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHED0332",
+   "name": "유기분광학",
+   "college": "사범대학",
+   "dept": "화학교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190I"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHEM0302",
+   "name": "무기화학2",
+   "college": "사범대학",
+   "dept": "화학교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "190I"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "CHEM0333",
+   "name": "무기화학실험",
+   "college": "사범대학",
+   "dept": "화학교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190I"
+   ],
+   "sections": [
+    "003"
+   ]
+  },
+  {
+   "code": "DTED0534",
+   "name": "독한번역연습",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 독어교육전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DTED0561",
+   "name": "독어회화지도법",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 독어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EDED0224",
+   "name": "교육 분야의 직업 탐색",
+   "college": "사범대학",
+   "dept": "교육학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1901"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EDED0483",
+   "name": "교육과정의 이론과 실제",
+   "college": "사범대학",
+   "dept": "교육학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1901"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENED0383",
+   "name": "영어통사구조의 이해",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENED0384",
+   "name": "영미희곡 및 연극지도법",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENED0389",
+   "name": "영어발표 및 토론",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "ENED0392",
+   "name": "영문학 특강",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENED0393",
+   "name": "제2 언어습득",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENED0398",
+   "name": "영어 말하기, 쓰기 지도법",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ENED0589",
+   "name": "영미문화",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ETED0213",
+   "name": "서양윤리교재연구",
+   "college": "사범대학",
+   "dept": "윤리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1907"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ETED0333",
+   "name": "가치론과윤리교육",
+   "college": "사범대학",
+   "dept": "윤리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1907"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ETED0354",
+   "name": "한국유학과 윤리교육",
+   "college": "사범대학",
+   "dept": "윤리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1907"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ETED0465",
+   "name": "민주주의론",
+   "college": "사범대학",
+   "dept": "윤리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1907"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FRED0422",
+   "name": "프랑스소설",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 불어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FRED0462",
+   "name": "프랑스어학개론",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 불어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FRED0486",
+   "name": "프랑스어작문연습",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 불어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "190D02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FRED0495",
+   "name": "프랑스어권문화",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 불어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GEED0330",
+   "name": "이주, 다문화 그리고 지역",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GEED0331",
+   "name": "데이터기반 도시의 미래탐구",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GEED0523",
+   "name": "역사지리학",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GEED0525",
+   "name": "지역지리교육",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "GEED0554",
+   "name": "기후변화와 지속가능한 세계",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "GEOG0513",
+   "name": "환경지리학",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIED0219",
+   "name": "한국사학사",
+   "college": "사범대학",
+   "dept": "역사교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190E"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIED0373",
+   "name": "동아시아현대사",
+   "college": "사범대학",
+   "dept": "역사교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190E"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIED0519",
+   "name": "역사교육특강",
+   "college": "사범대학",
+   "dept": "역사교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190E"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIED0532",
+   "name": "역사학습평가연습",
+   "college": "사범대학",
+   "dept": "역사교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190E"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIST0251",
+   "name": "한국현대사",
+   "college": "사범대학",
+   "dept": "역사교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190E"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HIST0451",
+   "name": "서양현대사",
+   "college": "사범대학",
+   "dept": "역사교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190E"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HOED0365",
+   "name": "소비자학",
+   "college": "사범대학",
+   "dept": "가정교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HOED0367",
+   "name": "가족자원관리교육",
+   "college": "사범대학",
+   "dept": "가정교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HOED0376",
+   "name": "가정생활과진로",
+   "college": "사범대학",
+   "dept": "가정교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HOED0407",
+   "name": "통신기술",
+   "college": "사범대학",
+   "dept": "기술·가정교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "HOED0421",
+   "name": "에너지기술",
+   "college": "사범대학",
+   "dept": "기술·가정교육전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0266",
+   "name": "현대소설교육론",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0343",
+   "name": "중·근세어강독",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0361",
+   "name": "국어어휘교육론",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0369",
+   "name": "시조·가사교육론",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "KOED0390",
+   "name": "고전산문교육론",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0576",
+   "name": "국어과교육과정 및 평가론",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0577",
+   "name": "국어학특강",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "KOED0578",
+   "name": "국문학특강",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MTED0535",
+   "name": "기하지도법2",
+   "college": "사범대학",
+   "dept": "수학교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1908"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PEED0522",
+   "name": "스포츠의학",
+   "college": "사범대학",
+   "dept": "체육교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "PEED0580",
+   "name": "스포츠사회학",
+   "college": "사범대학",
+   "dept": "체육교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190C"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PEED0582",
+   "name": "운동역학",
+   "college": "사범대학",
+   "dept": "체육교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190C"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "PHED0430",
+   "name": "중등물리실험지도",
+   "college": "사범대학",
+   "dept": "물리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "190H"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SSED0312",
+   "name": "한국정치와시민교육",
+   "college": "사범대학",
+   "dept": "일반사회교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190G"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SSED0436",
+   "name": "사회·문화교재연구",
+   "college": "사범대학",
+   "dept": "일반사회교육과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190G"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SSED0444",
+   "name": "형법과교육",
+   "college": "사범대학",
+   "dept": "일반사회교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190G"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SSED0456",
+   "name": "사회과학방법론과 교육",
+   "college": "사범대학",
+   "dept": "일반사회교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190G"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0301",
+   "name": "화학교육과정및평가",
+   "college": "사범대학",
+   "dept": "화학교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190I"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0446",
+   "name": "통합과학교재연구및지도법",
+   "college": "사범대학",
+   "dept": "통합과학교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "191G"
+   ],
+   "sections": [
+    "001",
+    "002",
+    "003",
+    "004"
+   ]
+  },
+  {
+   "code": "TCHR0465",
+   "name": "국어 논리 및 논술지도",
+   "college": "사범대학",
+   "dept": "국어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1902"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0468",
+   "name": "독일어 논리 및 논술지도",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 독어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0473",
+   "name": "영어 논리 및 논술지도",
+   "college": "사범대학",
+   "dept": "영어교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1903"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0479",
+   "name": "화학 논리 및 논술지도",
+   "college": "사범대학",
+   "dept": "화학교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190I"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0562",
+   "name": "생명과학교재연구 및 지도법",
+   "college": "사범대학",
+   "dept": "생물교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0579",
+   "name": "고등학교수학교재연구및지도법",
+   "college": "사범대학",
+   "dept": "수학교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1908"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0583",
+   "name": "프랑스어교육론",
+   "college": "사범대학",
+   "dept": "유럽어교육학부 불어교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190D02"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0587",
+   "name": "도덕·윤리교육론",
+   "college": "사범대학",
+   "dept": "윤리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1907"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0600",
+   "name": "통합사회교육과정",
+   "college": "사범대학",
+   "dept": "통합사회교육전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "191H"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0661",
+   "name": "교육학교재연구및지도법",
+   "college": "사범대학",
+   "dept": "교육학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1901"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0673",
+   "name": "지리교재연구및지도법",
+   "college": "사범대학",
+   "dept": "지리교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TCHR0691",
+   "name": "체육교재연구및지도법",
+   "college": "사범대학",
+   "dept": "체육교육과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "190C"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MEDE0297",
+   "name": "기본의학종합평가",
+   "college": "의과대학",
+   "dept": "의학과",
+   "track": null,
+   "grade": 4,
+   "credits": 5,
+   "type": "전공필수",
+   "dept_codes": [
+    "1F01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MEDE0331",
+   "name": "임상의학종합 및 평가 2",
+   "college": "의과대학",
+   "dept": "의학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1F01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MEDE0332",
+   "name": "미래의학",
+   "college": "의과대학",
+   "dept": "의학과",
+   "track": null,
+   "grade": 4,
+   "credits": 1,
+   "type": "전공필수",
+   "dept_codes": [
+    "1F01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MEDE0333",
+   "name": "환자-의사-사회 2",
+   "college": "의과대학",
+   "dept": "의학과",
+   "track": null,
+   "grade": 4,
+   "credits": 1,
+   "type": "전공필수",
+   "dept_codes": [
+    "1F01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHFA0248",
+   "name": "청소년발달 및 이해",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동가족학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0701"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHFA0292",
+   "name": "영유아사회정서지도",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0702"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHFA0338",
+   "name": "부모교육론",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동가족학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0701"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHFA0346",
+   "name": "아동상담론",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동가족학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0701"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CHFA0427",
+   "name": "유아교육기관운영관리",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0702"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CLTX0334",
+   "name": "패션리테일매니지먼트",
+   "college": "생활과학대학",
+   "dept": "의류학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOOD0575",
+   "name": "기능성식품학",
+   "college": "생활과학대학",
+   "dept": "식품영양학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B04"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "FSNU0433",
+   "name": "임상영양학",
+   "college": "생활과학대학",
+   "dept": "식품영양학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FSNU0536",
+   "name": "지역사회영양학",
+   "college": "생활과학대학",
+   "dept": "식품영양학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "MBIO0461",
+   "name": "식품미생물학",
+   "college": "생활과학대학",
+   "dept": "식품영양학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "WELF0323",
+   "name": "노인복지론",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동가족학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0701"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "WELF0382",
+   "name": "가족복지론",
+   "college": "생활과학대학",
+   "dept": "아동학부 아동가족학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1B0701"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "DEHY0266",
+   "name": "보건프로그램개발 및 평가",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0240",
+   "name": "호스피스",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0261",
+   "name": "간호정책과 리더십",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0294",
+   "name": "여성건강간호 2",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0295",
+   "name": "아동건강간호 2",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0296",
+   "name": "지역사회간호",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0297",
+   "name": "보건간호",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 1,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0302",
+   "name": "글로벌 헬스",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 1,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0306",
+   "name": "간호윤리와 보건관계법",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0310",
+   "name": "인공지능과 보건의료빅데이터",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0371",
+   "name": "정신건강간호학 1",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1C01"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "NURS0597",
+   "name": "영양과 간호",
+   "college": "간호대학",
+   "dept": "간호학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "AGRO0333",
+   "name": "작물생태학",
+   "college": "생태환경대학",
+   "dept": "식물자원학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L13"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ANSC0312",
+   "name": "동물세포생물학",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ANSC0444",
+   "name": "사료학",
+   "college": "생태환경대학",
+   "dept": "축산학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L04"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "DOAB0224",
+   "name": "곤충행동학개론",
+   "college": "생태환경대학",
+   "dept": "곤충생명과학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1L0A"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0203",
+   "name": "동물생명공학연구및학위논문작성 Ⅰ",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0222",
+   "name": "가축육종학",
+   "college": "생태환경대학",
+   "dept": "축산학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1L04"
+   ],
+   "sections": [
+    "001",
+    "002"
+   ]
+  },
+  {
+   "code": "DOAS0322",
+   "name": "축산경영학",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0366",
+   "name": "동물발생생물학",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0374",
+   "name": "식육가공학 및 실습",
+   "college": "생태환경대학",
+   "dept": "축산학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0385",
+   "name": "축산경영학 및 실습",
+   "college": "생태환경대학",
+   "dept": "축산학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0393",
+   "name": "응용분자생물학",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0403",
+   "name": "동물간호학",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L10"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0403",
+   "name": "동물간호학",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "002"
+   ]
+  },
+  {
+   "code": "DOAS0406",
+   "name": "실험동물학및 실습",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "DOAS0422",
+   "name": "축산법규",
+   "college": "생태환경대학",
+   "dept": "축산학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0436",
+   "name": "축산 창업 및 컨설팅",
+   "college": "생태환경대학",
+   "dept": "축산학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L04"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DOAS0456",
+   "name": "바이오소재학 및 실험",
+   "college": "생태환경대학",
+   "dept": "동물생명공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L15"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DPRE0228",
+   "name": "식량작물학2",
+   "college": "생태환경대학",
+   "dept": "식물자원학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L13"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECOT0425",
+   "name": "호스피탈리티서비스디자인",
+   "college": "생태환경대학",
+   "dept": "관광학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L0B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECOT0534",
+   "name": "관광논문작성법",
+   "college": "생태환경대학",
+   "dept": "관광학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1L0B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECOT0535",
+   "name": "호텔재무관리론",
+   "college": "생태환경대학",
+   "dept": "관광학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1L0B"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EQCO0217",
+   "name": "말/특수동물 번식학",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L10"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EQCO0232",
+   "name": "동물복지 및 법규",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L10"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EQCO0235",
+   "name": "야생동물보전유전학",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L10"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EQCO0237",
+   "name": "동물보건학",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L10"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EQCO0238",
+   "name": "말 질병학 및 장제 실습",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1L10"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "EQCO0239",
+   "name": "생물실험통계 및 실습",
+   "college": "생태환경대학",
+   "dept": "말/특수동물학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "VEEN0202",
+   "name": "양잠 및 양봉학",
+   "college": "생태환경대학",
+   "dept": "곤충생명과학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "AERO0223",
+   "name": "공간데이터베이스론",
+   "college": "과학기술대학",
+   "dept": "위치정보시스템학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0L"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AERO0232",
+   "name": "항공레이저측량",
+   "college": "과학기술대학",
+   "dept": "위치정보시스템학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0L"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AERO0235",
+   "name": "토지정보체계",
+   "college": "과학기술대학",
+   "dept": "위치정보시스템학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0L"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AERO0243",
+   "name": "LBS 및 스마트시티",
+   "college": "과학기술대학",
+   "dept": "위치정보시스템학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0L"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AERO0244",
+   "name": "공간정보응용시스템",
+   "college": "과학기술대학",
+   "dept": "위치정보시스템학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0L"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AMSE0432",
+   "name": "비파괴공학",
+   "college": "과학기술대학",
+   "dept": "에너지 신소재 · 화학공학부 신소재공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0N01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AUTO0226",
+   "name": "지능공학설계",
+   "college": "과학기술대학",
+   "dept": "자동차공학부 지능형자동차전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AUTO0350",
+   "name": "CAD응용",
+   "college": "과학기술대학",
+   "dept": "자동차공학부 지능형자동차전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0302"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "AUTO0356",
+   "name": "차량메카트로닉스",
+   "college": "과학기술대학",
+   "dept": "자동차공학부 친환경자동차전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0301"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "BIOF0430",
+   "name": "식품기기분석학",
+   "college": "과학기술대학",
+   "dept": "식품외식산업학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U08"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CDEE0416",
+   "name": "도로설계공학",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CDEE0418",
+   "name": "기초설계공학 2",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CDEE0419",
+   "name": "강구조설계공학",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CDEE0422",
+   "name": "교량방재공학",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CDEE0426",
+   "name": "방재경제학",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "CDEE0427",
+   "name": "방재GIS 이론 및 실습",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CDEE0508",
+   "name": "토목시공계획및관리",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CIVL0214",
+   "name": "상하수도공학",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CVLE0406",
+   "name": "철근콘크리트공학2",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CVLE0510",
+   "name": "매트릭스구조해석",
+   "college": "과학기술대학",
+   "dept": "건설방재공학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0F"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DEHY0288",
+   "name": "임상치과학(치과보철)",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1U0J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DEHY0293",
+   "name": "기초치위생학(치과약리)",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1U0J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DEHY0298",
+   "name": "치과영양학",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "DEHY0304",
+   "name": "보건의료관계법규",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1U0J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DEHY0305",
+   "name": "치위생 의료윤리",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 4,
+   "credits": 2,
+   "type": "전공필수",
+   "dept_codes": [
+    "1U0J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DEHY0307",
+   "name": "치위생 세미나",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1U0J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "DEHY0324",
+   "name": "지역사회치위생학",
+   "college": "과학기술대학",
+   "dept": "치위생학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1U0J"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECHE0401",
+   "name": "첨단나노바이오소재기술",
+   "college": "과학기술대학",
+   "dept": "에너지 신소재 · 화학공학부 에너지화학공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0N03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "ECHE0406",
+   "name": "환경 및 촉매 공학",
+   "college": "과학기술대학",
+   "dept": "에너지 신소재 · 화학공학부 에너지화학공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0N03"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOSE0214",
+   "name": "발효식품학",
+   "college": "과학기술대학",
+   "dept": "식품외식산업학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U08"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOSE0325",
+   "name": "외식문화론",
+   "college": "과학기술대학",
+   "dept": "식품외식산업학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U08"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "FOSE0345",
+   "name": "외식프렌차이즈 및 창업",
+   "college": "과학기술대학",
+   "dept": "식품외식산업학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U08"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "META0312",
+   "name": "상변태",
+   "college": "과학기술대학",
+   "dept": "나노신소재공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1U0P"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PLEN0231",
+   "name": "설비제어공학",
+   "college": "과학기술대학",
+   "dept": "스마트플랜트공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0M"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PLEN0237",
+   "name": "플랜트시공학",
+   "college": "과학기술대학",
+   "dept": "스마트플랜트공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0M"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "PLEN0280",
+   "name": "강구조 및 PSC",
+   "college": "과학기술대학",
+   "dept": "스마트플랜트공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0M"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOFT0365",
+   "name": "소프트웨어모델링",
+   "college": "과학기술대학",
+   "dept": "소프트웨어학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1U0K"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SOFT0366",
+   "name": "소프트웨어개발방법",
+   "college": "과학기술대학",
+   "dept": "소프트웨어학과",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "TEXT0323",
+   "name": "니트공학 및 실습",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TEXT0324",
+   "name": "인조섬유",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TEXT0327",
+   "name": "섬유가공학2 및 실험",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TEXT0331",
+   "name": "섬유고분자공정2  및 실험",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TEXT0333",
+   "name": "바이오소재",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TEXT0337",
+   "name": "스마트텍스타일",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "TEXT0339",
+   "name": "섬유고분자나노기술",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "TEXT0424",
+   "name": "섬유복합재료학",
+   "college": "과학기술대학",
+   "dept": "섬유패션디자인학부 섬유공학전공",
+   "track": null,
+   "grade": 4,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1U0A01"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CMEB0210",
+   "name": "종양면역학",
+   "college": "첨단기술융합대학",
+   "dept": "의생명융합공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1005"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "CMEB0211",
+   "name": "랩온어칩개론",
+   "college": "첨단기술융합대학",
+   "dept": "의생명융합공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "CMEB0229",
+   "name": "의생명신호처리",
+   "college": "첨단기술융합대학",
+   "dept": "의생명융합공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "CROS0214",
+   "name": "모빌리티 비전",
+   "college": "첨단기술융합대학",
+   "dept": "스마트모빌리티공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1002"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDM0219",
+   "name": "제약학2",
+   "college": "첨단기술융합대학",
+   "dept": "혁신신약학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1004"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDM0220",
+   "name": "전임상독성학",
+   "college": "첨단기술융합대학",
+   "dept": "혁신신약학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1004"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDM0221",
+   "name": "질환과 의약품1",
+   "college": "첨단기술융합대학",
+   "dept": "혁신신약학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1004"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDM0222",
+   "name": "의약품 규제과학2",
+   "college": "첨단기술융합대학",
+   "dept": "혁신신약학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1004"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDM0223",
+   "name": "신약개발실험4",
+   "college": "첨단기술융합대학",
+   "dept": "혁신신약학과",
+   "track": null,
+   "grade": 3,
+   "credits": 1,
+   "type": "전공필수",
+   "dept_codes": [
+    "1004"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "INDM0224",
+   "name": "신약과 의약화학2",
+   "college": "첨단기술융합대학",
+   "dept": "혁신신약학과",
+   "track": null,
+   "grade": 3,
+   "credits": 2,
+   "type": "전공",
+   "dept_codes": [
+    "1004"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SESM0222",
+   "name": "인공위성 시스템",
+   "college": "첨단기술융합대학",
+   "dept": "우주공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1003"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SESM0223",
+   "name": "우주공학실험",
+   "college": "첨단기술융합대학",
+   "dept": "우주공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "SESM0224",
+   "name": "축조로버 실험",
+   "college": "첨단기술융합대학",
+   "dept": "우주공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1003"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SESM0227",
+   "name": "기지충격해석",
+   "college": "첨단기술융합대학",
+   "dept": "우주공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1003"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SESM0234",
+   "name": "유도 항법 제어",
+   "college": "첨단기술융합대학",
+   "dept": "우주공학부",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1003"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SMMB0220",
+   "name": "모빌리티응용설계2A",
+   "college": "첨단기술융합대학",
+   "dept": "스마트모빌리티공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1002"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SMMB0221",
+   "name": "모빌리티응용설계2B",
+   "college": "첨단기술융합대학",
+   "dept": "스마트모빌리티공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공필수",
+   "dept_codes": [
+    "1002"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "SMMB0222",
+   "name": "배터리와 연료전지",
+   "college": "첨단기술융합대학",
+   "dept": "스마트모빌리티공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [],
+   "sections": []
+  },
+  {
+   "code": "SMMB0224",
+   "name": "진동시스템",
+   "college": "첨단기술융합대학",
+   "dept": "스마트모빌리티공학과",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1002"
+   ],
+   "sections": [
+    "001"
+   ]
+  },
+  {
+   "code": "JURA0232",
+   "name": "형법각론",
+   "college": "행정학부",
+   "dept": "행정학부 공공정책전공",
+   "track": null,
+   "grade": 3,
+   "credits": 3,
+   "type": "전공",
+   "dept_codes": [
+    "1S0102"
+   ],
+   "sections": [
+    "001"
+   ]
+  }
+ ]
+}

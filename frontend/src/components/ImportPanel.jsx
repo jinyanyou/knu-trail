@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import Mascot from './Mascot.jsx'
 import * as api from '../api.js'
 import { GRADES } from './CourseEditor.jsx'
 
@@ -123,7 +124,7 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
   return (
     <div className="import">
       <div className="import-head">
-        <h3>성적표·시간표 가져오기</h3>
+        <h3 className="with-mascot"><Mascot pose="report" size={40} />성적표·시간표 가져오기</h3>
         <button type="button" className="icon-btn" aria-label="가져오기 닫기" onClick={onClose}>✕</button>
       </div>
 

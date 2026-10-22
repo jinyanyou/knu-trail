@@ -17,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from pypdf import PdfReader
 
-from engine import ai_extract, catalog, daily, importer, roadmap, schedule
+from engine import ai_extract, catalog, daily, importer, relative_grading, roadmap, schedule
 from engine.graduation import evaluate
 from engine.rules import load_rules_doc, supported_entry_years
 
@@ -165,6 +165,13 @@ def course_catalog(entry_year: int, year: int | None = None, programs: str | Non
     return {"entry_year": entry_year, "liberal_arts_year": la_year, "courses": major + liberal + extra}
 
 
+@app.get("/api/relative-grading")
+def relative_grading_list(entry_year: int, programs: str | None = None):
+    """상대평가 권장 과목(A 50% 이내) 지정 내역 — 과목마다 학생 소속 학과가 연 분반이 해당되는지."""
+    _check_year(entry_year)
+    return relative_grading.for_student(entry_year, _program_codes(entry_year, programs))
+
+
 @app.get("/api/standard-plan")
 def standard_plan(entry_year: int):
     _check_year(entry_year)
@@ -196,6 +203,16 @@ def roadmap_endpoint(req: RoadmapRequest):
     try:
         return roadmap.plan(req.entry_year, [t.model_dump() for t in req.taken], req.profile.model_dump(),
                             start=start, max_credits=req.max_credits, exclude=req.exclude)
+    except KeyError as e:
+        raise HTTPException(400, str(e.args[0])) from e
+
+
+@app.post("/api/roadmap/timeline")
+def roadmap_timeline(req: EvaluateRequest):
+    """요건마다 언제 채워지는지 (지금 / 수강 예정 과목을 학기 순으로 더했을 때 처음 충족되는 학기) + 전체 계산 결과."""
+    _check_year(req.entry_year)
+    try:
+        return roadmap.timeline(req.entry_year, [t.model_dump() for t in req.taken], req.profile.model_dump())
     except KeyError as e:
         raise HTTPException(400, str(e.args[0])) from e
 

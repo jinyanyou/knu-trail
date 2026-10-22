@@ -72,3 +72,16 @@ export const roadmap = (entryYear, taken, profile, maxCredits, exclude = []) =>
 
 // 경북대 학사일정 중 진행 중·다가오는 학부 일정
 export const getSchedule = () => request('/api/schedule')
+
+// 상대평가 권장 과목(A 최대 50%) 지정 내역 — 과목마다 내 학과(주전공·다전공)가 연 분반이 해당되는지
+export const getRelativeGrading = (entryYear, programs = []) =>
+  request(`/api/relative-grading?entry_year=${entryYear}&programs=${encodeURIComponent(programs.join(','))}`)
+
+// 요건마다 언제 채워지는지 (지금 / 수강 예정 과목을 학기 순으로 더해 처음 충족되는 학기) + 전체 계산 결과
+export const roadmapTimeline = (entryYear, taken, profile, signal) =>
+  request('/api/roadmap/timeline', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ entry_year: entryYear, taken, profile }),
+    signal,
+  })

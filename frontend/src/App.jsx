@@ -325,7 +325,7 @@ function Navi({ user, initial }) {
   if (hash === '#/sim') {
     return (
       <Suspense fallback={<p className="app">수강신청 연습 불러오는 중…</p>}>
-        <SimApp taken={taken} programNames={chosenPrograms.map((c) => programs.find((p) => p.code === c.code)?.name).filter(Boolean)}
+        <SimApp taken={taken} entryYear={entryYear} programNames={chosenPrograms.map((c) => programs.find((p) => p.code === c.code)?.name).filter(Boolean)}
           onExportPlanned={exportPlanned} store={simStore} onExit={() => { window.location.hash = '' }} />
       </Suspense>
     )
@@ -344,6 +344,11 @@ function Navi({ user, initial }) {
 
       {error && <div className="banner banner-error" role="alert">서버와 통신하지 못했습니다: {error}</div>}
 
+      {draft && <SimBanner base={baseReport} now={report} onApply={() => endSim(true)} onCancel={() => endSim(false)} />}
+
+      {/* 넓은 화면: 왼쪽 졸업 현황 + 오른쪽 좁은 칸. 좁은 화면은 오른쪽 칸 내용이 먼저 (요약 → 학사일정 → 뉴스·퀴즈 → 현황) */}
+      <div className="home-grid">
+      <aside className="home-side" aria-label="내 정보와 오늘의 소식">
       {/* 학번·다전공·들은 과목은 프로필 설정에서 고친다 — 홈에는 요약만 */}
       <div className="profile-summary panel">
         <span className="chip">{entryYear}학번</span>
@@ -358,15 +363,15 @@ function Navi({ user, initial }) {
         </span>
       </div>
 
-      {draft && <SimBanner base={baseReport} now={report} onApply={() => endSim(true)} onCancel={() => endSim(false)} />}
-
       <Schedule />
 
       <Daily records={state.daily?.quiz} onChange={(quiz) => setState((s) => ({ ...s, daily: { ...s.daily, quiz } }))} />
+      </aside>
 
-      <main className="dashboard" aria-label="졸업요건 현황">
+      <main className="dashboard home-main" aria-label="졸업요건 현황">
         {report ? <Dashboard report={report} onPlan={planCourse} onOpen={setSheet} /> : <div className="panel empty">계산 중…</div>}
       </main>
+      </div>
       {sheet && report?.requirements.some((r) => r.id === sheet) && (
         <CourseSheet req={report.requirements.find((r) => r.id === sheet)} report={report} taken={taken}
           onChange={(t) => update({ taken: t })} onClose={() => setSheet(null)} />

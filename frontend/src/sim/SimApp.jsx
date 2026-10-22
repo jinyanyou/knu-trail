@@ -3,6 +3,7 @@
 // 학교로 전송하지 않는다. 로그인 칸(학번·ID·비밀번호)은 일부러 만들지 않았다 — 실제 로그인 화면으로 오인되지 않게.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as api from '../api.js'
+import { RgBadge, useRelativeGrading } from '../components/RelativeGrading.jsx'
 import { check, competition, fillTime, fmtSec, normalizeId, openTimeOf, restrictionOf, ROUNDS, seatsLeft, slotRow } from './engine.js'
 import './sim.css'
 
@@ -262,7 +263,7 @@ function Timetable({ courses }) {
   )
 }
 
-function Finder({ courses, onPick, entryDept }) {
+function Finder({ courses, onPick, entryDept, rg, term }) {
   const [q, setQ] = useState('')
   const [onlyMine, setOnlyMine] = useState(true)
   const list = useMemo(() => {
@@ -286,6 +287,7 @@ function Finder({ courses, onPick, entryDept }) {
                 <button type="button" onClick={() => onPick(c)}>
                   <b>{c.id.replace('-', '')}</b> {c.name} <span>{c.professor} · {c.credits}학점 · {c.time || '시간 미정'}</span>
                   {r != null && <em className={r >= 1 ? 'hot' : ''}>경쟁 {r.toFixed(1)}:1</em>}
+                  <RgBadge rg={rg} code={c.code} term={term} section={c} />
                 </button>
               </li>
             )
@@ -337,8 +339,9 @@ function initialTimetable(courses, byCode, memo, student, maxCredits) {
   return picked
 }
 
-function Main({ data, config, taken, programNames, store, onFinish }) {
+function Main({ data, config, taken, programNames, entryYear, store, onFinish }) {
   const courses = data.courses
+  const rg = useRelativeGrading(entryYear)
   const byId = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c])), [courses])
   const byCode = useMemo(() => {
     const m = {}
@@ -569,7 +572,7 @@ function Main({ data, config, taken, programNames, store, onFinish }) {
 
         <Memo memo={memo} byCode={byCode} onPick={(c) => setIdText(c.id.replace('-', ''))}
           onRemove={(code) => setMemo((m) => m.filter((x) => x !== code))} />
-        <Finder courses={courses} entryDept={DEPT}
+        <Finder courses={courses} entryDept={DEPT} rg={rg} term={data.term}
           onPick={(c) => { setIdText(c.id.replace('-', '')); setMemo((m) => (m.includes(c.code) ? m : [...m, c.code])); window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
       </div>
       {msg && <Modal msg={msg} onClose={() => setMsg(null)} />}
@@ -626,7 +629,7 @@ function Result({ registered, log, round, store, onAgain, onExport, onExit }) {
   )
 }
 
-export default function SimApp({ taken, programNames = [], store, onExportPlanned, onExit }) {
+export default function SimApp({ taken, programNames = [], entryYear, store, onExportPlanned, onExit }) {
   const [terms, setTerms] = useState(null)
   const [data, setData] = useState(null)
   const [config, setConfig] = useState(null)
@@ -660,7 +663,7 @@ export default function SimApp({ taken, programNames = [], store, onExportPlanne
       {stage === 'setup' && (terms ? <Setup terms={terms} defaults={defaults} onStart={start} /> : <p className="sim-loading">불러오는 중…</p>)}
       {stage === 'queue' && <Queue onDone={queueDone} />}
       {stage === 'main' && data && (
-        <Main data={data} config={config} taken={taken} programNames={programNames} store={store}
+        <Main data={data} config={config} taken={taken} programNames={programNames} entryYear={entryYear} store={store}
           onFinish={(registered, log) => { setResult({ registered, log }); setStage('result') }} />
       )}
       {stage === 'result' && result && (

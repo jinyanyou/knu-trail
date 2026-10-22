@@ -96,7 +96,7 @@ data/curriculum/      학번별 전공 교육과정 (knuin 공개 API)
 data/liberal_arts/    연도별 교양(첨성인) 교육과정
 data/timetable/       학기별 개설 강좌 (수강신청 연습용)
 data/programs/        학번별 다전공 대상 학과·융합·연계전공 교육과정 + 다전공 이수학점
-data/rules/           졸업요건 규칙 (학번별, 근거 출처 포함)
+data/rules/           졸업요건 규칙 (학번별, 근거 출처 포함), relative_grading/ 학기별 상대평가 권장 과목
 data/sources/         학교 공식 기준 원문 텍스트
 scripts/              데이터 수집·검사 스크립트
 tests/                pytest
@@ -114,6 +114,19 @@ pytest
 ```
 
 2027학번 교육과정·졸업요건은 아직 확정 전이다(`graduation.json`의 `provisional`). 2027년 2월 전후로 다시 수집할 것.
+
+### 상대평가 권장 과목 (A 최대 50%) — 학기마다
+
+학사과가 학기마다 '3학년 이상 개설 전공과목 성적 평가방법 변경 지정 내역' 엑셀을 공지한다. 새 공지가 나오면:
+
+```bash
+python scripts/fetch_timetable.py 2027 1                  # 그 학기 개설 강좌 (분반·개설학과 대조용, 먼저)
+python scripts/import_relative_grading.py <받은 엑셀>      # 학기·작성 기준일은 엑셀 제목에서 읽음
+pytest
+```
+
+`data/rules/relative_grading/<학기>.json`이 학기별로 쌓이고, 원본은 `data/sources/knu_<학기>_relative_grading.xlsx`로 보관된다.
+화면은 과목을 들을 학기의 목록을 쓰고, 그 학기 목록이 아직 없으면 같은 학기(1·2학기)의 가장 최근 목록으로 보여 준다 (목록에는 그 학기에 열리는 과목만 있어서).
 
 ## 로그인 (카카오·Google, Supabase)
 
