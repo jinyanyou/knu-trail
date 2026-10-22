@@ -35,7 +35,12 @@
 .sim-loading { padding: 40px; text-align: center; }
 .sim-check { display: flex !important; flex-direction: row !important; align-items: center; gap: 6px; font-size: 13px; }
 .sim-check input { min-height: auto; }
-.sim-banner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.sim-banner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
+/* 문구가 길면 문구 안에서 줄을 바꾸고, 버튼은 항상 문구 바로 옆에 */
+.sim-banner > span { min-width: 0; }
+/* 홈의 졸업 시뮬레이션 띠(index.css .sim-banner, 세로 쌓기)와 이름이 같아서 여기서는 가로로 못 박는다 */
+.sim-root .sim-banner { flex-direction: row; margin-bottom: 0; border: 0; border-bottom: 2px solid #111; }
+.sim-exit { flex: none; }
 .sim-exit { border: 1px solid #111; background: #fff; padding: 3px 10px; font-size: 12px; white-space: nowrap; }
 
 /* 버튼 */

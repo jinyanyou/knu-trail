@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import BrandMark from './BrandMark.jsx'
+import Mascot from './Mascot.jsx'
 import { byTerm, gpa, graded, POINTS } from '../gpa.js'
 
 const RETAKE_GRADES = ['A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+']
@@ -60,7 +61,7 @@ export default function Grades({ report, onBack }) {
     return (
       <div className="app grades">
         <button type="button" className="btn-link setup-back" onClick={onBack}>← 홈으로</button>
-        <div className="panel empty">성적이 있는 과목이 아직 없어요. 프로필 설정에서 성적표를 가져와 보세요.</div>
+        <div className="panel empty with-mascot"><Mascot pose="report" size={72} />성적이 있는 과목이 아직 없어요. 프로필 설정에서 성적표를 가져와 보세요.</div>
       </div>
     )
   }

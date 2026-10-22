@@ -319,7 +319,6 @@ select.invalid { border-color: var(--critical); }
 .trail-me.at-end .trail-me-label { transform: translateX(-80%); }
 @media (max-width: 560px) {
   .trail-goal, .trail-me-label { font-size: 11px; padding: 0 7px; border-width: 1.5px; }
-  .trail-goal { left: auto !important; right: 6px; top: 8px !important; transform: none; }
 }
 .sw-planned-solid { background: var(--meter-planned); }
 .sw-rest { background: repeating-linear-gradient(90deg, var(--trail-rest) 0 2px, transparent 2px 4px); height: 3px; }
@@ -562,4 +561,25 @@ h3.with-mascot { gap: 8px; }
   .home-side .schedule-list li { min-width: 0; }
   .home-side .schedule-name { white-space: normal; }
   .home-side .daily { grid-template-columns: minmax(0, 1fr); margin-bottom: 0; }
+}
+
+/* 로그인 카드 위 산길 그림 + 다람쥐 */
+.login-card { overflow: hidden; padding-top: 0; }
+.login-scene { position: relative; margin: 0 -24px 4px; border-bottom: 2px solid #1b1a17; }
+.login-scene img:first-child { display: block; width: 100%; height: auto; }
+.login-mascot { position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%); width: 21%; height: auto; }
+.login-brand { font-size: 44px; }
+/* 첫 시작 설정 안내 */
+.setup-guide { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; background: #e6f2e4; font-size: 14px; font-weight: 600; color: var(--text); }
+/* 계정 메뉴 '저장됨' */
+.save-status { display: inline-flex; align-items: center; gap: 3px; }
+.save-mascot { width: 20px; height: 20px; margin: -4px 0; }
+
+/* 폰: 산 그림 양옆을 조금 잘라 크게 (깃발까지는 보이게) */
+@media (max-width: 560px) {
+  .trail { overflow: hidden; }
+  .trail-plot { width: 135%; margin-left: -4%; }
+  .trail-goal { left: auto !important; right: 28%; top: 7% !important; transform: none; }
+  .trail-me.at-start .trail-me-img { transform: translateX(4px); }
+  .trail-me.at-start .trail-me-label { transform: translateX(6px); }
 }

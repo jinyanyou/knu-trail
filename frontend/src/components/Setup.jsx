@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import BrandMark from './BrandMark.jsx'
+import Mascot from './Mascot.jsx'
 import ProfilePanel from './ProfilePanel.jsx'
 import CourseEditor from './CourseEditor.jsx'
 
@@ -7,6 +8,13 @@ const STEPS = ['학번', '다전공·조건', '들은 과목']
 
 // 처음 로그인한 사용자: 학번 → 다전공·조건 → 들은 과목 순서로 안내한다. 끝나면 대시보드로
 // editing(프로필 설정): 같은 화면을 탭처럼 아무 단계나 골라 고친다
+// 처음 설정할 때 단계마다 다람쥐가 건네는 말
+const GUIDE = [
+  { pose: 'walk', text: '반가워요! 졸업까지 같이 걸어갈게요. 몇 학번인지부터 알려 주세요.' },
+  { pose: 'think', text: '복수전공·융합전공 같은 조건이 있으면 골라 주세요. 없으면 그냥 넘어가도 돼요.' },
+  { pose: 'report', text: '지금까지 들은 과목을 알려 주면 남은 길을 계산해 드려요.' },
+]
+
 export default function Setup({ meta, state, programs, programCodes, report, editing = false, initialStep = 0, onChange, onAddProgram, onDone }) {
   const [step, setStep] = useState(initialStep)
   const { entryYear, taken, profile } = state
@@ -44,6 +52,9 @@ export default function Setup({ meta, state, programs, programCodes, report, edi
       )}
 
       <div className="setup-body">
+        {!editing && GUIDE[step] && (
+          <p className="setup-guide with-mascot"><Mascot pose={GUIDE[step].pose} size={56} /><span>{GUIDE[step].text}</span></p>
+        )}
         {step === 0 && (
           <div className="card">
             <h2>몇 학번인가요?</h2>

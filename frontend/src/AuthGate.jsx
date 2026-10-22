@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { authEnabled, PROVIDERS, signIn, supabase } from './auth.js'
 import { useHash } from './hash.js'
 import { PrivacyPage } from './Privacy.jsx'
-import BrandMark from './components/BrandMark.jsx'
+import Mascot from './components/Mascot.jsx'
+import scene from './assets/trail-scene.svg'
 
 // 로그인한 사용자만 화면(children)을 본다. Supabase 설정이 없으면 로그인 없이 통과(user=null).
 // 개인정보 처리 안내(#/privacy)는 로그인 없이도 볼 수 있다.
@@ -30,7 +31,11 @@ export default function AuthGate({ children }) {
   return (
     <div className="login">
       <div className="login-card panel">
-        <h1 className="brand login-brand" aria-label="trAIl"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></h1>
+        <div className="login-scene" aria-hidden="true">
+          <img src={scene} alt="" draggable="false" />
+          <Mascot pose="walk" size={104} className="login-mascot" />
+        </div>
+        <h1 className="brand login-brand" aria-label="trAIl"><span>tr<span className="brand-ai">AI</span>l</span></h1>
         <p className="subtitle">졸업까지 따라가는 길 · 경북대 인공지능전공 졸업요건 대시보드</p>
         <div className="login-buttons">
           {PROVIDERS.map((p) => (
