@@ -185,6 +185,10 @@ function Setup({ terms, defaults, onStart }) {
           </ul>
         </div>
       </div>
+      {/* 모바일 수강신청 화면의 오른쪽 아래 TOP 버튼 (좁은 화면에서만 보임) */}
+      <button type="button" className="sim-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <span aria-hidden="true">↑</span>TOP
+      </button>
     </div>
   )
 }
@@ -536,19 +540,25 @@ function Main({ data, config, taken, programNames, entryYear, store, onFinish })
           </span>
         </div>
 
+        {/* 넓은 화면: 한 줄 / 좁은 화면: 강좌번호 → 문자 그림·입력 나란히 → 확인·조회 나란히 */}
         <form className="sim-inputbar" onSubmit={confirm}>
-          <label><span className="req">*</span>강좌번호
-            <input value={idText} onChange={(e) => setIdText(e.target.value)} placeholder="11자리 입력" maxLength={14} />
+          <label className="sim-field sim-field-id">
+            <span className="sim-lbl"><span className="sim-req">*</span>강좌번호</span>
+            <input value={idText} onChange={(e) => setIdText(e.target.value)} placeholder="11자리 입력" maxLength={14}
+              autoCapitalize="characters" autoCorrect="off" spellCheck={false} />
           </label>
           {config.captcha && (
-            <>
-              <span className="sim-captcha-label"><span className="req">*</span>자동입력방지<br />문자</span>
+            <div className="sim-field sim-field-captcha">
+              <span className="sim-lbl sim-captcha-label"><span className="sim-req">*</span>자동입력방지<br />문자</span>
               <Captcha text={captcha} onRefresh={() => setCaptcha(randomCaptcha())} />
-              <input value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} placeholder="왼쪽/상단 이미지 4자리 입력" maxLength={4} aria-label="자동입력방지문자 입력" />
-            </>
+              <input value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} placeholder="이미지 4자리 입력" maxLength={4}
+                aria-label="자동입력방지문자 입력" autoCapitalize="characters" autoCorrect="off" spellCheck={false} />
+            </div>
           )}
-          <button type="submit" className="sim-btn-line">확인</button>
-          <button type="button" className="sim-btn-red" onClick={confirm}>조회</button>
+          <div className="sim-actions">
+            <button type="submit" className="sim-btn-line">확인</button>
+            <button type="button" className="sim-btn-red" onClick={confirm}>조회</button>
+          </div>
         </form>
 
         <div className="sim-tabs">

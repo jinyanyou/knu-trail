@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import LoginShell from './components/LoginShell.jsx'
 
 // 내용을 바꾸면 버전을 올린다 → 기존 사용자도 다음 접속 때 다시 동의를 받는다
 export const PRIVACY_VERSION = '2026-10-23'
@@ -36,18 +37,26 @@ export function ConsentSummary({ agreed, onChange }) {
   )
 }
 
-// 로그인했지만 동의 기록이 없는 사용자 (처음 로그인, 또는 안내 내용이 바뀜)
-export function ConsentScreen({ onAgree, onDecline }) {
+// 로그인했지만 유효한 동의 기록이 없는 사용자
+// mode 'signup': 가입하지 않은 계정으로 [로그인]한 경우 → 동의하면 가입, 취소하면 방금 만들어진 계정 삭제
+// mode 'updated': 기존 회원인데 안내 내용(PRIVACY_VERSION)이 바뀐 경우 → 다시 동의, 거부하면 로그아웃
+export function ConsentScreen({ mode = 'signup', onAgree, onDecline }) {
   const [agreed, setAgreed] = useState(false)
+  const signup = mode === 'signup'
   return (
-    <div className="login">
-      <div className="login-card panel">
-        <h2>개인정보 처리 안내가 필요합니다</h2>
-        <ConsentSummary agreed={agreed} onChange={setAgreed} />
-        <button type="button" className="btn btn-primary" disabled={!agreed} onClick={onAgree}>동의하고 시작하기</button>
-        <button type="button" className="btn-link" onClick={onDecline}>동의하지 않음 (계정이 삭제됩니다)</button>
-      </div>
-    </div>
+    <LoginShell pose={signup ? 'think' : 'surprise'}>
+      <h2 className="consent-heading">{signup ? '아직 가입하지 않은 계정이에요' : '개인정보 처리 안내가 바뀌었어요'}</h2>
+      <p className="login-lead">
+        {signup ? '아래 안내에 동의하면 이 계정으로 가입이 완료돼요.' : '바뀐 안내를 확인하고 다시 동의해 주세요. 입력해 둔 내용은 그대로 있어요.'}
+      </p>
+      <ConsentSummary agreed={agreed} onChange={setAgreed} />
+      <button type="button" className="btn btn-primary" disabled={!agreed} onClick={onAgree}>
+        {signup ? '동의하고 가입하기' : '동의하고 계속하기'}
+      </button>
+      <button type="button" className="btn-link" onClick={onDecline}>
+        {signup ? '가입하지 않기 (방금 로그인한 계정 정보는 지워져요)' : '동의하지 않음 (로그아웃)'}
+      </button>
+    </LoginShell>
   )
 }
 

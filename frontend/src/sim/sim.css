@@ -87,11 +87,14 @@
 .sim-phase { margin-left: auto; font-weight: 700; color: var(--sim-sub); }
 .sim-phase.open { color: var(--sim-red); }
 .sim-inputbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border: 2px solid var(--sim-red); padding: 10px 14px; margin-bottom: 18px; }
-.sim-inputbar label { display: flex; align-items: center; gap: 10px; font-weight: 600; flex: 1 1 260px; }
-.sim-inputbar label input { flex: 1; }
-.sim-inputbar > input { flex: 1 1 170px; }
+.sim-field { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.sim-field input { flex: 1 1 auto; min-width: 0; }
+.sim-field-id { flex: 1 1 260px; }
+.sim-field-captcha { flex: 2 1 420px; }
+.sim-lbl { font-weight: 600; white-space: nowrap; }
+.sim-actions { display: flex; gap: 10px; }
 .sim-captcha-label { font-weight: 600; font-size: 13px; text-align: center; line-height: 1.2; }
-.req { color: var(--sim-red); margin-right: 2px; }
+.sim-req { color: var(--sim-red); margin-right: 2px; } /* 홈 요건 목록 .req와 이름이 겹치지 않게 */
 .sim-captcha { display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bbb; padding: 0 4px 0 0; background: #fff; }
 .sim-refresh { background: var(--sim-red); color: #fff; border: 0; width: 22px; height: 22px; border-radius: 3px; font-size: 13px; line-height: 1; }
 .sim-tabs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
@@ -185,11 +188,18 @@
   .sim-profile { display: grid; grid-template-columns: 1fr 1fr; }
   .sim-profile span { border-bottom: 1px solid var(--sim-line); }
   .sim-phase { grid-column: 1 / -1; margin-left: 0; }
-  .sim-inputbar { flex-direction: column; align-items: stretch; gap: 8px; }
-  .sim-inputbar label { flex-direction: column; align-items: stretch; gap: 4px; flex: none; }
+  .sim-inputbar { flex-direction: column; align-items: stretch; gap: 12px; padding: 12px; }
+  .sim-field { flex: none; }
+  .sim-field-id { flex-direction: column; align-items: stretch; gap: 6px; }
+  .sim-field input { height: 44px; font-size: 16px; padding: 0 10px; }
+  /* 이름은 한 줄 위, 그 아래 문자 그림과 입력 칸을 나란히 */
+  .sim-field-captcha { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 8px; align-items: stretch; }
+  .sim-field-captcha .sim-lbl { grid-column: 1 / -1; }
+  .sim-field-captcha .sim-captcha { height: 44px; }
   .sim-captcha-label br { display: none; }
-  .sim-captcha-label { text-align: left; }
-  .sim-inputbar > .sim-btn-line, .sim-inputbar > .sim-btn-red { width: 100%; }
+  .sim-captcha-label { text-align: left; font-size: inherit; }
+  .sim-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sim-actions button { min-height: 44px; font-size: 15px; font-weight: 700; }
   .sim-tabs > button:not(.sim-btn-red) { padding: 7px 16px; }
   .sim-batch { margin-left: 0; width: 100%; }
   .sim-notice { padding: 10px 12px; }
@@ -198,3 +208,25 @@
   .sim-login-info { padding: 20px; }
 }
 .sim-btn-xs { white-space: nowrap; }
+
+/* ── 모바일: 실제 수강신청 모바일 화면 배치를 따른다 (학번·비밀번호 칸과 학교 로고는 일부러 넣지 않음) ── */
+.sim-top { display: none; }
+@media (max-width: 640px) {
+  .sim-login-wrap { background: #f5f5f5; overflow: hidden; }
+  /* 붉은 띠는 왼쪽 절반, 그 붉은색이 왼쪽 가장자리를 따라 아래로 이어진다 */
+  .sim-login-band { width: 52%; height: 60px; padding: 0 16px; }
+  .sim-login-band::after { display: block; top: 60px; width: 52%; height: 720px; }
+  .sim-login-sheet { margin: 0 0 0 8px; padding: 20px 18px 96px; border-radius: 26px 40px 0 0; min-height: 0; }
+  .sim-login-card { width: 100%; box-shadow: none; }
+  .sim-login-head { height: auto; padding: 26px 32px 24px; }
+  .sim-login-head p { font-size: 24px; line-height: 1.4; }
+  .sim-login-body { padding: 26px 20px 8px; gap: 16px; }
+  .sim-login-body label { font-size: 16px; color: #7b6a58; gap: 10px; }
+  .sim-login-body select { height: 48px; font-size: 16px; border: 1px solid #bbb; border-radius: 0; background: #fff; padding: 0 12px; }
+  .sim-login-body .sim-check { font-size: 15px; }
+  .sim-btn-login { height: 54px; font-size: 20px; font-weight: 700; }
+  .sim-login-info { margin-top: 8px; box-shadow: none; border-top: 1px solid #eee; }
+  .sim-top { display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; right: 0; bottom: 72px; z-index: 25;
+    width: 50px; height: 50px; border: 0; background: var(--sim-red); color: #fff; font-size: 11px; letter-spacing: 0.04em; line-height: 1.1; }
+  .sim-top span { font-size: 18px; }
+}
