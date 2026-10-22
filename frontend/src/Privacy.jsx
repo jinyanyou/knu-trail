@@ -1,9 +1,8 @@
 import { useState } from 'react'
 
 // 내용을 바꾸면 버전을 올린다 → 기존 사용자도 다음 접속 때 다시 동의를 받는다
-export const PRIVACY_VERSION = '2026-10-22'
-// TODO: 배포 전 개인정보 보호책임자(팀 대표) 이름·연락처로 채우기
-const OFFICER = { name: 'trAIl 팀 대표', contact: '(연락처를 입력하세요)' }
+export const PRIVACY_VERSION = '2026-10-23'
+const OFFICER = { name: '연다(Open)', contact: 'yummyday007@gmail.com' }
 
 export const consentRecord = () => ({ version: PRIVACY_VERSION, agreedAt: new Date().toISOString() })
 export const hasConsent = (state) => state?.consent?.version === PRIVACY_VERSION
@@ -26,7 +25,7 @@ export function ConsentSummary({ agreed, onChange }) {
         ))}
       </dl>
       <p className="consent-more">
-        과목·성적은 데이터베이스 서비스 Supabase(국외 서버일 수 있음)에 보관합니다.{' '}
+        과목·성적은 Supabase의 서울 리전 서버에 보관하고, 졸업요건 계산은 trAIl 서버(Render, 싱가포르)에서 저장 없이 처리합니다.{' '}
         <a href="#/privacy" target="_blank" rel="noreferrer">개인정보 처리 안내 전문</a>
       </p>
       <label className="consent-check">
@@ -81,9 +80,14 @@ export function PrivacyPage() {
 
       <h2>4. 처리 위탁 및 국외 이전</h2>
       <ul>
-        <li><b>Supabase Inc.</b> — 로그인 처리와 데이터 보관. 서버 위치는 프로젝트 설정 지역에 따르며 국외일 수 있습니다. 보유 기간은 위 3과 같습니다.</li>
+        <li><b>Supabase Inc.</b> — 로그인 처리와 데이터 보관. 데이터는 대한민국 서울 리전(AWS ap-northeast-2) 서버에 저장합니다. 보유 기간은 위 3과 같습니다.</li>
+        <li>
+          <b>Render Services, Inc. (서버 위치: 싱가포르)</b> — trAIl 서버 운영(국외 이전).
+          졸업요건 계산·로드맵·성적표 글자 인식을 위해, 화면을 쓸 때마다 학번·과목·성적·졸업요건 조건을 HTTPS로 보내 계산만 하고
+          결과를 돌려준 뒤 저장하지 않습니다.
+        </li>
         <li><b>Anthropic PBC (미국)</b> — 성적표·시간표 <em>사진/스캔 PDF</em>의 AI 인식을 이용자가 직접 실행한 경우에만, 그 파일을 인식 목적으로 전송합니다. 인식 결과만 화면에 돌려받으며 trAIl은 원본 파일을 저장하지 않습니다.</li>
-        <li>글자로 붙여넣은 성적표·시간표는 외부로 보내지 않고 서버에서 규칙으로만 인식합니다.</li>
+        <li>글자로 붙여넣은 성적표·시간표는 AI 서비스로 보내지 않고 trAIl 서버에서 규칙으로만 인식합니다.</li>
       </ul>
 
       <h2>5. 이용자의 권리</h2>
@@ -99,7 +103,7 @@ export function PrivacyPage() {
       </ul>
 
       <h2>7. 문의</h2>
-      <p>개인정보 보호책임자: {OFFICER.name} · {OFFICER.contact}</p>
+      <p>개인정보 보호책임자: {OFFICER.name} · <a href={`mailto:${OFFICER.contact}`}>{OFFICER.contact}</a></p>
       <p className="subtitle">이 안내의 내용이 바뀌면 다음 접속 때 다시 동의를 받습니다.</p>
     </div>
   )

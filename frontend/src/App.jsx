@@ -5,6 +5,7 @@ import { useHash } from './hash.js'
 import { consentRecord, ConsentScreen, hasConsent } from './Privacy.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import BrandMark from './components/BrandMark.jsx'
+import Mascot from './components/Mascot.jsx'
 import Setup from './components/Setup.jsx'
 import CourseSheet from './components/CourseSheet.jsx'
 import Daily from './components/Daily.jsx'
@@ -131,6 +132,7 @@ function AccountMenu({ user, saveStatus }) {
         <span className="account-name">
           {displayName(user)}
           <small className={`save-status save-${saveStatus}`}>
+            {saveStatus === 'saved' && <Mascot pose="rest" size={20} className="save-mascot" />}
             {{ saved: '저장됨', saving: '저장 중…', error: '저장 실패' }[saveStatus]}
           </small>
         </span>

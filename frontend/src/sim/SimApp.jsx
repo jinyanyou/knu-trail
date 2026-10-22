@@ -18,6 +18,23 @@ const CHANGE_AGE = 3 * 86400      // 정정 기간에는 신청이 열린 지 �
 const CHANGE_BUSY = 3             // 정정 기간에는 취소가 잦아 빈자리가 더 자주 열림
 const BEST_KEY = 'best'
 const MEMO_KEY = 'memo'
+// 접속 대기 중 새로고침: 실제처럼 대기가 처음부터 다시 (맨 뒤 순번). 이 탭에서만 기억한다
+const SESSION_KEY = 'trail:sim-session'
+const readSession = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null')
+  } catch {
+    return null
+  }
+}
+const writeSession = (v) => {
+  try {
+    if (v) sessionStorage.setItem(SESSION_KEY, JSON.stringify(v))
+    else sessionStorage.removeItem(SESSION_KEY)
+  } catch {
+    // 저장이 막혀 있으면 새로고침 때 처음 화면으로 돌아갈 뿐
+  }
+}
 
 // 기록·메모는 이 브라우저에만 (실패해도 연습은 그대로 진행)
 const randomCaptcha = () =>
@@ -173,8 +190,9 @@ function Setup({ terms, defaults, onStart }) {
 }
 
 // ── 2. 접속 대기 ─────────────────────────────────────────────
-function Queue({ onDone }) {
-  const [n, setN] = useState(() => 300 + Math.floor(Math.random() * 1500))
+function Queue({ onDone, reloaded }) {
+  // 새로고침해서 다시 들어오면 맨 뒤 순번으로
+  const [n, setN] = useState(() => (reloaded ? 1500 : 300) + Math.floor(Math.random() * 1500))
   useEffect(() => {
     if (n <= 0) {
       onDone()
@@ -186,6 +204,7 @@ function Queue({ onDone }) {
   return (
     <div className="sim-queue" role="status">
       <p className="sim-queue-title">접속 대기 중입니다 (연습)</p>
+      {reloaded && <p className="sim-small sim-queue-reset">새로고침해서 대기 순번이 맨 뒤로 다시 배정됐어요.</p>}
       <p>나의 대기순번 <b>{n.toLocaleString()}</b>번</p>
       <div className="sim-queue-bar"><span style={{ width: `${Math.max(5, 100 - n / 18)}%` }} /></div>
       <p className="sim-small">실제 사이트에서는 새로고침하면 맨 뒤 순번으로 다시 배정됩니다.</p>
@@ -636,39 +655,55 @@ export default function SimApp({ taken, programNames = [], entryYear, store, onE
   const [stage, setStage] = useState('setup')
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
+  const [reloaded, setReloaded] = useState(false) // 대기 중에 새로고침해서 다시 들어왔는지
 
-  useEffect(() => {
-    api.getSimTerms().then((r) => setTerms(r.terms)).catch((e) => setError(e.message))
-  }, [])
-
-  const start = async (cfg) => {
+  const start = async (cfg, again = false) => {
     setError(null)
     try {
       if (!data || data.term !== cfg.term) setData({ term: cfg.term, ...(await api.getSimTimetable(cfg.term)) })
       setConfig(cfg)
+      setReloaded(again)
       setStage(cfg.queue ? 'queue' : 'main')
+      writeSession(cfg.queue ? { stage: 'queue', cfg } : null)
     } catch (e) {
       setError(e.message)
+      writeSession(null)
     }
   }
-  const queueDone = useCallback(() => setStage('main'), [])
+
+  useEffect(() => {
+    api.getSimTerms().then((r) => setTerms(r.terms)).catch((e) => setError(e.message))
+    const saved = readSession()
+    if (saved?.stage === 'queue' && saved.cfg) start(saved.cfg, true)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // 연습을 나가면 대기 기억도 지운다 (다음에 열 때 처음 화면부터)
+  const exit = () => {
+    writeSession(null)
+    onExit()
+  }
+
+  const queueDone = useCallback(() => {
+    writeSession(null)
+    setStage('main')
+  }, [])
 
   // 졸업 133학점 → 학기당 20학점 (2026-2학기 수강신청 안내 기준)
   const defaults = { gradCredits: 133, maxCredits: 20 }
 
   return (
     <div className="sim-root">
-      <SimBanner onExit={onExit} />
+      <SimBanner onExit={exit} />
       {error && <p className="sim-error" role="alert">{error}</p>}
       {stage === 'setup' && (terms ? <Setup terms={terms} defaults={defaults} onStart={start} /> : <p className="sim-loading">불러오는 중…</p>)}
-      {stage === 'queue' && <Queue onDone={queueDone} />}
+      {stage === 'queue' && <Queue onDone={queueDone} reloaded={reloaded} />}
       {stage === 'main' && data && (
         <Main data={data} config={config} taken={taken} programNames={programNames} entryYear={entryYear} store={store}
           onFinish={(registered, log) => { setResult({ registered, log }); setStage('result') }} />
       )}
       {stage === 'result' && result && (
-        <Result {...result} round={config.round} store={store} onAgain={() => setStage('setup')} onExit={onExit}
-          onExport={() => { onExportPlanned(result.registered, data); onExit() }} />
+        <Result {...result} round={config.round} store={store} onAgain={() => setStage('setup')} onExit={exit}
+          onExport={() => { onExportPlanned(result.registered, data); exit() }} />
       )}
     </div>
   )
