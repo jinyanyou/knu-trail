@@ -259,7 +259,7 @@ select.invalid { border-color: var(--critical); }
 .login-buttons .btn { min-height: 46px; font-size: 15px; }
 .login-kakao { background: #fee500; border-color: #fee500; color: #191919; }
 .login-google { background: #fff; border-color: #dadce0; color: #1f1f1f; }
-.login-note { color: var(--text-3); font-size: 13px; line-height: 1.6; }
+.login-note { color: var(--text-3); font-size: 13px; line-height: 1.6; word-break: keep-all; }
 .login-note a { color: var(--accent-ink); }
 .account { position: relative; }
 .account summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 4px 6px 4px 4px; border-radius: 999px; }

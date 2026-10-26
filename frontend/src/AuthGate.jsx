@@ -71,7 +71,8 @@ export default function AuthGate({ children }) {
         ) : (
           <>처음이라면 <button type="button" className="btn-link" onClick={() => setTab('signup')}>회원가입</button>부터 해 주세요.</>
         )}
-        {' '}입력한 과목·성적은 내 계정에 저장되어 본인만 볼 수 있습니다. 학교 포털 아이디·비밀번호는 묻지 않습니다.
+        <br />입력한 과목·성적은 내 계정에 저장되어 본인만 볼 수 있습니다.
+        <br />학교 포털 아이디·비밀번호는 묻지 않습니다.
       </p>
     </LoginShell>
   )
