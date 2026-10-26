@@ -72,6 +72,8 @@ a.rm-pill:hover { background: #d3ead1; }
 .panel > h2::before, .card > h2::before { content: ''; display: inline-block; width: 6px; height: 14px; border-radius: 2px; background: var(--accent); margin-right: 8px; vertical-align: -1px; }
 .panel, .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
 .footer { margin-top: 28px; color: var(--text-3); font-size: 12px; text-align: center; }
+.footer p { margin: 0; line-height: 1.7; word-break: keep-all; text-wrap: balance; }
+.footer-links { margin-top: 6px !important; }
 
 /* ── 폼 ───────────────────────────────────── */
 select, input[type='text'], input[type='search'], input[type='number'] {

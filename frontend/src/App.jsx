@@ -417,9 +417,10 @@ function Navi({ user, initial }) {
       )}
 
       <footer className="footer">
-        교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준. 최종 확인은 학과 사무실에서 하세요.
-        {' '}{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}
-        {' '}<a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a>
+        <p>교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준.</p>
+        <p>최종 확인은 학과 사무실에서 하세요.</p>
+        <p>{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}</p>
+        <p className="footer-links"><a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a></p>
       </footer>
     </div>
   )
