@@ -658,6 +658,23 @@ h3.with-mascot { gap: 8px; }
 .login-scene img:first-child { display: block; width: 100%; height: auto; }
 .login-mascot { position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%); width: 21%; height: auto; }
 .login-brand { font-size: 44px; }
+.login-hero, .login-body { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.login-hero .subtitle { word-break: keep-all; text-wrap: balance; }
+/* 컴퓨터: 넓은 카드 2단 — 왼쪽 그림·로고, 오른쪽 탭·안내·버튼 */
+@media (min-width: 900px) {
+  .login-card { width: min(920px, 100%); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 0; padding: 0; border: 2px solid #1b1a17; border-radius: 24px; }
+  .login-hero { justify-content: center; gap: 18px; padding-bottom: 40px; background: #e6f2e4; border-right: 2px solid #1b1a17; }
+  .login-scene { margin: 0 0 8px; }
+  .login-mascot { width: 26%; }
+  .login-hero .login-brand { font-size: 64px; }
+  .login-hero .subtitle { font-size: 15px; padding: 0 32px; word-break: keep-all; }
+  .login-body { justify-content: center; gap: 16px; padding: 40px 44px; }
+  .login-tabs button { font-size: 17px; padding: 12px 0; }
+  .login-lead { font-size: 15px; }
+  .login-buttons .btn { min-height: 50px; font-size: 16px; }
+  .login-note { font-size: 14px; }
+  .login-body .consent { font-size: 14px; }
+}
 /* 첫 시작 설정 안내 */
 .setup-guide { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; background: #e6f2e4; font-size: 14px; font-weight: 600; color: var(--text); }
 /* 계정 메뉴 '저장됨' */
@@ -677,7 +694,8 @@ h3.with-mascot { gap: 8px; }
 .login-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--border); margin-top: 4px; }
 .login-tabs button { border: 0; background: none; padding: 10px 0; font: inherit; font-weight: 700; font-size: 16px; color: var(--text-3); cursor: pointer; margin-bottom: -2px; border-bottom: 3px solid transparent; }
 .login-tabs button.on { color: var(--accent-ink); border-bottom-color: var(--accent); }
-.login-lead { font-size: 14px; color: var(--text-2); }
+.login-lead { font-size: 14px; color: var(--text-2); word-break: keep-all; }
+.login-lead-line { display: block; text-wrap: balance; }
 .login-wait { padding: 8px 0 16px; }
 .consent-heading { font-size: 18px; margin: 4px 0 0; }
 .login-card .consent { text-align: left; }
