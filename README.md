@@ -143,8 +143,11 @@ pytest
      - [앱] > [플랫폼 키] > [REST API 키]: **카카오 로그인 리다이렉트 URI**에 위 callback 주소,
        같은 화면의 REST API 키 = Client ID, **클라이언트 시크릿** = Client Secret
      - [카카오 로그인] > [사용 설정] 상태 ON
-     - [카카오 로그인] > [동의항목]: 닉네임 필수, 프로필 사진 선택. 이메일은 비즈 앱 전환이 필요해 받지 않는다
-       → Supabase Kakao 설정에서 **Allow users without an email**을 켠다
+     - [카카오 로그인] > [동의항목]: 닉네임 필수, 프로필 사진 선택, **카카오계정(이메일) 선택 동의**
+       - Supabase는 카카오에 `account_email profile_image profile_nickname`을 항상 요청한다(화면에서 뺄 수 없음).
+         세 항목 중 하나라도 설정하지 않으면 **KOE205 (설정하지 않은 동의항목)** 오류가 난다
+       - 이메일 동의항목은 비즈 앱에서만 켤 수 있다 → **개인 개발자 비즈 앱**으로 전환(본인 인증)
+       - 이메일 제공을 거절한 사용자도 가입되게 Supabase Kakao 설정에서 **Allow users without an email**을 켠다
      - 사이트 도메인(JavaScript SDK 도메인)은 필요 없다 (카카오 JS SDK를 쓰지 않음)
 
 구조: 로그인·저장은 화면이 Supabase에 직접 한다(`frontend/src/auth.js`, `AuthGate.jsx`). 표 `user_state`에
