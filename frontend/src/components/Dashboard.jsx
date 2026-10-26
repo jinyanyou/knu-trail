@@ -23,6 +23,7 @@ function Badge({ status }) {
 }
 
 function Progress({ r }) {
+  if (r.counseling && r.required == null) return r.earned == null ? null : <span className="numbers"><strong>{r.earned}</strong><span className="of">회 받음</span></span>
   if (r.required == null) {
     // 기준을 모르는 다전공 학점 — 지금까지 모은 학점만 보여준다
     return r.earned == null ? null : (
@@ -84,7 +85,39 @@ function Options({ r, onPlan, planned, rg }) {
   )
 }
 
-function Requirement({ r, onPlan, planned, onOpen, rg }) {
+// 학생상담지도교수 상담 — 받은 횟수·필요 횟수를 바로 고친다 (필요 횟수는 학과 안내 기준).
+// 계산 결과를 기다리지 않게 입력값은 프로필에서 바로 읽는다
+function CounselingEdit({ profile, onChange }) {
+  const c = { count: profile.counseling_count ?? null, required: profile.counseling_required ?? null, confirmed: !!profile.counseling_done }
+  const count = c.count ?? 0
+  const num = (v) => (v === '' ? null : Math.max(0, Math.min(99, Math.floor(Number(v)) || 0)))
+  return (
+    <div className="counsel-edit">
+      <div className="counsel-row">
+        <span className="counsel-label">받은 상담</span>
+        <button type="button" className="btn btn-sm counsel-step" aria-label="상담 횟수 1 줄이기" disabled={count <= 0}
+          onClick={() => onChange({ counseling_count: count - 1 })}>−</button>
+        <input type="number" inputMode="numeric" min="0" max="99" className="counsel-input" aria-label="받은 상담 횟수"
+          value={c.count ?? ''} placeholder="0" onChange={(e) => onChange({ counseling_count: num(e.target.value) })} />
+        <button type="button" className="btn btn-sm counsel-step" aria-label="상담 횟수 1 늘리기"
+          onClick={() => onChange({ counseling_count: count + 1 })}>+</button>
+        <span className="muted">회</span>
+      </div>
+      <label className="counsel-row">
+        <span className="counsel-label">필요 횟수</span>
+        <input type="number" inputMode="numeric" min="1" max="99" className="counsel-input" aria-label="졸업에 필요한 상담 횟수"
+          value={c.required ?? ''} placeholder="입력" onChange={(e) => onChange({ counseling_required: num(e.target.value) || null })} />
+        <span className="muted">회 (학과 안내 기준)</span>
+      </label>
+      <label className="check">
+        <input type="checkbox" checked={c.confirmed} onChange={(e) => onChange({ counseling_done: e.target.checked })} />
+        <span>학과에서 충족 확인받음</span>
+      </label>
+    </div>
+  )
+}
+
+function Requirement({ r, onPlan, planned, onOpen, rg, profile, onProfile }) {
   return (
     <li className="req">
       <div className="req-head">
@@ -98,6 +131,7 @@ function Requirement({ r, onPlan, planned, onOpen, rg }) {
         <Progress r={r} />
         <Badge status={r.status} />
       </div>
+      {r.counseling && onProfile && <CounselingEdit profile={profile} onChange={onProfile} />}
       {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={r.label} />}
 
       {r.missing?.length > 0 && (
@@ -128,7 +162,7 @@ function Requirement({ r, onPlan, planned, onOpen, rg }) {
   )
 }
 
-export default function Dashboard({ report, onPlan, onOpen }) {
+export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProfile }) {
   const planned = new Set(report.courses.map((c) => c.code))
   const rg = useRelativeGrading(report.entry_year, report.programs.map((p) => p.code))
   const byId = Object.fromEntries(report.requirements.map((r) => [r.id, r]))
@@ -204,7 +238,8 @@ export default function Dashboard({ report, onPlan, onOpen }) {
                 {r.planned > 0 && <span className="plus">+{r.planned}</span>}
                 <span className="of">{r.required != null ? `/${r.required}${r.unit}` : `${r.unit} (기준 확인 필요)`}</span>
               </p>
-              {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={title} />}
+              {r.counseling && onProfile && <CounselingEdit profile={profile} onChange={onProfile} />}
+      {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={title} />}
               {req && (
                 <p className="muted">
                   {req.label} {req.earned}{req.planned > 0 ? `+${req.planned}` : ''}/{req.required}{req.unit}
@@ -220,7 +255,7 @@ export default function Dashboard({ report, onPlan, onOpen }) {
         <div key={g} className="panel">
           <h2 className="display">{g}</h2>
           <ul className="reqs">
-            {report.requirements.filter((r) => r.group === g).map((r) => <Requirement key={r.id} r={r} onPlan={onPlan} planned={planned} onOpen={onOpen} rg={rg} />)}
+            {report.requirements.filter((r) => r.group === g).map((r) => <Requirement key={r.id} r={r} onPlan={onPlan} planned={planned} onOpen={onOpen} rg={rg} profile={profile} onProfile={onProfile} />)}
           </ul>
         </div>
       ))}

@@ -3,6 +3,8 @@ import * as api from '../api.js'
 import BrandMark from './BrandMark.jsx'
 import Mascot from './Mascot.jsx'
 import { RgBadge, RgNote, termKey, useRelativeGrading } from './RelativeGrading.jsx'
+import { CLS, CLS_LABEL, ProgramTrail, TrailMap, buildTrail, makeTagOf, nodeKey, planCls } from './RoadmapTrail.jsx'
+import TermCards from './TermCards.jsx'
 
 const CREDIT_LIMITS = [15, 18, 19, 21]
 const TERM_COUNT = 10 // 학기 옮기기에서 고를 수 있는 학기 수 (계획 시작부터)
@@ -10,16 +12,6 @@ const newId = () => Math.random().toString(36).slice(2, 10)
 const key = (t) => `${t.year}|${t.semester}`
 const sumCredits = (courses) => courses.reduce((s, c) => s + (c.credits || 0), 0)
 
-// 과목 색 구분 (엔진이 붙여 주는 kind) — 필터 칩도 이 순서
-const KINDS = [
-  { kind: '전공필수', label: '전필', cls: 'req' },
-  { kind: '전공', label: '전공', cls: 'major' },
-  { kind: '다전공', label: '다전공', cls: 'prog' },
-  { kind: '교양', label: '교양', cls: 'la' },
-  { kind: '자유선택', label: '자유', cls: 'free' },
-  { kind: '일반선택', label: '일선', cls: 'free' },
-]
-const kindOf = (c) => KINDS.find((k) => k.kind === c.kind) ?? KINDS[5]
 const termName = (key, entryYear) => {
   const [y, s] = key.split('-').map(Number)
   return `${y - entryYear + 1}학년 ${s}학기`
@@ -62,33 +54,38 @@ function mergeTerms(terms, extra) {
   return [...map.values()].sort((a, b) => a.year - b.year || a.semester.localeCompare(b.semester))
 }
 
-function CourseRow({ c, terms, used, rg, onMove, onSwap, onRemove }) {
+// 로드맵이 넣은 과목 — '고치기'를 누르면 학기 옮기기·다른 과목으로 바꾸기·빼기
+function PlanItem({ c, cls, tag, terms, used, rg, onMove, onSwap, onRemove }) {
+  const [open, setOpen] = useState(false)
   const alts = (c.alternatives ?? []).filter((a) => !used.has(a.code))
-  const k = kindOf(c)
   return (
-    <li className={`k-${k.cls}`}>
-      <div className="roadmap-course-main">
-        <span className="c-name">{c.name} <RgBadge rg={rg} code={c.code} term={termKey(c.year, c.semester)} /></span>
-        <span className="c-meta"><b className="k-tag">{k.label}</b> {c.credits}학점 · {c.reason}</span>
+    <li className={`tc-item k-${cls}${c.code.startsWith('ROADMAP-FREE') ? ' tc-free' : ''}`}>
+      <div className="tc-line">
+        <span className="tc-name">{c.name} <RgBadge rg={rg} code={c.code} term={termKey(c.year, c.semester)} /></span>
+        <button type="button" className="tc-edit-btn" aria-expanded={open} aria-label={`${c.name} 고치기`} onClick={() => setOpen(!open)}>{open ? '닫기' : '고치기'}</button>
       </div>
-      <div className="roadmap-course-edit">
-        <select aria-label={`${c.name} 학기 옮기기`} value={key(c)} onChange={(e) => onMove(e.target.value)}>
-          {terms.map((t) => <option key={key(t)} value={key(t)}>{t.grade}학년 {t.semester}</option>)}
-        </select>
-        {alts.length > 0 && (
-          <select aria-label={`${c.name} 다른 과목으로 바꾸기`} value="" onChange={(e) => onSwap(e.target.value)}>
-            <option value="">다른 과목으로…</option>
-            {alts.map((a) => <option key={a.code} value={a.code}>{a.name} ({a.credits}학점)</option>)}
+      <span className="tc-meta">{tag} · {c.credits}학점</span>
+      {c.reason && <span className="tc-reason">{c.reason}</span>}
+      {open && (
+        <div className="roadmap-course-edit">
+          <select aria-label={`${c.name} 학기 옮기기`} value={key(c)} onChange={(e) => onMove(e.target.value)}>
+            {terms.map((t) => <option key={key(t)} value={key(t)}>{t.grade}학년 {t.semester}로</option>)}
           </select>
-        )}
-        <button type="button" className="icon-btn" aria-label={`${c.name} 계획에서 빼기`} onClick={onRemove}>✕</button>
-      </div>
+          {alts.length > 0 && (
+            <select aria-label={`${c.name} 다른 과목으로 바꾸기`} value="" onChange={(e) => onSwap(e.target.value)}>
+              <option value="">다른 과목으로…</option>
+              {alts.map((a) => <option key={a.code} value={a.code}>{a.name} ({a.credits}학점)</option>)}
+            </select>
+          )}
+          <button type="button" className="btn btn-sm" onClick={onRemove}>계획에서 빼기</button>
+        </div>
+      )}
     </li>
   )
 }
 
 // #/roadmap — 졸업까지 학기별 수강 계획. 넣기 전에 학기 옮기기·다른 과목으로 바꾸기·빼기로 고칠 수 있다
-export default function Roadmap({ entryYear, payload, profile, taken, simulating, onAdd, onBack }) {
+export default function Roadmap({ entryYear, payload, profile, taken, report, simulating, onAdd, onBack }) {
   const [maxCredits, setMaxCredits] = useState(18)
   const [plan, setPlan] = useState(null)
   const [terms, setTerms] = useState([])       // 고친 계획
@@ -101,6 +98,7 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [reload, setReload] = useState(0)
+  const [picked, setPicked] = useState(null)   // 지도에서 누른 학기
   const rg = useRelativeGrading(entryYear, (profile.programs ?? []).map((p) => p.code))
 
   useEffect(() => {
@@ -210,12 +208,22 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
     })
   }
   const removedRequired = removed.filter((c) => !c.alternatives?.length && !c.code.startsWith('ROADMAP-FREE') && !used.has(c.code))
-  const unmet = check ? check.requirements.filter((r) => r.status === 'unmet') : []
-  const manual = check ? check.requirements.filter((r) => r.status === 'manual' || r.status === 'unknown') : []
+  // 상담 횟수는 과목으로 못 채우니 '직접 확인'으로
+  const unmet = check ? check.requirements.filter((r) => r.status === 'unmet' && !r.counseling) : []
+  const manual = check ? check.requirements.filter((r) => r.status === 'manual' || r.status === 'unknown' || (r.counseling && r.status === 'unmet')) : []
   const edited = plan && JSON.stringify(terms.map((t) => t.courses.map((c) => `${key(c)}${c.code}`)))
     !== JSON.stringify(plan.terms.map((t) => t.courses.map((c) => `${key(c)}${c.code}`)))
-  const kindsHere = [...new Map(KINDS.filter((k) => planned.some((c) => kindOf(c) === k)).map((k) => [k.cls, k])).values()]
-  const shown = (courses) => (filter ? courses.filter((c) => kindOf(c).cls === filter) : courses)
+  // 지도·학기 카드에 쓸 학기별 점 (들은 과목 + 수강 예정 + 고친 계획)
+  const startKey = plan ? nodeKey(plan.start.year, plan.start.semester) : null
+  const trail = useMemo(
+    () => (plan && report ? buildTrail({ entryYear, taken, report, plan: planned, startKey, clsOfPlan: planCls }) : null),
+    [plan, report, entryYear, taken, planned, startKey],
+  )
+  const programs = report?.programs ?? []
+  const tagOf = makeTagOf(programs)
+  const labelOf = (cls) => (cls === 'prog' && programs.length === 1 ? programs[0].label : CLS_LABEL[cls])
+  const totalReq = report?.requirements.find((r) => r.id === 'total')?.required
+  const clsHere = trail ? CLS.filter((c) => trail.nodes.some((n) => n.items.some((i) => i.cls === c))) : []
   const lastRegular = { year: entryYear + 3, semester: '2학기' }
   const overflow = terms.filter((t) => t.courses.length && (t.year > lastRegular.year)).length
 
@@ -225,12 +233,48 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
   const currentMissing = current && current.year >= entryYear
     && !taken.some((t) => t.year === current.year && t.semester === current.semester)
 
+  // 지도에서 학기를 누르면 그 학기 카드로
+  const pick = (k) => {
+    setPicked(k)
+    document.getElementById(`term-${k}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+  }
+  // 폰에서 지도와 다전공 길을 옆으로 밀 때 같이 움직이게
+  const hasTrail = !!trail
+  useEffect(() => {
+    const els = [...document.querySelectorAll('.roadmap .trail-scroll')]
+    if (els.length < 2) return undefined
+    let lock = false
+    const sync = (e) => {
+      if (lock) return
+      lock = true
+      for (const el of els) if (el !== e.target) el.scrollLeft = e.target.scrollLeft
+      requestAnimationFrame(() => { lock = false })
+    }
+    for (const el of els.slice(1)) el.scrollLeft = els[0].scrollLeft
+    els.forEach((el) => el.addEventListener('scroll', sync, { passive: true }))
+    return () => els.forEach((el) => el.removeEventListener('scroll', sync))
+  }, [hasTrail, programs.length])
+
   return (
     <div className="app roadmap">
-      <header className="setup-head">
+      <header className="roadmap-head">
         <button type="button" className="btn-link setup-back" onClick={onBack}>← 홈으로</button>
-        <h1 className="brand" aria-label="trAIl"><BrandMark /><span>졸업 로드맵</span></h1>
-        <p className="subtitle">남은 졸업요건을 채우는 학기별 수강 계획이에요. 과목마다 학기를 옮기거나, 다른 과목으로 바꾸거나, 뺄 수 있어요. 고칠 때마다 졸업요건을 다시 확인해요.</p>
+        <div className="roadmap-head-row">
+          <div>
+            <a className="rm-pill" href="#" aria-label="trAIl 홈으로"><BrandMark /> trAIl · 졸업 로드맵</a>
+            <h1 className="display roadmap-title">졸업까지 오르는 산길 지도</h1>
+            <p className="subtitle">
+              학기마다 쌓은 학점이 고도가 돼요. {totalReq ? `${totalReq}학점 정상까지` : '졸업까지'}
+              {programs.length ? `, 주전공과 ${programs.map((p) => p.label).join('·')}을 함께` : ''} 따라가요.
+              계획한 과목은 학기를 옮기거나 바꾸거나 뺄 수 있고, 고칠 때마다 졸업요건을 다시 확인해요.
+            </p>
+          </div>
+          {clsHere.length > 0 && (
+            <ul className="rm-legend" aria-label="과목 분류 색">
+              {clsHere.map((c) => <li key={c} className={`k-${c}`}><span className="rm-swatch" />{labelOf(c)}</li>)}
+            </ul>
+          )}
+        </div>
       </header>
       {simulating && <div className="banner banner-warn" role="status">시뮬레이션 중이라 바꾼 조건으로 계획했어요. 넣은 과목도 시뮬레이션에만 반영돼요.</div>}
 
@@ -255,7 +299,23 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
       )}
       {message && <p className="ok" role="status">{message}</p>}
       {error && <div className="banner banner-error" role="alert">계획을 만들지 못했어요: {error}</div>}
-      {!plan && !error && <div className="panel empty with-mascot"><Mascot pose="search" size={64} />계획 짜는 중…</div>}
+      {(!plan || !report) && !error && <div className="panel empty with-mascot"><Mascot pose="search" size={64} />계획 짜는 중…</div>}
+
+      {trail && (
+        <section className="rm-map" aria-label="졸업 산길 지도">
+          <TrailMap nodes={trail.nodes} here={trail.here} required={totalReq} picked={picked} onPick={pick} label="누적 학점 산길" />
+          <p className="rm-map-help muted">길 위의 학기를 누르면 아래 그 학기 카드로 가요.</p>
+        </section>
+      )}
+      {trail && programs.filter((p) => p.min_credits).map((p) => (
+        <section key={p.code} className="rm-prog" aria-label={`${p.label} 길`}>
+          <div className="rm-prog-head">
+            <h2 className="display">{p.label} 길 · {p.name} {p.min_credits}학점</h2>
+            <span className="muted">원 안 숫자는 누적 {p.label} 학점, 아래는 그 학기에 더하는 학점이에요</span>
+          </div>
+          <div className="trail-scroll rm-prog-strip"><ProgramTrail nodes={trail.nodes} program={p} /></div>
+        </section>
+      ))}
 
       {plan && check && (
         <div className={`banner with-mascot ${unmet.length ? 'banner-warn' : 'banner-ok'}`} role="status">
@@ -283,43 +343,34 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
         </div>
       )}
 
-      {plan && kindsHere.length > 1 && (
-        <div className="kind-filter" role="group" aria-label="과목 분류로 보기">
-          <button type="button" className={`chip-btn${filter ? '' : ' on'}`} aria-pressed={!filter} onClick={() => setFilter(null)}>전체</button>
-          {kindsHere.map((k) => (
-            <button key={k.cls} type="button" className={`chip-btn k-${k.cls}${filter === k.cls ? ' on' : ''}`} aria-pressed={filter === k.cls}
-              onClick={() => setFilter(filter === k.cls ? null : k.cls)}>{k.cls === 'free' ? '자유·일반선택' : k.kind}</button>
-          ))}
-        </div>
-      )}
-
-      {plan && terms.length === 0 && unmet.length === 0 && <div className="panel empty with-mascot"><Mascot pose="cheer" size={64} />더 들어야 할 과목이 없어요.</div>}
-      {plan && (
-        <ol className="roadmap-terms">
-          {terms.filter((t) => !filter || shown(t.courses).length > 0).map((t) => {
-            const credits = (base[key(t)] ?? 0) + sumCredits(t.courses)
-            return (
-              <li key={key(t)} className="panel roadmap-term">
-                <div className="roadmap-term-head">
-                  <h2 className="display">{t.grade}학년 {t.semester} <span className="muted">{t.year}년</span></h2>
-                  <span className={`chip${credits > maxCredits ? ' chip-over' : ''}`}>{credits}학점{credits > maxCredits ? ` · ${maxCredits}학점 초과` : ''}</span>
-                </div>
-                {base[key(t)] > 0 && <p className="muted">이미 넣어 둔 수강 예정 {base[key(t)]}학점 포함</p>}
-                {t.courses.length > 0 ? (
-                  <>
-                    <ul className="roadmap-courses">
-                      {shown(t.courses).map((c) => (
-                        <CourseRow key={c.code} c={c} terms={allTerms} used={used} rg={rg}
-                          onMove={(to) => move(c, to)} onSwap={(code) => swap(c, code)} onRemove={() => remove(c)} />
-                      ))}
-                    </ul>
-                    <button type="button" className="btn btn-sm" onClick={() => addTerms([t])}>이 학기만 수강 예정으로 넣기</button>
-                  </>
-                ) : <p className="muted">새로 넣을 과목 없음</p>}
-              </li>
-            )
-          })}
-        </ol>
+      {trail && (
+        <section className="rm-terms" aria-label="학기별 수강 계획">
+          <div className="rm-terms-head">
+            <h2 className="display rm-h2">학기별 짐 꾸러미</h2>
+            <p className="muted">막대는 학기 학점의 구성이에요. 재수강한 과목은 재수강 전·후 학기에 모두 보이고, 누적 학점엔 한 번만 들어가요.</p>
+          </div>
+          {clsHere.length > 1 && (
+            <div className="kind-filter" role="group" aria-label="과목 분류로 보기">
+              <button type="button" className={`chip-btn${filter ? '' : ' on'}`} aria-pressed={!filter} onClick={() => setFilter(null)}>전체</button>
+              {clsHere.map((c) => (
+                <button key={c} type="button" className={`chip-btn k-${c}${filter === c ? ' on' : ''}`} aria-pressed={filter === c}
+                  onClick={() => setFilter(filter === c ? null : c)}>{labelOf(c)}</button>
+              ))}
+            </div>
+          )}
+          {plan && terms.length === 0 && unmet.length === 0 && <div className="panel empty with-mascot"><Mascot pose="cheer" size={64} />더 들어야 할 과목이 없어요.</div>}
+          <TermCards nodes={trail.nodes} tagOf={tagOf} filter={filter} picked={picked} maxCredits={maxCredits}
+            renderPlan={(i, tag) => (
+              <PlanItem key={i.key} c={i} cls={i.cls} tag={tag} terms={allTerms} used={used} rg={rg}
+                onMove={(to) => move(i, to)} onSwap={(code) => swap(i, code)} onRemove={() => remove(i)} />
+            )}
+            footer={(n) => {
+              const planTerm = terms.find((t) => nodeKey(t.year, t.semester) === n.key)
+              return planTerm?.courses.length > 0 && (
+                <button type="button" className="btn btn-sm tc-add" onClick={() => addTerms([planTerm])}>이 학기만 수강 예정으로 넣기</button>
+              )
+            }} />
+        </section>
       )}
       {plan && check && (
         <section className="panel req-check" aria-label="요건 체크">
@@ -336,7 +387,7 @@ export default function Roadmap({ entryYear, payload, profile, taken, simulating
               <tbody>
                 {check.requirements.map((r) => {
                   const at = metAt[r.id]
-                  const hand = r.status === 'manual' || r.status === 'unknown'
+                  const hand = r.status === 'manual' || r.status === 'unknown' || !!r.counseling
                   return (
                     <tr key={r.id}>
                       <td>{r.label}</td>

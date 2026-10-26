@@ -94,6 +94,14 @@ def _normalize_taken(taken, entry_year):
     return list(latest.values()), dropped
 
 
+def _count(v):
+    """사용자가 입력한 횟수 (빈칸·잘못된 값은 None, 음수는 0)."""
+    try:
+        return max(0, int(v)) if v not in (None, "") else None
+    except (TypeError, ValueError):
+        return None
+
+
 def _credits(item):
     return item["info"].credits if item["info"].credits is not None else (item.get("credits") or 0)
 
@@ -447,6 +455,20 @@ def evaluate(entry_year, taken, profile=None):
                 r["examples"] = catalog.area_examples(credit_rule["area"], credit_rule["sub_areas"], ref_year)
                 if any(a.get("status") == "unknown" for a in q["any_of"]):
                     r["note"] = "학과 지정 대체과목으로도 인정될 수 있음 (대체과목 목록은 확인 중)"
+        elif q["id"] == "advisor_counseling":
+            # 학생이 받은 상담 횟수·필요 횟수를 직접 입력 (필요 횟수는 학과 안내 기준 — 규정 원문 확인 전)
+            count = _count(profile.get("counseling_count"))
+            need = _count(profile.get("counseling_required"))
+            if profile.get(alt_flag):
+                status = MET
+            elif count is not None and need:
+                status = MET if count >= need else UNMET
+            else:
+                status = MANUAL
+            r = _req(q["id"], "졸업자격인정", q["label"], need, count, 0 if count is not None else None,
+                     unit="회", status=status, alternatives=alternatives, source=q["source"],
+                     counseling={"count": count, "required": need, "confirmed": bool(profile.get(alt_flag))},
+                     note=None if need or count is None else "필요 횟수를 입력하면 충족 여부를 계산해요.")
         else:
             status = MET if profile.get(alt_flag) else (UNKNOWN if q.get("status") == "unknown" else MANUAL)
             r = _req(q["id"], "졸업자격인정", q["label"], None, None, None, unit=None, status=status,

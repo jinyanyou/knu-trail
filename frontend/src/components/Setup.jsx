@@ -29,7 +29,9 @@ export default function Setup({ meta, state, programs, programCodes, report, edi
     <div className="app setup">
       <header className="setup-head">
         {editing && <button type="button" className="btn-link setup-back" onClick={onDone}>← 홈으로</button>}
-        <h1 className="brand" aria-label="trAIl"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></h1>
+        <h1 className="brand">{editing
+          ? <a className="brand-link" href="#" aria-label="trAIl 홈으로"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></a>
+          : <span className="brand-link" aria-label="trAIl"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></span>}</h1>
         <p className="subtitle">
           {editing ? '프로필 설정 · 바꾼 내용은 바로 저장돼요.'
             : '졸업까지 가는 길을 그리기 전에, 지금 내 위치를 알려 주세요. 언제든 다시 바꿀 수 있어요.'}

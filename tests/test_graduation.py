@@ -188,3 +188,15 @@ def test_joint_degree_counts_pnu_credits():
 def test_unsupported_entry_year():
     with pytest.raises(ValueError):
         evaluate(2022, [])
+
+
+def test_advisor_counseling_count():
+    req = lambda prof: next(r for r in evaluate(2025, [], prof)["requirements"] if r["id"] == "advisor_counseling")
+    assert req({})["status"] == "manual"
+    r = req({"counseling_count": 3})
+    assert r["status"] == "manual" and r["earned"] == 3 and r["required"] is None
+    r = req({"counseling_count": 3, "counseling_required": 8})
+    assert r["status"] == "unmet" and (r["earned"], r["required"], r["unit"]) == (3, 8, "회")
+    assert req({"counseling_count": "8", "counseling_required": 8})["status"] == "met"
+    assert req({"counseling_count": 1, "counseling_required": 8, "counseling_done": True})["status"] == "met"
+    assert req({"counseling_count": "abc"})["counseling"]["count"] is None
