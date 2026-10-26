@@ -162,6 +162,9 @@ function Requirement({ r, onPlan, planned, onOpen, rg, profile, onProfile }) {
   )
 }
 
+// 다전공의 필수 과목 요건은 주전공 '전공필수 과목'과 이름이 같아 학과 이름을 붙인다 (예: 경영학부 전공필수 과목)
+const shortLabel = (r) => (r.id.startsWith('program:') && r.id.endsWith(':required') ? `${r.group.split(' · ').pop()} ${r.label}` : r.label)
+
 export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProfile }) {
   const planned = new Set(report.courses.map((c) => c.code))
   const rg = useRelativeGrading(report.entry_year, report.programs.map((p) => p.code))
@@ -214,7 +217,7 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
         </div>
         {blocking.length > 0 && (
           <p className="blocking">
-            <span className="muted">아직 부족:</span> {blocking.map((r) => r.label).join(' · ')}
+            <span className="muted">아직 부족:</span> {blocking.map(shortLabel).join(' · ')}
           </p>
         )}
       </div>
