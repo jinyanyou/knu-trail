@@ -60,6 +60,8 @@ class Profile(BaseModel):
     english_test: str | None = Field(default=None, max_length=50)
     software_alternative: bool = False
     counseling_done: bool = False
+    counseling_count: int | None = Field(default=None, ge=0, le=99)
+    counseling_required: int | None = Field(default=None, ge=1, le=99)
     major_assessment_done: bool = False
     joint_degree: bool = False
 

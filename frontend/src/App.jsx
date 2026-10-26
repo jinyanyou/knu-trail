@@ -11,10 +11,10 @@ import Setup from './components/Setup.jsx'
 import CourseSheet from './components/CourseSheet.jsx'
 import Daily from './components/Daily.jsx'
 import Roadmap from './components/Roadmap.jsx'
+import { NoticeBar } from './Notices.jsx'
 import Grades from './components/Grades.jsx'
 import Schedule from './components/Schedule.jsx'
 import SimBanner from './components/SimBanner.jsx'
-import { gpa, graded } from './gpa.js'
 
 // 수강신청 연습은 시간표 데이터가 커서 들어갈 때만 불러온다
 const SimApp = lazy(() => import('./sim/SimApp.jsx'))
@@ -132,12 +132,27 @@ function AccountMenu({ user, saveStatus }) {
     if (!window.confirm('회원 탈퇴하면 계정과 저장된 과목·성적·설정이 모두 삭제됩니다. 되돌릴 수 없습니다.')) return
     deleteAccount().catch((e) => window.alert(`탈퇴하지 못했습니다: ${e.message}`))
   }
+  // 메뉴가 열려 있을 때 바깥을 누르거나 Esc → 닫기
+  const ref = useRef(null)
+  useEffect(() => {
+    const close = (e) => {
+      const el = ref.current
+      if (!el?.open) return
+      if (e.type === 'keydown' ? e.key === 'Escape' : !el.contains(e.target)) el.open = false
+    }
+    document.addEventListener('pointerdown', close)
+    document.addEventListener('keydown', close)
+    return () => {
+      document.removeEventListener('pointerdown', close)
+      document.removeEventListener('keydown', close)
+    }
+  }, [])
   return (
-    <details className="account">
+    <details className="account" ref={ref}>
       <summary>
         <Avatar user={user} />
         <span className="account-name">
-          {displayName(user)}
+          <span className="account-name-text">{displayName(user)}</span>
           <small className={`save-status save-${saveStatus}`}>
             {saveStatus === 'saved' && <Mascot pose="rest" size={20} className="save-mascot" />}
             {{ saved: '저장됨', saving: '저장 중…', error: '저장 실패' }[saveStatus]}
@@ -330,7 +345,7 @@ function Navi({ user, initial }) {
 
   if (hash === '#/roadmap') {
     return (
-      <Roadmap entryYear={entryYear} payload={payload} profile={evalProfile} taken={taken} simulating={!!draft}
+      <Roadmap entryYear={entryYear} payload={payload} profile={evalProfile} taken={taken} report={report} simulating={!!draft}
         onAdd={(items) => edit((s) => ({ ...s, taken: [...s.taken, ...items] }))} onBack={() => { window.location.hash = '' }} />
     )
   }
@@ -350,33 +365,35 @@ function Navi({ user, initial }) {
   return (
     <div className="app">
       <header className="topbar">
-        <div>
-          <h1 className="brand" aria-label="trAIl"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></h1>
+        <div className="topbar-title">
+          <h1 className="brand"><a className="brand-link" href="#" aria-label="trAIl 홈"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></a></h1>
           <p className="subtitle">졸업까지 따라가는 길 · 경북대 인공지능전공 졸업요건 대시보드</p>
         </div>
         <a className="btn sim-link" href="#/sim">수강신청 연습 <small>(시뮬레이션)</small></a>
         {user && <AccountMenu user={user} saveStatus={saveStatus} />}
       </header>
 
+      <NoticeBar />
       {error && <div className="banner banner-error" role="alert">서버와 통신하지 못했습니다: {error}</div>}
 
       {draft && <SimBanner base={baseReport} now={report} onApply={() => endSim(true)} onCancel={() => endSim(false)} />}
 
-      {/* 넓은 화면: 왼쪽 졸업 현황 + 오른쪽 좁은 칸. 좁은 화면은 오른쪽 칸 내용이 먼저 (요약 → 학사일정 → 뉴스·퀴즈 → 현황) */}
+      {/* 넓은 화면: 왼쪽 졸업 현황 + 오른쪽 좁은 칸. 좁은 화면은 요약 → 학사일정 → 현황 → 뉴스·퀴즈(맨 아래) */}
       <div className="home-grid">
       <aside className="home-side" aria-label="내 정보와 오늘의 소식">
       {/* 학번·다전공·들은 과목은 프로필 설정에서 고친다 — 홈에는 요약만 */}
       <div className="profile-summary panel">
-        <span className="chip">{entryYear}학번</span>
-        <span className="chip">인공지능전공</span>
-        {chosenPrograms.map((c) => programs.find((p) => p.code === c.code)?.name).filter(Boolean).map((n) => <span key={n} className="chip">{n}</span>)}
-        <span className="chip">{taken.length}과목 입력</span>
-        {report && gpa(graded(report)) != null && <a className="chip chip-link" href="#/grades">평점 {gpa(graded(report)).toFixed(2)} ›</a>}
-        <span className="summary-actions">
-          <a className="btn btn-sm btn-primary" href="#/roadmap">졸업 로드맵</a>
-          {!draft && <button type="button" className="btn btn-sm" onClick={startSim}>🧪 졸업 시뮬레이션</button>}
-          <a className="btn-link profile-edit" href="#/profile">프로필 설정 →</a>
-        </span>
+        <div className="summary-chips">
+          <span className="chip">{entryYear}학번</span>
+          <span className="chip">인공지능전공</span>
+          {chosenPrograms.map((c) => programs.find((p) => p.code === c.code)?.name).filter(Boolean).map((n) => <span key={n} className="chip">{n}</span>)}
+        </div>
+        <div className="summary-actions">
+          <a className="btn btn-primary" href="#/roadmap">졸업 로드맵</a>
+          {!draft && <button type="button" className="btn" onClick={startSim}>🧪 졸업 시뮬레이션</button>}
+          <a className="btn" href="#/grades">성적 통계</a>
+          <a className="btn" href="#/profile">프로필 설정</a>
+        </div>
       </div>
 
       <Schedule />
@@ -385,7 +402,8 @@ function Navi({ user, initial }) {
       </aside>
 
       <main className="dashboard home-main" aria-label="졸업요건 현황">
-        {report ? <Dashboard report={report} onPlan={planCourse} onOpen={setSheet} /> : <div className="panel empty">계산 중…</div>}
+        {report ? <Dashboard report={report} onPlan={planCourse} onOpen={setSheet} profile={profile}
+          onProfile={(patch) => edit((s) => ({ ...s, profile: { ...s.profile, ...patch } }))} /> : <div className="panel empty">계산 중…</div>}
       </main>
       </div>
       {sheet && report?.requirements.some((r) => r.id === sheet) && (
@@ -396,7 +414,7 @@ function Navi({ user, initial }) {
       <footer className="footer">
         교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준. 최종 확인은 학과 사무실에서 하세요.
         {' '}{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}
-        {' '}<a href="#/privacy">개인정보 처리 안내</a>
+        {' '}<a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a>
       </footer>
     </div>
   )

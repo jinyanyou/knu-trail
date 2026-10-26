@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import { authEnabled, dropSignupConsent, holdSignupConsent, PROVIDERS, signIn, supabase } from './auth.js'
 import { useHash } from './hash.js'
 import { ConsentSummary, consentRecord, PrivacyPage } from './Privacy.jsx'
+import { NoticesPage } from './Notices.jsx'
 import LoginShell from './components/LoginShell.jsx'
 
 // 로그인한 사용자만 화면(children)을 본다. Supabase 설정이 없으면 로그인 없이 통과(user=null).
-// 개인정보 처리 안내(#/privacy)는 로그인 없이도 볼 수 있다.
+// 개인정보 처리 안내(#/privacy)·공지(#/notices)는 로그인 없이도 볼 수 있다.
 // 처음이면 [회원가입] 탭에서 개인정보 안내에 동의한 뒤 카카오·Google로 가입, 이미 가입했으면 [로그인] 탭.
 export default function AuthGate({ children }) {
   const [session, setSession] = useState(undefined) // undefined = 확인 중
@@ -22,6 +23,7 @@ export default function AuthGate({ children }) {
   }, [])
 
   if (hash === '#/privacy') return <PrivacyPage />
+  if (hash === '#/notices') return <NoticesPage />
   if (!authEnabled) return children(null)
   if (session === undefined) return <LoginShell pose="search"><p className="muted login-wait">로그인 확인 중…</p></LoginShell>
   if (session) return children(session.user)

@@ -60,7 +60,11 @@ export default function Grades({ report, onBack }) {
   if (!courses.length) {
     return (
       <div className="app grades">
+      <header className="setup-head">
         <button type="button" className="btn-link setup-back" onClick={onBack}>← 홈으로</button>
+        <h1 className="brand"><a className="brand-link" href="#" aria-label="trAIl 홈으로"><BrandMark /></a><span>성적 통계</span></h1>
+        <p className="subtitle">경북대 4.3 만점 기준 · 성적증명서처럼 소수 셋째 자리에서 버림 · P/S 과목은 평점에서 제외</p>
+      </header>
         <div className="panel empty with-mascot"><Mascot pose="report" size={72} />성적이 있는 과목이 아직 없어요. 프로필 설정에서 성적표를 가져와 보세요.</div>
       </div>
     )
@@ -69,7 +73,7 @@ export default function Grades({ report, onBack }) {
     <div className="app grades">
       <header className="setup-head">
         <button type="button" className="btn-link setup-back" onClick={onBack}>← 홈으로</button>
-        <h1 className="brand" aria-label="trAIl"><BrandMark /><span>성적 통계</span></h1>
+        <h1 className="brand"><a className="brand-link" href="#" aria-label="trAIl 홈으로"><BrandMark /></a><span>성적 통계</span></h1>
         <p className="subtitle">경북대 4.3 만점 기준 · 성적증명서처럼 소수 셋째 자리에서 버림 · P/S 과목은 평점에서 제외</p>
       </header>
 

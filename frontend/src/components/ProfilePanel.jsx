@@ -12,7 +12,6 @@ const MAX_PROGRAMS = 3
 const FLAGS = [
   { key: 'math_science_waived', label: '기초학력 진단평가 A (수리·기초과학 면제)' },
   { key: 'software_alternative', label: '소프트웨어 대체 인정 (자격증·교육 이수 등)' },
-  { key: 'counseling_done', label: '지도교수 상담 기준 충족' },
   { key: 'major_assessment_done', label: '전공영역 평가 통과' },
   { key: 'transfer', label: '편입생' },
   { key: 'teaching_course', label: '교직과정 이수' },
