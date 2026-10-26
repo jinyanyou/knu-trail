@@ -26,8 +26,8 @@ export function ConsentSummary({ agreed, onChange }) {
         ))}
       </dl>
       <p className="consent-more">
-        과목·성적은 Supabase의 서울 리전 서버에 보관하고, 졸업요건 계산은 trAIl 서버(Render, 싱가포르)에서 저장 없이 처리합니다.{' '}
-        <a href="#/privacy" target="_blank" rel="noreferrer">개인정보 처리 안내 전문</a>
+        과목·성적은 Supabase의 서울 리전 서버에 보관하고, 졸업요건 계산은 trAIl 서버(Render, 싱가포르)에서 저장 없이 처리합니다.
+        <a className="consent-full" href="#/privacy" target="_blank" rel="noreferrer">개인정보 처리 안내 전문</a>
       </p>
       <label className="consent-check">
         <input type="checkbox" checked={agreed} onChange={(e) => onChange(e.target.checked)} />

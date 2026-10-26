@@ -293,7 +293,8 @@ select.invalid { border-color: var(--critical); }
 .consent-table > div:first-child { border-top: 0; }
 .consent-table dt { background: var(--surface-2); padding: 8px 10px; font-weight: 600; color: var(--text-2); }
 .consent-table dd { margin: 0; padding: 8px 10px; line-height: 1.5; }
-.consent-more { color: var(--text-3); line-height: 1.5; }
+.consent-more { color: var(--text-3); line-height: 1.5; word-break: keep-all; }
+.consent-full { display: block; margin-top: 6px; text-align: center; font-weight: 600; }
 .consent-more a, .footer a { color: var(--accent-ink); }
 .consent-check { display: flex; gap: 8px; align-items: flex-start; font-weight: 600; line-height: 1.5; cursor: pointer; }
 .consent-check input { margin-top: 3px; width: 16px; height: 16px; flex: none; }
