@@ -582,6 +582,12 @@ a.btn.btn-primary { color: #fff; }
 .rg-badge small { font-size: 11px; font-weight: 500; }
 .rg-other { color: var(--text-3); background: none; border-style: dashed; border-color: var(--border); white-space: normal; border-radius: 6px; }
 .rg-note { margin: 12px 4px 0; line-height: 1.6; }
+.rg-note summary { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--text-2); }
+.rg-note[open] summary { margin-bottom: 4px; }
+.rg-note summary::-webkit-details-marker { display: none; }
+.rg-note summary::after { content: '▾'; font-size: 11px; color: var(--text-3); }
+.rg-note[open] summary::after { content: '▴'; }
+.rg-note p { margin: 0; word-break: keep-all; }
 .sim-finder li .rg-badge { width: auto; color: #1f5c39; background: #e6f2ea; border-color: #8fc4a0; }
 
 /* ── 팀 디자인 초안 반영: 제목 글꼴(제주돌담체)·다람쥐·과목 색 ───────────── */

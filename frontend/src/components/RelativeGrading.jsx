@@ -68,11 +68,14 @@ export function RgNote({ rg }) {
   const terms = Object.keys(rg.lists).sort()
   const latest = rg.lists[rg.latest]
   return (
-    <p className="muted rg-note">
-      <span className="rg-badge" aria-hidden="true">A 최대 50%</span>{' '}
-      상대평가 권장 과목이에요 ({terms.map(termLabel).join('·')} 지정 목록, 최근 공지 {latest.notice_date.replaceAll('-', '. ')}.).
-      지정된 학과가 연 분반만 해당되고, 목록은 학기마다 바뀌어요 — 들을 학기 목록이 아직 없으면 같은 학기(1·2학기)의 가장 최근 목록으로 보여 줘요.
-      목록에 없어도 실습·영어 과목 등은 원래대로 적용될 수 있어요.
-    </p>
+    // 평소엔 접어 두고, 궁금하면 펼쳐 본다
+    <details className="muted rg-note">
+      <summary><span className="rg-badge" aria-hidden="true">A 최대 50%</span> 가 뭔가요?</summary>
+      <p>
+        상대평가 권장 과목이에요 ({terms.map(termLabel).join('·')} 지정 목록, 최근 공지 {latest.notice_date.replaceAll('-', '. ')}.).
+        지정된 학과가 연 분반만 해당되고, 목록은 학기마다 바뀌어요 — 들을 학기 목록이 아직 없으면 같은 학기(1·2학기)의 가장 최근 목록으로 보여 줘요.
+        목록에 없어도 실습·영어 과목 등은 원래대로 적용될 수 있어요.
+      </p>
+    </details>
   )
 }
