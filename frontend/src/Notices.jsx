@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { supabase } from './auth.js'
 import BrandMark from './components/BrandMark.jsx'
 
-// 공지사항·업데이트 기록. 새 소식은 맨 위에 추가한다 (id는 겹치지 않게, 날짜는 YYYY-MM-DD)
-// kind: notice(공지) / update(업데이트)
-export const NOTICES = [
+// 공지사항·업데이트 — 평소엔 Supabase 표 notices(supabase/notices.sql)에서 읽는다.
+// 아래 목록은 표를 못 읽을 때(로컬 모드·연결 실패·표 비어 있음) 보여 주는 기본값이다
+const NOTICES = [
   {
     id: '2026-10-27-update',
     date: '2026-10-27',
@@ -82,8 +83,45 @@ export const NOTICES = [
 const KIND_LABEL = { notice: '공지', update: '업데이트' }
 const SEEN_KEY = 'trail:notice-seen'
 
+// Supabase 표 notices 한 줄 → 화면용 (내용은 한 줄에 한 항목)
+const fromRow = (r) => ({
+  id: `db-${r.id}`,
+  date: r.date,
+  kind: r.kind,
+  title: r.title,
+  items: (r.body ?? '').split(/\r?\n/).map((s) => s.trim()).filter(Boolean),
+  link: r.link_href ? { href: r.link_href, label: r.link_label || '자세히 보기' } : null,
+})
+
+// 공지 목록: Supabase 표에서 읽고(관리자는 대시보드 Table Editor에서 수정), 표가 없거나 비었거나 연결이 안 되면 위 기본 목록.
+// 한 번 읽으면 화면을 옮겨 다녀도 다시 읽지 않는다
+let loading = null
+function loadNotices() {
+  if (!loading) {
+    loading = (async () => {
+      if (!supabase) return NOTICES
+      const { data, error } = await supabase.from('notices').select('*').eq('published', true)
+        .order('date', { ascending: false }).order('sort', { ascending: false }).order('created_at', { ascending: false })
+      return !error && data?.length ? data.map(fromRow) : NOTICES
+    })().catch(() => NOTICES)
+  }
+  return loading
+}
+
+export function useNotices() {
+  const [list, setList] = useState(null)
+  useEffect(() => {
+    let alive = true
+    loadNotices().then((l) => alive && setList(l))
+    return () => {
+      alive = false
+    }
+  }, [])
+  return list
+}
+
 // 마지막으로 본 소식 — 이 브라우저에만 기억 (못 읽어도 화면은 그대로)
-export function useNoticeSeen() {
+function useNoticeSeen(list) {
   const [seen, setSeen] = useState(() => {
     try {
       return localStorage.getItem(SEEN_KEY)
@@ -92,19 +130,22 @@ export function useNoticeSeen() {
     }
   })
   const markSeen = () => {
+    if (!list?.length) return
     try {
-      localStorage.setItem(SEEN_KEY, NOTICES[0].id)
+      localStorage.setItem(SEEN_KEY, list[0].id)
     } catch { /* 저장 불가 환경 */ }
-    setSeen(NOTICES[0].id)
+    setSeen(list[0].id)
   }
-  const unseen = seen ? NOTICES.findIndex((n) => n.id === seen) : NOTICES.length
-  return { unseen: Math.max(0, unseen), markSeen }
+  const at = list ? list.findIndex((n) => n.id === seen) : 0
+  return { unseen: list ? (at < 0 ? list.length : at) : 0, markSeen }
 }
 
 // 홈 위 한 줄: 가장 최근 소식
 export function NoticeBar() {
-  const { unseen } = useNoticeSeen()
-  const latest = NOTICES[0]
+  const list = useNotices()
+  const { unseen } = useNoticeSeen(list)
+  const latest = list?.[0]
+  if (!latest) return null
   return (
     <a className="notice-bar" href="#/notices">
       <span className={`notice-kind k-${latest.kind}`}>{KIND_LABEL[latest.kind]}</span>
@@ -118,12 +159,15 @@ export function NoticeBar() {
 // #/notices — 공지사항·업데이트 기록 (로그인 없이도 열림)
 export function NoticesPage() {
   const [tab, setTab] = useState('all')
-  const { markSeen } = useNoticeSeen()
+  const all = useNotices()
+  const { markSeen } = useNoticeSeen(all)
   useEffect(() => {
-    markSeen()
     window.scrollTo(0, 0)
   }, [])
-  const list = NOTICES.filter((n) => tab === 'all' || n.kind === tab)
+  useEffect(() => {
+    if (all) markSeen()
+  }, [all]) // 목록을 불러온 뒤 '읽음'
+  const list = (all ?? []).filter((n) => tab === 'all' || n.kind === tab)
   return (
     <div className="app notices">
       <header className="setup-head">
@@ -136,6 +180,8 @@ export function NoticesPage() {
           <button key={k} type="button" role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{label}</button>
         ))}
       </div>
+      {!all && <p className="muted">소식 불러오는 중…</p>}
+      {all && list.length === 0 && <p className="muted">아직 소식이 없어요.</p>}
       <ol className="notice-list">
         {list.map((n) => (
           <li key={n.id} className="panel notice-item">
@@ -144,7 +190,7 @@ export function NoticesPage() {
               <time dateTime={n.date} className="muted">{n.date.replaceAll('-', '. ')}</time>
             </div>
             <h2 className="display notice-title">{n.title}</h2>
-            <ul className="notice-items">{n.items.map((t) => <li key={t}>{t}</li>)}</ul>
+            {n.items.length > 0 && <ul className="notice-items">{n.items.map((t, i) => <li key={i}>{t}</li>)}</ul>}
             {n.link && <a className="btn-link notice-link" href={n.link.href}>{n.link.label} ›</a>}
           </li>
         ))}
