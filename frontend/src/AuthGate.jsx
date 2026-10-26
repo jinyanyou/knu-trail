@@ -48,7 +48,7 @@ export default function AuthGate({ children }) {
 
       {signup ? (
         <>
-          <p className="login-lead">처음 오셨나요? 아래 안내를 확인하고 카카오나 Google 계정으로 가입해 주세요.</p>
+          <p className="login-lead">처음 오셨나요?<span className="login-lead-line">아래 안내를 확인하고 카카오나 Google 계정으로 가입해 주세요.</span></p>
           <ConsentSummary agreed={agreed} onChange={setAgreed} />
         </>
       ) : (

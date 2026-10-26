@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- trAIl 앱 아이콘: 하늘 · 먼 능선과 졸업 깃발 · 초록 언덕과 크림색 산길 · 학사모 다람쥐 얼굴 (탭 아이콘 favicon.svg와 같은 얼굴) -->
+  <rect width="1024" height="1024" fill="#e6f2e4"/>
+  <polygon points="0,770 160,640 300,730 470,600 640,720 840,560 1024,680 1024,1024 0,1024" fill="#c3dfc9" stroke="#1b1a17" stroke-width="14" stroke-linejoin="round"/>
+  <line x1="840" y1="566" x2="840" y2="430" stroke="#1b1a17" stroke-width="14" stroke-linecap="round"/>
+  <path d="M840 430 L950 456 L840 486 Z" fill="#2a7a4c" stroke="#1b1a17" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M-20 880 Q 260 770 540 850 T 1044 820 V1044 H-20 Z" fill="#2a7a4c" stroke="#1b1a17" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M230 1044 C 320 960 460 950 560 905 S 820 860 1044 840" fill="none" stroke="#1b1a17" stroke-width="58" stroke-linecap="round"/>
+  <path d="M230 1044 C 320 960 460 950 560 905 S 820 860 1044 840" fill="none" stroke="#f6f2e7" stroke-width="38" stroke-linecap="round"/>
+  <g transform="translate(-258 -32) scale(11)">
+    <path d="M58 36 L55 22 L67 30 Z" fill="#ffffff" stroke="#1b1a17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M76 31 L84 21 L87 36 Z" fill="#ffffff" stroke="#1b1a17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="70" cy="46" r="16" fill="#ffffff" stroke="#1b1a17" stroke-width="2.2"/>
+    <polygon points="50,29 70,20 94,29 70,38" fill="#1b1a17" stroke="#1b1a17" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M59 34 v6 q11 6 22 0 v-6" fill="#1b1a17"/>
+    <path d="M52 29 L49 44" fill="none" stroke="#1b1a17" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="49" cy="45" r="2.4" fill="#e0a019" stroke="#1b1a17" stroke-width="0.8"/>
+    <circle cx="73" cy="54" r="3" fill="#f2b8ad"/>
+    <circle cx="76" cy="47" r="2.4" fill="#1b1a17"/>
+    <ellipse cx="85" cy="50" rx="2.6" ry="2" fill="#1b1a17"/>
+    <path d="M75 56 q6 4 11 -1" fill="none" stroke="#1b1a17" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
