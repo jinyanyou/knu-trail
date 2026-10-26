@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as api from './api.js'
 import { deleteAccount, displayName, dropSignupConsent, loadUserState, saveUserState, signOut, takeSignupConsent } from './auth.js'
 import { useHash } from './hash.js'
@@ -332,6 +332,11 @@ function Navi({ user, initial }) {
 
   // 처음 로그인한 사용자는 학번·다전공·들은 과목부터 단계별로 설정. 이후엔 #/profile 에서 고친다
   const firstSetup = user && !state.setupDone
+  // 화면이 바뀔 때(시작 설정을 마치고 홈으로 들어올 때 포함)는 맨 위부터 보여 준다
+  const screen = firstSetup ? 'setup' : hash
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [screen])
   if (firstSetup || hash.startsWith('#/profile')) {
     const done = () => {
       if (firstSetup) update({ setupDone: true })

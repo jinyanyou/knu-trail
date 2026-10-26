@@ -63,7 +63,10 @@ export default function Setup({ meta, state, programs, programCodes, report, edi
             <div className="year-cards">
               {years.map((y) => (
                 <button key={y.year} type="button" aria-pressed={y.year === entryYear}
-                  onClick={() => onChange({ entryYear: y.year })}>
+                  onClick={() => {
+                    onChange({ entryYear: y.year })
+                    if (!editing) setStep(1) // 처음 설정할 때는 고르면 바로 다음 단계로
+                  }}>
                   {y.year}학번
                   {y.status === 'provisional' && <small>임시 기준</small>}
                 </button>
