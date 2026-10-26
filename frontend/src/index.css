@@ -170,7 +170,14 @@ select:focus-visible, input:focus-visible, button:focus-visible, summary:focus-v
 .req { padding: 12px 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
 .req:first-child { border-top: 0; padding-top: 0; }
 .req-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.req-label { font-weight: 600; flex: 1 1 180px; }
+.req-label { font-weight: 600; flex: 1 1 180px; word-break: keep-all; }
+.req .hint { word-break: keep-all; }
+/* 폰: 요건 이름은 한 줄 전체, 그 아래 학점(왼쪽)·상태(오른쪽) */
+@media (max-width: 560px) {
+  .req-head { gap: 6px 10px; }
+  .req-head .req-label { flex-basis: 100%; }
+  .req-head .badge { margin-left: auto; }
+}
 .numbers { font-variant-numeric: tabular-nums; font-size: 14px; }
 .numbers .plus { color: var(--accent-ink); }
 .numbers .of { font-size: 13px; }
