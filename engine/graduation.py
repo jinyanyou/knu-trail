@@ -31,7 +31,8 @@ profile 항목 (모두 선택)
     major_track             programs 없이 학점 기준만 바꿀 때: "single"(기본) / "double_major" / "single_minor"
     math_science_waived     기초학력 진단평가 A → 수리·기초과학 이수 면제
     english_test            실용영어 대체 성적 보유 (예: "TOEIC 750") — 기준 충족 여부는 학생이 확인
-    software_alternative    소프트웨어 대체 인정(자격증, 45시간 교육 등) 보유
+    software_alternative    소프트웨어 대체 인정(자격증, 45시간 교육 등) — True 또는 방법 글 (예: "정보처리기사")
+    software_alternative_planned  위 대체를 아직 받기 전(예정) → '예정 포함 충족' 
     counseling_done         학생상담지도교수 상담 기준 충족
     major_assessment_done   전공영역 평가 통과
     joint_degree            부산대 공동학위 희망
@@ -461,9 +462,11 @@ def evaluate(entry_year, taken, profile=None):
                      pick={"categories": [LIBERAL_ARTS], "area": credit_rule["area"], "sub_areas": credit_rule["sub_areas"]})
             if alt_flag and profile.get(alt_flag) and r["status"] != MET:
                 # 대체로 인정되면 과목을 더 들을 필요가 없다 → 학점 진행 대신 '대체 인정'으로 보여 준다
-                r["status"] = MET
+                planned = bool(profile.get(f"{alt_flag}_planned"))  # 받을 예정 → '예정 포함 충족'
+                r["status"] = MET_WITH_PLANNED if planned else MET
                 r["replaced"] = profile[alt_flag] if isinstance(profile[alt_flag], str) else "본인 입력"
-                r["note"] = f"대체 인정: {r['replaced']}"
+                r["replaced_planned"] = planned
+                r["note"] = f"대체 {'예정' if planned else '인정'}: {r['replaced']}"
             elif r["status"] != MET:
                 r["examples"] = catalog.area_examples(credit_rule["area"], credit_rule["sub_areas"], ref_year)
                 if any(a.get("status") == "unknown" for a in q["any_of"]):
