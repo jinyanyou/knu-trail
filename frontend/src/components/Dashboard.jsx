@@ -326,8 +326,10 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
           // 다전공 카드: 'program:<코드>:credits' — 이름은 그 학과·융합전공, 필수 과목이 있으면 함께
           const prog = id.startsWith('program:') ? report.programs.find((p) => id === `program:${p.code}:credits`) : null
           const req = prog && byId[`program:${prog.code}:required`]
-          // 제목은 한 줄 (카드끼리 숫자·막대 높이가 맞게) — '빅데이터융합전공'처럼 이름에 종류가 들어 있으면 이름만
-          const title = prog ? (prog.name.endsWith(prog.label) ? prog.name : `${prog.label} · ${prog.name}`)
+          // 제목은 한 줄 (카드끼리 숫자·막대 높이가 맞게) — 다전공은 종류만('융합전공'), 같은 종류가 둘 이상이면 이름으로 구분.
+          // 전체 이름은 툴팁으로
+          const sameKind = prog && report.programs.filter((p) => p.label === prog.label).length > 1
+          const title = prog ? (sameKind ? prog.name : prog.label)
             : id === 'major_required' ? '전공필수' : r.label.replace(' (전공필수 포함)', '')
           return (
             // 카드 안에 막대(div)가 있어 <button> 대신 역할만 버튼으로
