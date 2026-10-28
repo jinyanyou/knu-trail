@@ -4,11 +4,11 @@ import { deleteAccount, displayName, dropSignupConsent, loadUserState, saveUserS
 import { useHash } from './hash.js'
 import { consentRecord, ConsentScreen, hasConsent, PRIVACY_VERSION } from './Privacy.jsx'
 import Dashboard from './components/Dashboard.jsx'
-import BrandMark from './components/BrandMark.jsx'
 import Mascot from './components/Mascot.jsx'
 import LoginShell from './components/LoginShell.jsx'
 import Setup from './components/Setup.jsx'
 import CourseSheet from './components/CourseSheet.jsx'
+import HomeLogo from './components/HomeLogo.jsx'
 import Daily from './components/Daily.jsx'
 import Roadmap from './components/Roadmap.jsx'
 import { NoticeBar } from './Notices.jsx'
@@ -370,10 +370,7 @@ function Navi({ user, initial }) {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="topbar-title">
-          <h1 className="brand"><a className="brand-link" href="#" aria-label="trAIl 홈"><BrandMark /><span>tr<span className="brand-ai">AI</span>l</span></a></h1>
-          <p className="subtitle">졸업까지 따라가는 길 · 경북대 인공지능전공 졸업요건 대시보드</p>
-        </div>
+        <HomeLogo subtitle="경북대 인공지능전공 졸업요건 대시보드" />
         <a className="btn sim-link" href="#/sim">수강신청 연습 <small>(시뮬레이션)</small></a>
         {user && <AccountMenu user={user} saveStatus={saveStatus} />}
       </header>
