@@ -463,7 +463,8 @@ a.btn.btn-primary { color: #fff; }
 .rm-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 12px; border-radius: 999px; background: #e4f1e3; border: 2px solid var(--ink); font-size: 13px; font-weight: 800; }
 .rm-pill .brand-mark { width: 1.3em; height: 1.3em; margin: 0; }
 .roadmap-title { margin-top: 10px; font-size: 40px; line-height: 1.15; }
-.roadmap-head .subtitle { margin-top: 8px; font-size: 15px; line-height: 1.6; max-width: 640px; }
+.roadmap-head .subtitle { margin-top: 8px; font-size: 15px; line-height: 1.6; max-width: 760px; word-break: keep-all; }
+@media (min-width: 900px) { .rm-lead span { display: block; } }
 .rm-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: flex-end; max-width: 420px; }
 .rm-legend li { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; }
 .rm-swatch { width: 14px; height: 14px; border-radius: 4px; background: var(--k); border: 1.5px solid var(--ink); }

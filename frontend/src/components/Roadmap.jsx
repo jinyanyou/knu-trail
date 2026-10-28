@@ -263,10 +263,13 @@ export default function Roadmap({ entryYear, payload, profile, taken, report, si
           <div>
             <a className="rm-pill" href="#" aria-label="trAIl 홈으로"><BrandMark /> trAIl · 졸업 로드맵</a>
             <h1 className="display roadmap-title">졸업까지 오르는 산길 지도</h1>
-            <p className="subtitle">
-              학기마다 쌓은 학점이 고도가 돼요. {totalReq ? `${totalReq}학점 정상까지` : '졸업까지'}
-              {programs.length ? `, 주전공과 ${programs.map((p) => p.label).join('·')}을 함께` : ''} 따라가요.
-              계획한 과목은 학기를 옮기거나 바꾸거나 뺄 수 있고, 고칠 때마다 졸업요건을 다시 확인해요.
+            {/* 넓은 화면은 문장 묶음마다 한 줄씩, 좁은 화면은 이어서 (단어 중간에서 끊기지 않게) */}
+            <p className="subtitle rm-lead">
+              <span>
+                학기마다 쌓은 학점이 고도가 돼요. {totalReq ? `${totalReq}학점 정상까지` : '졸업까지'}
+                {programs.length ? `, 주전공과 ${programs.map((p) => p.label).join('·')}을 함께` : ''} 따라가요.
+              </span>{' '}
+              <span>계획한 과목은 학기를 옮기거나 바꾸거나 뺄 수 있고, 고칠 때마다 졸업요건을 다시 확인해요.</span>
             </p>
           </div>
           {clsHere.length > 0 && (
