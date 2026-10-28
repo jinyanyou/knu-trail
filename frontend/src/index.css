@@ -789,14 +789,12 @@ h3.with-mascot { gap: 8px; }
 .hl-letters { position: absolute; left: 0; top: 0; display: block; }
 .hl-text { min-width: 0; }
 .topbar h1.hl-tilt, .hl-tilt { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; margin: 0; transform: rotate(-3deg); font-weight: 400; letter-spacing: 0; }
-.hl-name { font-family: 'JejuStoneWall', sans-serif; font-size: 58px; letter-spacing: 5px; line-height: 1.1; color: #1b1a17; }
 .hl-slogan { font-family: 'JejuStoneWall', sans-serif; font-size: 20px; letter-spacing: 1px; line-height: 1.2; color: #1b1a17; }
 .hl-sub { margin: 12px 0 0; font-size: 13px; color: #67645d; word-break: keep-all; }
 a.hl-link:hover .hl-mountain { transform: rotate(-3deg); transform-origin: 50% 90%; }
 @media (max-width: 640px) {
   .topbar .topbar-title.hl { display: flex; grid-area: brand; flex-wrap: nowrap; gap: 4px 10px; }
   .hl-mark { --s: 0.17; }
-  .hl-name { font-size: 38px; letter-spacing: 3px; }
   .hl-slogan { font-size: 14px; }
   .hl-sub { margin-top: 8px; font-size: 12px; }
 }

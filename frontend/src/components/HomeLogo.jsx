@@ -27,7 +27,6 @@ export default function HomeLogo({ subtitle }) {
       <a className="hl-link" href="#" aria-label="trAIl 홈"><LogoMark /></a>
       <div className="hl-text">
         <h1 className="hl-tilt">
-          <span className="hl-name">트레일</span>
           <span className="hl-slogan">졸업까지 따라가는 길</span>
         </h1>
         {subtitle && <p className="hl-sub">{subtitle}</p>}
