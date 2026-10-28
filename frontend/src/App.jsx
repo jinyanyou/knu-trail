@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState }
 import * as api from './api.js'
 import { deleteAccount, displayName, dropSignupConsent, loadUserState, saveUserState, signOut, takeSignupConsent } from './auth.js'
 import { useHash } from './hash.js'
-import { consentRecord, ConsentScreen, hasConsent, PRIVACY_VERSION } from './Privacy.jsx'
+import { consentRecord, ConsentScreen, hasConsent, PRIVACY_VERSION, OFFICER } from './Privacy.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import Mascot from './components/Mascot.jsx'
 import LoginShell from './components/LoginShell.jsx'
@@ -423,9 +423,18 @@ function Navi({ user, initial }) {
       {/* 맨 아래 산자락 띠 (팀 디자인 초안) — 글씨는 푸터 내용만 */}
       <footer className="footer footer-scene">
         <div className="footer-body">
-          <p>교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준.</p>
-          <p>{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}</p>
-          <p className="footer-links"><a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a></p>
+          <div className="footer-info">
+            <p>교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준.</p>
+            <p>{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}</p>
+            <p className="footer-links"><a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a></p>
+          </div>
+          {/* 문의 — 만든 팀과 연락처 (이메일은 개인정보 보호책임자 연락처와 같음) */}
+          <div className="footer-contact">
+            <h2 className="footer-contact-title">문의</h2>
+            <p>만든 팀 <b>{OFFICER.name}</b> · 김연우 · 류다현</p>
+            <p>경북대 인공지능전공</p>
+            <p><a href={`mailto:${OFFICER.contact}`}>{OFFICER.contact}</a></p>
+          </div>
         </div>
         <Mascot pose="walk" size={64} className="footer-mascot" />
         <FooterHills />

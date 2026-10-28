@@ -819,10 +819,19 @@ a.hl-link:hover .hl-mountain { transform: rotate(-3deg); transform-origin: 50% 9
 .footer-scene { position: relative; overflow: hidden; margin-top: 32px; padding: 22px 120px 96px 26px; text-align: left;
   background: #e6f2e4; border: 1.5px solid #cfe3d2; border-radius: 18px; color: var(--text-2); }
 .footer-scene p { text-wrap: pretty; }
+/* 푸터 안: 왼쪽 안내, 오른쪽 문의 (좁은 화면은 위아래) */
+.footer-body { display: flex; flex-wrap: wrap; gap: 14px 40px; align-items: flex-start; }
+.footer-info { flex: 1 1 320px; min-width: 0; }
+.footer-contact { flex: 0 1 auto; padding-left: 20px; border-left: 1.5px solid #b9d6be; }
+.footer-contact-title { margin: 0 0 2px; font-family: 'JejuStoneWall', 'Pretendard Variable', sans-serif; font-weight: 400; font-size: 15px; color: #1b1a17; }
+.footer-contact b { color: #1b1a17; }
 .footer-mascot { position: absolute; top: 14px; right: 24px; width: 64px; height: auto; }
 .footer-hills { position: absolute; left: 0; right: 0; bottom: 0; display: block; width: 100%; height: 86px; }
 @media (max-width: 640px) {
   .footer-scene { padding: 18px 16px 78px; text-align: center; }
+  .footer-body { flex-direction: column; align-items: stretch; }
+  .footer-info, .footer-contact { flex: none; }
+  .footer-contact { padding: 12px 0 0; border-left: 0; border-top: 1.5px solid #b9d6be; }
   .footer-mascot { top: auto; bottom: 34px; right: 14px; width: 44px; z-index: 1; }
   .footer-hills { height: 64px; }
 }
