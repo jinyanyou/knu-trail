@@ -17,8 +17,8 @@ const keyNum = (k) => {
 
 // 과목 분류 색 — 화면 범례·막대·카드 왼쪽 띠 모두 이 순서
 export const CLS = ['req', 'major', 'prog', 'la', 'free']
-export const CLS_LABEL = { req: '전공필수', major: '전공선택', prog: '다전공', la: '교양', free: '자유·일반선택' }
-export const CLS_TAG = { req: '전필', major: '전선', prog: '다전공', la: '교양', free: '자선' }
+export const CLS_LABEL = { req: '전공필수', major: '전공선택', prog: '다전공', la: '교양', free: '일반선택' }
+export const CLS_TAG = { req: '전필', major: '전선', prog: '다전공', la: '교양', free: '일선' }
 const CLS_COLOR = { req: '#910000', major: '#e8821a', prog: '#3b5bdb', la: '#e0a800', free: '#cfcbc0' }
 const CAT_CLS = { 전공필수: 'req', 전공: 'major', 교양: 'la' }
 // counts_for: 'primary'(주전공에 인정) 또는 다전공 학과 코드 — 'primary'는 다전공이 아니다
