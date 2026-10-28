@@ -478,7 +478,7 @@ def evaluate(entry_year, taken, profile=None):
                     r["note"] = f"대체과목 인정: {', '.join(used)}"
                 r["certificates"] = subs["certificates"]
         elif q["id"] == "advisor_counseling":
-            # 필요 횟수는 학과 안내 기준 8회로 고정, 받은 횟수만 학생이 입력
+            # 필요 횟수는 학과 안내 기준 8회(graduation.json required_count), 받은 횟수만 학생이 입력
             count = _count(profile.get("counseling_count"))
             need = q["required_count"]
             status = MET if profile.get(alt_flag) or (count or 0) >= need else UNMET

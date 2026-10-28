@@ -86,7 +86,7 @@ function Options({ r, onPlan, planned, rg }) {
   )
 }
 
-// 학생상담지도교수 상담 — 받은 횟수를 바로 고친다 (필요 횟수는 8회 고정).
+// 학생상담지도교수 상담 — 받은 횟수를 바로 고친다 (필요 횟수는 학과 안내 기준 8회 고정).
 // 계산 결과를 기다리지 않게 입력값은 프로필에서 바로 읽는다
 function CounselingEdit({ profile, onChange }) {
   const c = { count: profile.counseling_count ?? null, confirmed: !!profile.counseling_done }
@@ -102,7 +102,7 @@ function CounselingEdit({ profile, onChange }) {
           value={c.count ?? ''} placeholder="0" onChange={(e) => onChange({ counseling_count: num(e.target.value) })} />
         <button type="button" className="btn btn-sm counsel-step" aria-label="상담 횟수 1 늘리기"
           onClick={() => onChange({ counseling_count: count + 1 })}>+</button>
-        <span className="muted">/ 8회</span>
+        <span className="muted">/ 8회 (학과 안내 기준)</span>
       </div>
       <label className="check">
         <input type="checkbox" checked={c.confirmed} onChange={(e) => onChange({ counseling_done: e.target.checked })} />
