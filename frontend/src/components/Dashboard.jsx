@@ -326,20 +326,22 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
           // 다전공 카드: 'program:<코드>:credits' — 이름은 그 학과·융합전공, 필수 과목이 있으면 함께
           const prog = id.startsWith('program:') ? report.programs.find((p) => id === `program:${p.code}:credits`) : null
           const req = prog && byId[`program:${prog.code}:required`]
-          const title = prog ? `${prog.label} · ${prog.name}` : id === 'major_required' ? '전공필수' : r.label.replace(' (전공필수 포함)', '')
+          // 제목은 한 줄 (카드끼리 숫자·막대 높이가 맞게) — '빅데이터융합전공'처럼 이름에 종류가 들어 있으면 이름만
+          const title = prog ? (prog.name.endsWith(prog.label) ? prog.name : `${prog.label} · ${prog.name}`)
+            : id === 'major_required' ? '전공필수' : r.label.replace(' (전공필수 포함)', '')
           return (
             // 카드 안에 막대(div)가 있어 <button> 대신 역할만 버튼으로
             <div key={id} role="button" tabIndex={0} className={`panel kpi kpi-open${prog ? ' kpi-program' : ''}`} onClick={() => onOpen(id)}
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onOpen(id))}
               aria-label={`${title} 과목 보기·고치기`}>
-              <p className="eyebrow">{title}</p>
+              <p className="eyebrow kpi-title" title={prog ? `${prog.label} · ${prog.name}` : title}>{title}</p>
               <p className="kpi-value">
                 {r.earned}
                 {r.planned > 0 && <span className="plus">+{r.planned}</span>}
                 <span className="of">{r.required != null ? `/${r.required}${r.unit}` : `${r.unit} (기준 확인 필요)`}</span>
               </p>
               {r.counseling && onProfile && <CounselingEdit profile={profile} onChange={onProfile} />}
-      {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={title} />}
+              {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={title} />}
               {req && (
                 <p className="muted">
                   {req.label} {req.earned}{req.planned > 0 ? `+${req.planned}` : ''}/{req.required}{req.unit}

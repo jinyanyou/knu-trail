@@ -364,7 +364,9 @@ select.invalid { border-color: var(--critical); }
 /* ── 요건 눌러 과목 고치기 ── */
 .kpi-open { text-align: left; font: inherit; color: inherit; cursor: pointer; width: 100%; }
 .kpi-open:hover, .req-open:hover { border-color: var(--accent); }
-.kpi-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.kpi-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+/* 카드끼리 줄 맞춤: 제목은 한 줄(넘치면 …), '부족·과목 N개'는 카드 바닥에 */
+.kpi-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .req-count { font-size: 12px; font-weight: 600; color: var(--accent-ink); white-space: nowrap; }
 .req-open { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: inherit; text-align: left; cursor: pointer; display: inline-flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .req-open:hover .req-count { text-decoration: underline; }
