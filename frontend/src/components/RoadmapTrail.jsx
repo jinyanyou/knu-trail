@@ -19,7 +19,7 @@ const keyNum = (k) => {
 export const CLS = ['req', 'major', 'prog', 'la', 'free']
 export const CLS_LABEL = { req: '전공필수', major: '전공선택', prog: '다전공', la: '교양', free: '자유·일반선택' }
 export const CLS_TAG = { req: '전필', major: '전선', prog: '다전공', la: '교양', free: '자선' }
-const CLS_COLOR = { req: '#3b5bdb', major: '#d6336c', prog: '#e8821a', la: '#8b5e3c', free: '#cfcbc0' }
+const CLS_COLOR = { req: '#d6336c', major: '#e8821a', prog: '#3b5bdb', la: '#e0a800', free: '#cfcbc0' }
 const CAT_CLS = { 전공필수: 'req', 전공: 'major', 교양: 'la' }
 // counts_for: 'primary'(주전공에 인정) 또는 다전공 학과 코드 — 'primary'는 다전공이 아니다
 const progOf = (cf) => (cf && cf !== 'primary' ? cf : null)
@@ -314,9 +314,9 @@ export function ProgramTrail({ nodes, program }) {
         const r = 9 + 14 * Math.min(1, cum / req)
         return (
           <g key={n.key}>
-            <circle cx={xs[i]} cy="42" r={r} fill={cum >= req ? '#e8821a' : '#fff0df'} stroke={INK} strokeWidth="2.6"
+            <circle cx={xs[i]} cy="42" r={r} fill={cum >= req ? CLS_COLOR.prog : '#e6ecff'} stroke={INK} strokeWidth="2.6"
               strokeDasharray={n.status === 'done' ? undefined : '4 3'} />
-            <text x={xs[i]} y="47" textAnchor="middle" className="t-num" fill={cum >= req ? '#fff' : '#8f3a00'}>{cum}</text>
+            <text x={xs[i]} y="47" textAnchor="middle" className="t-num" fill={cum >= req ? '#fff' : '#1c3aa9'}>{cum}</text>
             <text x={xs[i]} y="90" textAnchor="middle" className="t-small" fill="#67645d">{add ? `+${add}학점` : '–'}</text>
           </g>
         )
