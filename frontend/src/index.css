@@ -814,3 +814,15 @@ a.hl-link:hover .hl-mountain { transform: rotate(-3deg); transform-origin: 50% 9
   .topbar .topbar-title.hl { display: none; }
   .topbar .topbar-title-m { display: contents; }
 }
+
+/* 홈 맨 아래 산자락 띠 — 연초록 칸 안에 푸터 글씨, 오른쪽 위 다람쥐, 바닥에 능선·나무 */
+.footer-scene { position: relative; overflow: hidden; margin-top: 32px; padding: 22px 120px 96px 26px; text-align: left;
+  background: #e6f2e4; border: 1.5px solid #cfe3d2; border-radius: 18px; color: var(--text-2); }
+.footer-scene p { text-wrap: pretty; }
+.footer-mascot { position: absolute; top: 14px; right: 24px; width: 64px; height: auto; }
+.footer-hills { position: absolute; left: 0; right: 0; bottom: 0; display: block; width: 100%; height: 86px; }
+@media (max-width: 640px) {
+  .footer-scene { padding: 18px 16px 78px; text-align: center; }
+  .footer-mascot { top: auto; bottom: 34px; right: 14px; width: 44px; z-index: 1; }
+  .footer-hills { height: 64px; }
+}
