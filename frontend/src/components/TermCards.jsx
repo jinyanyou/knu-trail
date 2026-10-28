@@ -18,22 +18,36 @@ export function TakenItem({ i, tag }) {
         {i.before && <span className="tc-flag">재수강 전</span>}
       </span>
       {i.fail && <span className="tc-note">학점을 받지 못했어요{i.retakenIn ? ` → ${termShort(i.retakenIn)} 재수강` : ' — 재수강하면 학점이 생겨요'}</span>}
-      {i.before && <span className="tc-note">{termShort(i.retakenIn)}에 재수강 → 이 성적은 평점에서 빠지고 {i.retakenIn.grade}로 바뀌어요</span>}
+      {i.before && i.retakenIn && <span className="tc-note">{termShort(i.retakenIn)}에 재수강 → 이 성적은 평점에서 빠지고 {i.retakenIn.grade}로 바뀌어요</span>}
       {i.retakeOf && (
         <span className="tc-note">
-          이전 {termShort(i.retakeOf)} {i.retakeOf.grade} → {i.grade}{i.noCredit ? ' · 학점은 한 번만 쳐요' : ''}
+          {i.retakeOf.year ? `이전 ${termShort(i.retakeOf)} ${i.retakeOf.grade}` : `이전 성적 ${i.retakeOf.grade ?? '모름'}`} → {i.grade}{i.noCredit ? ' · 학점은 한 번만 쳐요' : ''}
         </span>
       )}
     </li>
   )
 }
 
+// 다전공을 고른 학생은 카드 안을 주전공 / 다전공(전공마다) / 교양·일반선택으로 나눈다
+function sections(items, programs) {
+  if (!programs.length) return [{ key: 'all', items }]
+  const progOf = (i) => i.prog ?? programs[0].code
+  return [
+    { key: 'major', title: '주전공', items: items.filter((i) => i.cls === 'req' || i.cls === 'major') },
+    ...programs.map((p) => ({ key: `prog-${p.code}`, title: p.name, sub: p.label, items: items.filter((i) => i.cls === 'prog' && progOf(i) === p.code) })),
+    { key: 'etc', title: '교양·일반선택', items: items.filter((i) => i.cls === 'la' || i.cls === 'free') },
+  ].filter((g) => g.items.length)
+}
+
+// 카드 머리의 학기 학점과 같은 기준 (F는 빼고)
+const sumCredits = (items) => items.reduce((n, i) => n + (i.fail ? 0 : i.credits), 0)
+
 /**
- * nodes: buildTrail 결과 / tagOf(cls, prog): 과목 꼬리표
+ * nodes: buildTrail 결과 / tagOf(cls, prog): 과목 꼬리표 / programs: report.programs (카드 안 묶음)
  * renderPlan(item, tag): 계획 과목 그리기
  * footer(node): 카드 아래 버튼 등
  */
-export default function TermCards({ nodes, tagOf, filter = null, picked = null, maxCredits = null, renderPlan, footer }) {
+export default function TermCards({ nodes, tagOf, programs = [], filter = null, picked = null, maxCredits = null, renderPlan, footer }) {
   const ref = useRef(null)
   const shown = (items) => (filter ? items.filter((i) => i.cls === filter) : items)
 
@@ -66,15 +80,23 @@ export default function TermCards({ nodes, tagOf, filter = null, picked = null, 
               <span className={`tc-status s-${n.status}`}>{STATUS_LABEL[n.status]}</span>
             </div>
             <MixBar mix={n.mix} />
-            {list.length > 0 ? (
-              <ul className="tc-list">
-                {list.map((i) => {
-                  const tag = tagOf(i.cls, i.prog)
-                  if (!i.plan) return <TakenItem key={i.key} i={i} tag={tag} />
-                  return renderPlan(i, tag)
-                })}
-              </ul>
-            ) : (
+            {list.length > 0 ? sections(list, programs).map((g) => (
+              <section key={g.key} className={`tc-group${g.title ? '' : ' tc-group-plain'}`}>
+                {g.title && (
+                  <h4 className="tc-group-head">
+                    <span>{g.title}{g.sub && <small> {g.sub}</small>}</span>
+                    <span className="muted">{sumCredits(g.items)}학점</span>
+                  </h4>
+                )}
+                <ul className="tc-list">
+                  {g.items.map((i) => {
+                    const tag = tagOf(i.cls, i.prog)
+                    if (!i.plan) return <TakenItem key={i.key} i={i} tag={tag} />
+                    return renderPlan(i, tag)
+                  })}
+                </ul>
+              </section>
+            )) : (
               <p className="muted tc-empty">
                 {n.items.length ? '이 분류 과목 없음' : n.status === 'empty' ? '입력한 과목 없음 (휴학이면 그대로 두세요)' : '새로 넣을 과목 없음'}
               </p>

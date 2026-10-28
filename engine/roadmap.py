@@ -210,7 +210,7 @@ def plan(entry_year, taken, profile=None, start=None, max_credits=18, exclude=()
     report = evaluate(entry_year, p.taken, p.profile)
     for _ in range(MAX_STEPS):
         todo = sorted((r for r in report["requirements"] if r["status"] == UNMET and r["id"] not in skipped
-                       and r.get("required") is not None), key=_order)
+                       and r.get("required") is not None and not r.get("counseling")), key=_order)
         if not todo:
             break
         req = todo[0]
@@ -231,7 +231,8 @@ def plan(entry_year, taken, profile=None, start=None, max_credits=18, exclude=()
     for a in p.added:
         by_term[(a["year"], a["semester"])].append({k: v for k, v in a.items() if k not in ("_taken", "flexible")})
     existing = {t: [x for x in taken if (x.get("year"), x.get("semester")) == t and not x.get("grade")] for t in p.terms}
-    unmet = [r["label"] for r in report["requirements"] if r["status"] == UNMET]
+    # 상담 횟수는 과목으로 못 채우니 '직접 확인'으로
+    unmet = [r["label"] for r in report["requirements"] if r["status"] == UNMET and not r.get("counseling")]
     terms = [{"year": t[0], "semester": t[1], "grade": _grade_of(t, entry_year),
               "credits": p.load[t], "planned_before": len(existing[t]), "courses": by_term[t]}
              for t in p.terms if by_term[t] or existing[t]]
@@ -242,7 +243,8 @@ def plan(entry_year, taken, profile=None, start=None, max_credits=18, exclude=()
         "extra_terms": p.extra,
         "verified": not unmet,
         "unmet": unmet,
-        "manual": [r["label"] for r in report["requirements"] if r["status"] in ("manual", "unknown")],
+        "manual": [r["label"] for r in report["requirements"]
+                   if r["status"] in ("manual", "unknown") or (r.get("counseling") and r["status"] == UNMET)],
         "summary_after": report["summary"],
     }
 

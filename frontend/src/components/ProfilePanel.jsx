@@ -14,6 +14,8 @@ const FLAGS = [
   { key: 'software_alternative', label: '소프트웨어 대체 인정 (자격증·교육 이수 등)' },
   { key: 'major_assessment_done', label: '전공영역 평가 통과' },
   { key: 'transfer', label: '편입생' },
+  { key: 'foreign_student', label: '외국인 학생 (소프트웨어 면제, 실용영어는 TOPIK 4급)' },
+  { key: 'qualification_exempt', label: '졸업자격인정 일괄 면제 대상 (실용영어·소프트웨어·상담)' },
   { key: 'teaching_course', label: '교직과정 이수' },
   { key: 'joint_degree', label: '부산대 공동학위 희망' },
 ]

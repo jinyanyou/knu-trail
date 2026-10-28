@@ -114,7 +114,7 @@ export default function Grades({ report, onBack }) {
                 <li key={`${c.code}${c.year}`}>
                   <div className="c-main">
                     <span className="c-name">{c.name}</span>
-                    <span className="c-meta">{c.year}년 {c.semester} · {c.credits}학점 · 지금 {c.grade}</span>
+                    <span className="c-meta">{c.year}년 {c.semester} · {c.credits}학점 · 지금 {c.grade}{c.retake ? ` · 이미 재수강한 과목${c.retake.grade ? ` (이전 ${c.retake.grade})` : ''}` : ''}</span>
                   </div>
                   <select aria-label={`${c.name} 재수강 목표 성적`} value={retake[c.code] ?? ''}
                     onChange={(e) => setRetake({ ...retake, [c.code]: e.target.value || undefined })}>

@@ -156,3 +156,15 @@ def recognizable(entry_year, program_codes=()):
             merged.setdefault(c["code"], {"code": c["code"], "name": c["name"], "credits": c["credits"],
                                           "category": "다전공", "program": p["name"], "year": entry_year})
     return merged
+
+
+@lru_cache(maxsize=None)
+def software_substitutes(entry_year):
+    """졸업자격인정 소프트웨어영역 — 입학년도 기준 대체과목 {code: name}과 전산 자격증 목록.
+    대체과목: 2023학번 목록 / 2024학번 이후 목록 + 폐지된 교양 소프트웨어 과목. 자격증: 2024학번 이전 / 2025학번 이후"""
+    doc = json.loads((DATA / "rules" / "software_substitutes.json").read_text(encoding="utf-8"))
+    by_year = doc["by_entry_year"]
+    key = max((y for y in by_year if int(y) <= entry_year), default=min(by_year))
+    courses = {c["code"]: c["name"] for c in by_year[key] + doc["discontinued_liberal"]}
+    cert_key = "2024" if entry_year <= 2024 else "2025"
+    return {"courses": courses, "certificates": doc["certificates"][cert_key]}

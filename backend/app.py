@@ -29,6 +29,13 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 TIMETABLE = Path(__file__).resolve().parent.parent / "data" / "timetable"
 
 
+class RetakeInfo(BaseModel):
+    """재수강한 과목의 이전 수강 (성적표에는 재수강 뒤 성적만 남아 학생이 직접 표시). 모르면 비워 둠"""
+    year: int | None = Field(default=None, ge=2000, le=2100)
+    semester: str | None = None
+    grade: str | None = Field(default=None, max_length=5)
+
+
 class TakenCourse(BaseModel):
     code: str = Field(min_length=1, max_length=20)
     year: int | None = Field(default=None, ge=2000, le=2100)
@@ -43,6 +50,7 @@ class TakenCourse(BaseModel):
     category: Literal["전공필수", "전공", "교양", "일반선택"] | None = None
     area: str | None = Field(default=None, max_length=30)
     sub_area: str | None = Field(default=None, max_length=30)
+    retake: RetakeInfo | None = None
 
 
 class ProgramChoice(BaseModel):
@@ -55,6 +63,8 @@ class Profile(BaseModel):
     major_track: Literal["single", "double_major", "single_minor"] = "single"
     programs: list[ProgramChoice] = Field(default_factory=list, max_length=3)
     transfer: bool = False
+    qualification_exempt: bool = False
+    foreign_student: bool = False
     teaching_course: bool = False
     math_science_waived: bool = False
     english_test: str | None = Field(default=None, max_length=50)

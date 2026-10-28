@@ -17,11 +17,17 @@
     pnu         True면 부산대 개설 과목 (공동학위 18학점 계산)
     counts_for  "primary"(인공지능전공) 또는 다전공 학과 코드 — 이 과목을 어느 전공에 인정할지 직접 지정.
                 없으면 자동 배정 (한 과목은 한 전공에만 인정: 필수 과목 우선, 나머지는 부족한 쪽부터)
+    retake      {"year", "semester", "grade"} — 학생이 직접 표시한 재수강 (성적표에 이전 수강이 안 남은 경우).
+                계산에는 영향 없음(이전 학점은 이미 무효) — 화면 표시용으로 courses에 그대로 넘긴다
 
 profile 항목 (모두 선택)
     programs                다전공 목록 [{"kind": "double"|"linked"|"convergence"|"minor", "code": 학과코드,
                             "min_credits": 학과 기준을 직접 입력할 때}] — 코드는 data/programs/<학번>.json
     transfer, teaching_course   편입생 / 교직과정 이수자 → 주전공 '다전공 시' 학점(61) 적용
+                            (편입생은 졸업자격인정 실용영어·소프트웨어·상담도 면제)
+    qualification_exempt    학교가 인정한 일괄 면제 대상(장애학생지원센터 등록 등) → 실용영어·소프트웨어·상담 면제.
+                            사유(장애 여부)는 민감정보라 받지 않는다
+    foreign_student         외국인 학생(2022학번 이후) → 소프트웨어 면제, 실용영어는 TOPIK 4급으로 대체
     major_track             programs 없이 학점 기준만 바꿀 때: "single"(기본) / "double_major" / "single_minor"
     math_science_waived     기초학력 진단평가 A → 수리·기초과학 이수 면제
     english_test            실용영어 대체 성적 보유 (예: "TOEIC 750") — 기준 충족 여부는 학생이 확인
@@ -444,35 +450,53 @@ def evaluate(entry_year, taken, profile=None):
         if credit_rule:
             in_rule = lambda i, a=credit_rule: (in_la(i) and at_knu(i)
                                                 and i["info"].area == a["area"] and i["info"].sub_area in a["sub_areas"])
+            subs = catalog.software_substitutes(entry_year) if q["id"] == "software" else None
+            if subs:
+                # 소프트웨어교육원 지정 대체과목 — 개설학과·이수 구분과 상관없이 같은 3학점 기준에 합산
+                in_area = in_rule
+                in_rule = lambda i: in_area(i) or (not i.get("external") and i["code"] in subs["courses"])
             e, p = _tally(items, in_rule)
             r = _req(q["id"], "졸업자격인정", q["label"], credit_rule["min_credits"], e, p,
                      alternatives=alternatives, source=q["source"], counted=_counted(items, in_rule),
                      pick={"categories": [LIBERAL_ARTS], "area": credit_rule["area"], "sub_areas": credit_rule["sub_areas"]})
             if alt_flag and profile.get(alt_flag) and r["status"] != MET:
+                # 대체로 인정되면 과목을 더 들을 필요가 없다 → 학점 진행 대신 '대체 인정'으로 보여 준다
                 r["status"] = MET
-                r["note"] = f"대체 인정: {profile[alt_flag] if isinstance(profile[alt_flag], str) else '본인 입력'}"
+                r["replaced"] = profile[alt_flag] if isinstance(profile[alt_flag], str) else "본인 입력"
+                r["note"] = f"대체 인정: {r['replaced']}"
             elif r["status"] != MET:
                 r["examples"] = catalog.area_examples(credit_rule["area"], credit_rule["sub_areas"], ref_year)
                 if any(a.get("status") == "unknown" for a in q["any_of"]):
                     r["note"] = "학과 지정 대체과목으로도 인정될 수 있음 (대체과목 목록은 확인 중)"
+            if subs:
+                used = [subs["courses"][i["code"]] for i in items if i["code"] in subs["courses"]]
+                if used and not r.get("replaced"):
+                    r["note"] = f"대체과목 인정: {', '.join(used)}"
+                r["certificates"] = subs["certificates"]
         elif q["id"] == "advisor_counseling":
-            # 학생이 받은 상담 횟수·필요 횟수를 직접 입력 (필요 횟수는 학과 안내 기준 — 규정 원문 확인 전)
+            # 필요 횟수는 학과 안내 기준 8회로 고정, 받은 횟수만 학생이 입력
             count = _count(profile.get("counseling_count"))
-            need = _count(profile.get("counseling_required"))
-            if profile.get(alt_flag):
-                status = MET
-            elif count is not None and need:
-                status = MET if count >= need else UNMET
-            else:
-                status = MANUAL
-            r = _req(q["id"], "졸업자격인정", q["label"], need, count, 0 if count is not None else None,
+            need = q["required_count"]
+            status = MET if profile.get(alt_flag) or (count or 0) >= need else UNMET
+            r = _req(q["id"], "졸업자격인정", q["label"], need, count or 0, 0,
                      unit="회", status=status, alternatives=alternatives, source=q["source"],
-                     counseling={"count": count, "required": need, "confirmed": bool(profile.get(alt_flag))},
-                     note=None if need or count is None else "필요 횟수를 입력하면 충족 여부를 계산해요.")
+                     counseling={"count": count, "required": need, "confirmed": bool(profile.get(alt_flag))})
         else:
             status = MET if profile.get(alt_flag) else (UNKNOWN if q.get("status") == "unknown" else MANUAL)
             r = _req(q["id"], "졸업자격인정", q["label"], None, None, None, unit=None, status=status,
                      alternatives=alternatives, note=q.get("note"), source=q["source"])
+        # 다전공으로 인정 (영어영문학과·영어교육과 복수·부전공 → 실용영어)
+        prog_rule = next((a for a in q["any_of"] if a["type"] == "program"), None)
+        hit = prog_rule and next((p for p in profile.get("programs") or []
+                                  if p.get("code") in prog_rule["codes"] and p.get("kind") in prog_rule["kinds"]), None)
+        if hit and r["status"] != MET:
+            r.update(status=MET, replaced=prog_rule["label"], examples=None,
+                     note=f"대체 인정: {prog_rule['label']} (그 다전공을 완성해야 인정)")
+        # 일괄 면제 (편입생·장애학생 / 외국인 학생은 소프트웨어만)
+        ex = next((x for x in rs["graduation_qualification"].get("exemptions", [])
+                   if q["id"] in x["items"] and any(profile.get(f) for f in x["flags"])), None)
+        if ex and r["status"] != MET:
+            r.update(status=WAIVED, examples=None, note=f"면제: {ex['label']}")
         reqs.append(r)
 
     # ── 공동학위 (희망자만) ─────────────────────────────────────
@@ -505,7 +529,7 @@ def evaluate(entry_year, taken, profile=None):
                      "semester": i.get("semester"), "grade": i.get("grade"), "planned": i["planned"],
                      "counts_for": i["counts_for"], "counts_for_auto": i["auto"], "eligible": i["pools"],
                      "category_override": i.get("category") in CATEGORIES,
-                     "program": prog_names.get(i["counts_for"])}
+                     "program": prog_names.get(i["counts_for"]), "retake": i.get("retake")}
                     for i in items],
         "programs": [{"code": p["code"], "name": p["name"], "kind": p["kind"], "label": p["label"],
                       "min_credits": p["min_credits"], "basis": p["basis"]} for p in progs],

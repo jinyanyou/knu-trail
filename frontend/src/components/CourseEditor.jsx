@@ -3,6 +3,7 @@ import * as api from '../api.js'
 import ImportPanel from './ImportPanel.jsx'
 import BrowsePanel from './BrowsePanel.jsx'
 import CategoryPicker from './CategoryPicker.jsx'
+import RetakeEdit from './RetakeEdit.jsx'
 
 export const GRADES = ['A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'P', 'S', 'F', 'U', 'NP', '이수']
 const PLANNED = '' // 성적 없음 = 수강 예정
@@ -233,6 +234,7 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
                         </span>
                         <CategoryPicker course={t} info={info} areas={report?.liberal_areas} programs={report?.programs}
                           onChange={(patch) => setRow(t.id, patch)} />
+                        <RetakeEdit course={t} entryYear={entryYear} onChange={(patch) => setRow(t.id, patch)} />
                       </div>
                       <select aria-label="성적" value={t.grade ?? PLANNED} onChange={(e) => setRow(t.id, { grade: e.target.value || null })}>
                         {GRADES.map((g) => <option key={g} value={g}>{g}</option>)}

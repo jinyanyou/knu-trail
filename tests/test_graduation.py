@@ -164,18 +164,19 @@ def test_unknown_course_without_credits_warns():
 def test_english_test_substitutes_credits():
     rep = evaluate(2026, [], {"english_test": "TOEIC 750"})
     r = req(rep, "practical_english")
-    assert r["status"] == MET and "TOEIC 750" in r["note"]
+    assert r["status"] == MET and "TOEIC 750" in r["note"] and r["replaced"] == "TOEIC 750"
+    assert not r.get("examples")
 
 
 @pytest.mark.parametrize("entry_year", [2023, 2024, 2025, 2026])
 def test_full_transcript_is_graduation_ready_once_manual_items_confirmed(entry_year):
     taken = full_transcript(entry_year)
-    rep = evaluate(entry_year, taken)
+    rep = evaluate(entry_year, taken, {"counseling_count": 8})
     assert rep["summary"]["blocking"] == [], json.dumps(
         [r for r in rep["requirements"] if r["status"] == UNMET], ensure_ascii=False)
-    assert not rep["summary"]["graduation_ready"], "상담·전공영역 평가는 본인 확인 전까지 미완료"
+    assert not rep["summary"]["graduation_ready"], "전공영역 평가는 본인 확인 전까지 미완료"
 
-    rep = evaluate(entry_year, taken, {"counseling_done": True, "major_assessment_done": True})
+    rep = evaluate(entry_year, taken, {"counseling_count": 8, "major_assessment_done": True})
     assert rep["summary"]["graduation_ready"]
 
 
@@ -191,12 +192,62 @@ def test_unsupported_entry_year():
 
 
 def test_advisor_counseling_count():
+    """필요 횟수는 8회 고정 — 예전에 입력한 counseling_required는 무시"""
     req = lambda prof: next(r for r in evaluate(2025, [], prof)["requirements"] if r["id"] == "advisor_counseling")
-    assert req({})["status"] == "manual"
-    r = req({"counseling_count": 3})
-    assert r["status"] == "manual" and r["earned"] == 3 and r["required"] is None
-    r = req({"counseling_count": 3, "counseling_required": 8})
-    assert r["status"] == "unmet" and (r["earned"], r["required"], r["unit"]) == (3, 8, "회")
-    assert req({"counseling_count": "8", "counseling_required": 8})["status"] == "met"
-    assert req({"counseling_count": 1, "counseling_required": 8, "counseling_done": True})["status"] == "met"
+    r = req({})
+    assert r["status"] == "unmet" and (r["earned"], r["required"], r["unit"]) == (0, 8, "회")
+    r = req({"counseling_count": 3, "counseling_required": 2})
+    assert r["status"] == "unmet" and (r["earned"], r["required"]) == (3, 8)
+    assert req({"counseling_count": "8"})["status"] == "met"
+    assert req({"counseling_count": 1, "counseling_done": True})["status"] == "met"
     assert req({"counseling_count": "abc"})["counseling"]["count"] is None
+
+
+def test_manual_retake_mark_is_passed_through_without_changing_credits():
+    """성적표엔 재수강 뒤 성적만 남는다 → 학생이 표시한 retake는 계산에 영향 없이 courses로 넘어간다"""
+    base = [{"code": "CLTR0041", "year": 2025, "semester": "1학기", "grade": "A0"}]
+    marked = [{**base[0], "retake": {"year": 2024, "semester": "1학기", "grade": "C0"}}]
+    a, b = evaluate(2024, base), evaluate(2024, marked)
+    assert req(a, "total")["earned"] == req(b, "total")["earned"] == 3
+    assert b["courses"][0]["retake"] == {"year": 2024, "semester": "1학기", "grade": "C0"}
+    assert a["courses"][0]["retake"] is None
+
+
+@pytest.mark.parametrize("entry_year,code,ok", [
+    (2023, "COMP0217", True),    # 2023학번 목록에만 있음
+    (2024, "COMP0217", False),
+    (2024, "COMP0204", True),    # 2024학번 이후 목록
+    (2027, "ELEC0520", True),
+    (2026, "CLTR0266", True),    # 폐지된 교양 소프트웨어 과목
+])
+def test_software_substitute_courses_by_entry_year(entry_year, code, ok):
+    taken = [{"code": code, "year": entry_year, "semester": "1학기", "grade": "A0", "credits": 3}]
+    r = req(evaluate(entry_year, taken), "software")
+    assert (r["status"] == MET) is ok
+    if ok:
+        assert r["note"].startswith("대체과목 인정")
+
+
+def test_software_certificate_list_follows_entry_year():
+    assert req(evaluate(2024, []), "software")["certificates"]["label"] == "2024학번 이전"
+    r = req(evaluate(2025, []), "software")
+    assert r["certificates"]["label"] == "2025학번 이후"
+    assert not any("워드프로세서" in names for _, names in r["certificates"]["list"])
+
+
+@pytest.mark.parametrize("flag,waived", [
+    ("transfer", {"practical_english", "software", "advisor_counseling"}),
+    ("qualification_exempt", {"practical_english", "software", "advisor_counseling"}),
+    ("foreign_student", {"software"}),
+])
+def test_graduation_qualification_exemptions(flag, waived):
+    rep = evaluate(2025, [], {flag: True})
+    got = {r["id"] for r in rep["requirements"] if r["group"] == "졸업자격인정" and r["status"] == "waived"}
+    assert got == waived
+    assert req(rep, "major_assessment")["status"] != "waived"   # 전공영역은 면제 대상 아님
+
+
+@pytest.mark.parametrize("kind,ok", [("double", True), ("minor", True), ("linked", False)])
+def test_english_department_program_counts_as_practical_english(kind, ok):
+    rep = evaluate(2025, [], {"programs": [{"kind": kind, "code": "1102"}]})
+    assert (req(rep, "practical_english")["status"] == MET) is ok
