@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import LoginShell from './components/LoginShell.jsx'
 
 // 내용을 바꾸면 버전을 올린다 → 기존 사용자도 다음 접속 때 다시 동의를 받는다
@@ -62,6 +62,10 @@ export function ConsentScreen({ mode = 'signup', onAgree, onDecline }) {
 
 // #/privacy — 개인정보 처리 안내 전문
 export function PrivacyPage() {
+  // 홈 맨 아래 링크로 들어와도 맨 위부터 보이게 (App 밖에서 그려져 App의 스크롤 초기화가 안 닿음)
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div className="app privacy">
       <a className="btn-link" href="#">← trAIl로</a>
