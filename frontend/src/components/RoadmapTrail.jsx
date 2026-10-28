@@ -19,7 +19,7 @@ const keyNum = (k) => {
 export const CLS = ['req', 'major', 'prog', 'la', 'free']
 export const CLS_LABEL = { req: '전공필수', major: '전공선택', prog: '다전공', la: '교양', free: '자유·일반선택' }
 export const CLS_TAG = { req: '전필', major: '전선', prog: '다전공', la: '교양', free: '자선' }
-const CLS_COLOR = { req: '#3b5bdb', major: '#d6336c', prog: '#e8821a', la: '#8a5bd6', free: '#cfcbc0' }
+const CLS_COLOR = { req: '#3b5bdb', major: '#d6336c', prog: '#e8821a', la: '#8b5e3c', free: '#cfcbc0' }
 const CAT_CLS = { 전공필수: 'req', 전공: 'major', 교양: 'la' }
 // counts_for: 'primary'(주전공에 인정) 또는 다전공 학과 코드 — 'primary'는 다전공이 아니다
 const progOf = (cf) => (cf && cf !== 'primary' ? cf : null)
