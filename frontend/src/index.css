@@ -711,6 +711,8 @@ h3.with-mascot { gap: 8px; }
   .trail-goal { left: auto !important; right: 28%; top: 7% !important; transform: none; }
   .trail-me.at-start .trail-me-img { transform: translateX(4px); }
   .trail-me.at-start .trail-me-label { transform: translateX(6px); }
+  /* 정상에 닿으면 다람쥐가 깃발 자리에 서므로 말풍선은 왼쪽으로 비킨다 */
+  .trail.done .trail-goal { right: 36%; }
 }
 
 /* 로그인 / 회원가입 탭 */

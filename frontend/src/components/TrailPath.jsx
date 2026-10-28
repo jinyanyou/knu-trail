@@ -7,7 +7,8 @@ import scene from '../assets/trail-scene.svg'
 // 그림은 비율을 지킨 채 폭에 맞춰 커지고 작아진다 — 다람쥐·말풍선은 글씨 크기를 지키려고 HTML로 겹쳐 그린다
 const W = 880
 const H = 210
-const PATH = 'M20 196 C140 176 200 196 300 170 C400 144 470 140 520 120 C570 100 600 80 640 56'
+// 앞 언덕을 지나 오른쪽 산 경사면으로 올라 정상(깃발)에 닿는다 — 나무·능선 선과 겹치거나 나란히 붙지 않게 (그림의 나무도 길 밖으로 옮김)
+const PATH = 'M16 197 C120 196 220 196 300 184 C380 171 450 164 525 156 C578 148 612 104 640 56'
 const TOP = { x: 640, y: 56 }
 const at = (pt) => ({ left: `${(pt.x / W) * 100}%`, top: `${(pt.y / H) * 100}%` })
 
@@ -27,7 +28,7 @@ export default function TrailPath({ earned, planned = 0, required, label = '총 
 
   const tip = `이수 ${earned}학점${planned ? ` · 예정 ${planned}학점` : ''} · 졸업 ${required}학점`
   return (
-    <figure className="trail" role="meter" aria-label={label} aria-valuemin={0} aria-valuemax={required}
+    <figure className={`trail${e >= 1 ? ' done' : ''}`} role="meter" aria-label={label} aria-valuemin={0} aria-valuemax={required}
       aria-valuenow={Math.min(earned, required)} aria-valuetext={tip}>
       <div className="trail-plot">
         <img className="trail-scene" src={scene} alt="" aria-hidden="true" draggable="false" />
@@ -44,11 +45,12 @@ export default function TrailPath({ earned, planned = 0, required, label = '총 
           <line x1={TOP.x} y1={TOP.y + 2} x2={TOP.x} y2="12" className="flag-pole" />
           <path d={`M${TOP.x} 12 L${TOP.x + 34} 22 L${TOP.x} 34 Z`} className="flag-cloth" />
         </svg>
-        <span className="trail-goal" style={at({ x: 684, y: 23 })}>졸업 {required}학점</span>
+        <span className="trail-goal" style={at({ x: 684, y: 23 })}>졸업 {required}학점{e >= 1 ? ' 달성' : ''}</span>
         {me && (
           <span className={`trail-me${me.x < 90 ? ' at-start' : me.x > 560 ? ' at-end' : ''}`} style={at(me)}>
             <Mascot pose={e >= 1 ? 'cheer' : 'walk'} size={60} className="trail-me-img" />
-            <span className="trail-me-label">지금 {earned}학점</span>
+            {/* 정상에 닿으면 '졸업 … 달성' 말풍선 하나로 (위로 잘리지 않게) */}
+            {e < 1 && <span className="trail-me-label">지금 {earned}학점</span>}
           </span>
         )}
       </div>
