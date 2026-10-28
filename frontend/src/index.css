@@ -794,6 +794,13 @@ h3.with-mascot { gap: 8px; }
 .hl-slogan { font-family: 'JejuStoneWall', sans-serif; font-size: 20px; letter-spacing: 1px; line-height: 1.2; color: #1b1a17; }
 .hl-sub { margin: 12px 0 0; font-size: 13px; color: #67645d; word-break: keep-all; }
 a.hl-link:hover .hl-mountain { transform: rotate(-3deg); transform-origin: 50% 90%; }
+/* 넓은 화면: 로고 옆 글씨·수강신청 연습 버튼·프로필을 로고 글자 아랫선에 맞춰 아래 정렬
+   (로고 칸 140px 중 글자 아랫선이 바닥에서 약 12px 위) */
+@media (min-width: 641px) {
+  .topbar { align-items: flex-end; }
+  .hl { align-items: flex-end; }
+  .hl-text, .topbar > .sim-link, .topbar > .account { margin-bottom: 12px; }
+}
 /* 폰(≤640px)은 예전 로고를 그대로 쓴다 */
 .topbar-title-m { display: none; }
 @media (max-width: 640px) {
