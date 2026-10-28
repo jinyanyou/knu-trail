@@ -335,6 +335,8 @@ select.invalid { border-color: var(--critical); }
 .trail-me-label { bottom: clamp(34px, 6.6vw, 62px); left: 0; transform: translateX(-50%); }
 .trail-me.at-start .trail-me-label { transform: translateX(-20%); }
 .trail-me.at-end .trail-me-label { transform: translateX(-80%); }
+/* 정상 가까이에선 '지금' 말풍선을 다람쥐 왼쪽 옆으로 (깃대 옆 '졸업' 말풍선과 겹치지 않게) */
+.trail-me.near-top .trail-me-label { bottom: 8px; transform: translateX(calc(-100% - clamp(18px, 3.4vw, 34px))); }
 @media (max-width: 560px) {
   .trail-goal, .trail-me-label { font-size: 11px; padding: 0 7px; border-width: 1.5px; }
 }
@@ -716,8 +718,7 @@ h3.with-mascot { gap: 8px; }
   /* 폰은 '졸업' 말풍선을 그림 맨 위에 붙여 '지금' 말풍선과 겹치지 않게 */
   .trail-goal { top: 2% !important; transform: translateX(-100%); }
   .trail.done .trail-goal { transform: translateX(calc(-100% - 30px)); }
-  /* 정상 가까이에선 '지금' 말풍선을 다람쥐 왼쪽 옆으로 (위의 '졸업' 말풍선과 겹치지 않게) */
-  .trail-me.near-top .trail-me-label { bottom: 8px; transform: translateX(calc(-100% - 22px)); }
+
   .trail-me.at-start .trail-me-img { transform: translateX(4px); }
   .trail-me.at-start .trail-me-label { transform: translateX(6px); }
 }
