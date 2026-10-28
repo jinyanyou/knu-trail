@@ -778,3 +778,25 @@ h3.with-mascot { gap: 8px; }
 }
 /* 폰: 하위 화면(프로필 설정·성적 통계·공지) 제목 크기를 홈 로고와 비슷하게 */
 @media (max-width: 640px) { .setup-head .brand { font-size: 24px; } }
+
+/* 홈 로고 — 팀 디자인 초안 그대로 (그림판 1024x765를 --s 비율로 줄이고, 원본처럼 왼쪽·위를 잘라 216x140 칸에) */
+.hl { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; min-width: 0; }
+.hl-link { display: block; flex: none; }
+.hl-mark { --s: 0.26; position: relative; display: block; width: calc(830.8px * var(--s)); height: calc(538.5px * var(--s)); overflow: hidden; }
+.hl-canvas { position: absolute; left: 0; top: 0; width: 1024px; height: 765px; transform-origin: 0 0;
+  transform: scale(var(--s)) translate(-84.6px, -107.7px); }
+.hl-mountain { position: absolute; left: 340px; top: 120px; width: 346px; height: 530px; display: block; }
+.hl-letters { position: absolute; left: 0; top: 0; display: block; }
+.hl-text { min-width: 0; }
+.topbar h1.hl-tilt, .hl-tilt { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; margin: 0; transform: rotate(-3deg); font-weight: 400; letter-spacing: 0; }
+.hl-name { font-family: 'JejuStoneWall', sans-serif; font-size: 58px; letter-spacing: 5px; line-height: 1.1; color: #1b1a17; }
+.hl-slogan { font-family: 'JejuStoneWall', sans-serif; font-size: 20px; letter-spacing: 1px; line-height: 1.2; color: #1b1a17; }
+.hl-sub { margin: 12px 0 0; font-size: 13px; color: #67645d; word-break: keep-all; }
+a.hl-link:hover .hl-mountain { transform: rotate(-3deg); transform-origin: 50% 90%; }
+@media (max-width: 640px) {
+  .topbar .topbar-title.hl { display: flex; grid-area: brand; flex-wrap: nowrap; gap: 4px 10px; }
+  .hl-mark { --s: 0.17; }
+  .hl-name { font-size: 38px; letter-spacing: 3px; }
+  .hl-slogan { font-size: 14px; }
+  .hl-sub { margin-top: 8px; font-size: 12px; }
+}
