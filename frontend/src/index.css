@@ -615,7 +615,7 @@ h3.with-mascot { gap: 8px; }
 
 /* 과목 분류 색 (로드맵) */
 .k-req { --k: #3b5bdb; --k-bg: #e6ecff; --k-ink: #1c3aa9; }
-.k-major { --k: #8c8a82; --k-bg: #eceae4; --k-ink: #4b4842; }
+.k-major { --k: #0f9b8e; --k-bg: #dcf3f0; --k-ink: #0b6b62; }
 .k-prog { --k: #e8821a; --k-bg: #fff0df; --k-ink: #8f3a00; }
 .k-la { --k: #8a5bd6; --k-bg: #f1ebfa; --k-ink: #5a2f96; }
 .k-free { --k: #cfcbc0; --k-bg: #fff; --k-ink: #67645d; }
