@@ -9,6 +9,7 @@ import LoginShell from './components/LoginShell.jsx'
 import Setup from './components/Setup.jsx'
 import CourseSheet from './components/CourseSheet.jsx'
 import HomeLogo from './components/HomeLogo.jsx'
+import FooterHills from './components/FooterHills.jsx'
 import BrandMark from './components/BrandMark.jsx'
 import Daily from './components/Daily.jsx'
 import Roadmap from './components/Roadmap.jsx'
@@ -419,10 +420,15 @@ function Navi({ user, initial }) {
           onChange={(t) => update({ taken: t })} onClose={() => setSheet(null)} />
       )}
 
-      <footer className="footer">
-        <p>교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준.</p>
-        <p>{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}</p>
-        <p className="footer-links"><a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a></p>
+      {/* 맨 아래 산자락 띠 (팀 디자인 초안) — 글씨는 푸터 내용만 */}
+      <footer className="footer footer-scene">
+        <div className="footer-body">
+          <p>교육과정·졸업요건 데이터: 경북대 knuin 교육과정조회, 학교·학과 공식 기준.</p>
+          <p>{user ? '입력한 성적은 내 계정에 저장되며 본인만 볼 수 있습니다.' : '입력한 성적은 이 브라우저에만 저장됩니다.'}</p>
+          <p className="footer-links"><a href="#/notices">공지 · 업데이트</a> · <a href="#/privacy">개인정보 처리 안내</a></p>
+        </div>
+        <Mascot pose="walk" size={64} className="footer-mascot" />
+        <FooterHills />
       </footer>
     </div>
   )
