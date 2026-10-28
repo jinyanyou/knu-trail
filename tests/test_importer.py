@@ -174,7 +174,7 @@ def test_image_upload_without_ai_key_is_400(monkeypatch):
     monkeypatch.setattr(ai_extract, "enabled", lambda: False)
     res = client.post("/api/import/file", data={"entry_year": "2026"},
                       files={"file": ("tt.png", b"\x89PNG", "image/png")})
-    assert res.status_code == 400 and "AI 인식이 꺼져" in res.json()["detail"]
+    assert res.status_code == 400 and "글자를 읽을 수 없는" in res.json()["detail"]
 
 
 def test_image_upload_with_ai(monkeypatch):

@@ -240,7 +240,9 @@ class ImportTextRequest(BaseModel):
 
 def _run_ai(entry_year, **kwargs):
     if not ai_extract.enabled():
-        raise HTTPException(400, "AI 인식이 꺼져 있습니다 (서버에 ANTHROPIC_API_KEY 없음). 텍스트로 붙여넣어 주세요.")
+        # 사진·스캔본처럼 글자를 뽑을 수 없는 자료 (AI 인식은 서버에 ANTHROPIC_API_KEY가 있을 때만)
+        raise HTTPException(400, "글자를 읽을 수 없는 자료예요 (사진·스캔본). 통합정보시스템에서 내려받은 성적증명서 PDF를 올리거나, "
+                                 "내용을 복사해 텍스트로 붙여넣어 주세요.")
     try:
         return {"engine": "ai", **ai_extract.extract(entry_year, **kwargs)}
     except ai_extract.AIExtractError as e:

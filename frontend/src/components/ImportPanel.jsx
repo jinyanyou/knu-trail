@@ -132,7 +132,7 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
         <>
           <div className="tabs" role="tablist">
             <button type="button" role="tab" aria-selected={mode === 'text'} className={mode === 'text' ? 'on' : ''} onClick={() => setMode('text')}>텍스트 붙여넣기</button>
-            <button type="button" role="tab" aria-selected={mode === 'file'} className={mode === 'file' ? 'on' : ''} onClick={() => setMode('file')}>사진·PDF 올리기</button>
+            <button type="button" role="tab" aria-selected={mode === 'file'} className={mode === 'file' ? 'on' : ''} onClick={() => setMode('file')}>{aiEnabled ? '사진·PDF 올리기' : 'PDF 올리기'}</button>
           </div>
 
           {mode === 'text' ? (
@@ -140,12 +140,15 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
               onChange={(e) => setText(e.target.value)} />
           ) : (
             <div className="file-drop">
-              <input type="file" accept="image/png,image/jpeg,image/webp,application/pdf" aria-label="파일 선택"
+              {/* AI 인식(서버에 API 키)이 없으면 글자가 든 PDF만 — 사진을 고르면 막히는 대신 처음부터 PDF만 받는다 */}
+              <input type="file" accept={aiEnabled ? 'image/png,image/jpeg,image/webp,application/pdf' : 'application/pdf'} aria-label="파일 선택"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
               <p className="muted">
-                성적표 PDF는 바로 인식돼요. 시간표 캡처 같은 사진은 AI 인식이 필요해요
-                {aiEnabled ? '.' : ' (현재 서버에서 꺼져 있음).'}
+                {aiEnabled
+                  ? '성적표 PDF는 바로 인식돼요. 시간표 캡처 같은 사진은 AI로 인식해요.'
+                  : '통합정보시스템에서 내려받은 성적증명서 PDF를 올려 주세요. 사진이나 스캔본은 텍스트 붙여넣기 또는 과목 직접 추가를 이용해 주세요.'}
               </p>
+              {fileNeedsAi && <p className="error" role="alert">사진 파일은 인식할 수 없어요. 성적증명서 PDF를 올려 주세요.</p>}
             </div>
           )}
 
