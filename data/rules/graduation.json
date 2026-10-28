@@ -361,6 +361,7 @@
             "id": "advisor_counseling",
             "label": "학생상담지도교수 상담",
             "required_count": 8,
+            "required_count_source": "인공지능전공 학과 안내 (학생상담지도교수 상담 8회)",
             "any_of": [
               {
                 "type": "manual",
