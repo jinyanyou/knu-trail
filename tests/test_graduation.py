@@ -260,3 +260,8 @@ def test_software_alternative_done_or_planned():
     r = req(evaluate(2025, [], {"software_alternative": "정보처리기사", "software_alternative_planned": True}), "software")
     assert r["status"] == "planned" and r["note"] == "대체 예정: 정보처리기사"
     assert req(evaluate(2025, [], {"software_alternative": True}), "software")["status"] == MET
+
+
+def test_english_test_planned_is_met_with_planned():
+    r = req(evaluate(2025, [], {"english_test": "TOEIC 750", "english_test_planned": True}), "practical_english")
+    assert r["status"] == "planned" and r["replaced_planned"] and r["note"] == "대체 예정: TOEIC 750"

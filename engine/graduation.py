@@ -31,6 +31,7 @@ profile 항목 (모두 선택)
     major_track             programs 없이 학점 기준만 바꿀 때: "single"(기본) / "double_major" / "single_minor"
     math_science_waived     기초학력 진단평가 A → 수리·기초과학 이수 면제
     english_test            실용영어 대체 성적 보유 (예: "TOEIC 750") — 기준 충족 여부는 학생이 확인
+    english_test_planned    위 대체를 아직 받기 전(예정) → '예정 포함 충족'
     software_alternative    소프트웨어 대체 인정(자격증, 45시간 교육 등) — True 또는 방법 글 (예: "정보처리기사")
     software_alternative_planned  위 대체를 아직 받기 전(예정) → '예정 포함 충족' 
     counseling_done         학생상담지도교수 상담 기준 충족
