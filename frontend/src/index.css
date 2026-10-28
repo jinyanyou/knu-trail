@@ -792,9 +792,9 @@ h3.with-mascot { gap: 8px; }
 .hl-slogan { font-family: 'JejuStoneWall', sans-serif; font-size: 20px; letter-spacing: 1px; line-height: 1.2; color: #1b1a17; }
 .hl-sub { margin: 12px 0 0; font-size: 13px; color: #67645d; word-break: keep-all; }
 a.hl-link:hover .hl-mountain { transform: rotate(-3deg); transform-origin: 50% 90%; }
+/* 폰(≤640px)은 예전 로고를 그대로 쓴다 */
+.topbar-title-m { display: none; }
 @media (max-width: 640px) {
-  .topbar .topbar-title.hl { display: flex; grid-area: brand; flex-wrap: nowrap; gap: 4px 10px; }
-  .hl-mark { --s: 0.17; }
-  .hl-slogan { font-size: 14px; }
-  .hl-sub { margin-top: 8px; font-size: 12px; }
+  .topbar .topbar-title.hl { display: none; }
+  .topbar .topbar-title-m { display: contents; }
 }
