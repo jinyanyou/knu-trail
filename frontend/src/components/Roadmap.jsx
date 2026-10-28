@@ -359,7 +359,7 @@ export default function Roadmap({ entryYear, payload, profile, taken, report, si
             </div>
           )}
           {plan && terms.length === 0 && unmet.length === 0 && <div className="panel empty with-mascot"><Mascot pose="cheer" size={64} />더 들어야 할 과목이 없어요.</div>}
-          <TermCards nodes={trail.nodes} tagOf={tagOf} filter={filter} picked={picked} maxCredits={maxCredits}
+          <TermCards nodes={trail.nodes} tagOf={tagOf} programs={programs} filter={filter} picked={picked} maxCredits={maxCredits}
             renderPlan={(i, tag) => (
               <PlanItem key={i.key} c={i} cls={i.cls} tag={tag} terms={allTerms} used={used} rg={rg}
                 onMove={(to) => move(i, to)} onSwap={(code) => swap(i, code)} onRemove={() => remove(i)} />

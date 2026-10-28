@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { GRADES } from './CourseEditor.jsx'
 import CategoryPicker from './CategoryPicker.jsx'
+import RetakeEdit from './RetakeEdit.jsx'
 import AddCourse from './AddCourse.jsx'
 
 const SEMESTERS = ['1학기', '여름계절', '2학기', '겨울계절']
@@ -61,6 +62,7 @@ export default function CourseSheet({ req, report, taken, onChange, onClose }) {
                     <span className="c-meta">{c?.credits ?? t.credits ?? '?'}학점{c?.program ? ` · ${c.program}` : ''}</span>
                     <CategoryPicker course={t} info={c} areas={report.liberal_areas} programs={report.programs}
                       onChange={(patch) => setRow(t.id, patch)} />
+                    <RetakeEdit course={t} entryYear={report.entry_year} onChange={(patch) => setRow(t.id, patch)} />
                   </div>
                   <select aria-label="연도" value={t.year} onChange={(e) => setRow(t.id, { year: Number(e.target.value) })}>
                     {years.map((y) => <option key={y} value={y}>{y}</option>)}

@@ -7,6 +7,7 @@ import { mascotSrc } from './Mascot.jsx'
 
 export const SEM_NO = { '1학기': 1, '여름계절': 1, '2학기': 2, '겨울계절': 2 }
 const ORDER = { '1학기': 0, '여름계절': 1, '2학기': 2, '겨울계절': 3 }
+const FAIL = new Set(['F', 'U', 'NP'])
 const SEASON = { '여름계절': '여름', '겨울계절': '겨울' }
 export const nodeKey = (year, semester) => `${year}-${SEM_NO[semester] ?? 1}`
 const keyNum = (k) => {
@@ -51,8 +52,21 @@ export function buildTrail({ entryYear, taken, report, plan, startKey, clsOfPlan
     items.push({
       key: `t-${t.id ?? at(x)}`, code: x.code, name: rc?.name ?? x.name ?? x.code, credits: rc?.credits ?? x.credits ?? 0,
       year: x.year, semester: x.semester, grade: x.grade || null, cls: clsOfReport(rc), prog: rc?.counts_for ?? null,
-      fail: why.startsWith('성적'), before: why.startsWith('재이수'),
+      fail: why.startsWith('성적'), before: why.startsWith('재이수'), retake: t.retake ?? null,
     })
+  }
+  // 학생이 직접 표시한 재수강 — 이전 수강 학기를 알면 그 학기에 '재수강 전' 과목으로 되살린다
+  const manual = new Map()
+  for (const i of [...items]) {
+    const r = i.retake
+    if (!r || !i.grade) continue
+    if (items.some((o) => o !== i && o.code === i.code && o.grade && o.year * 4 + (ORDER[o.semester] ?? 0) < i.year * 4 + (ORDER[i.semester] ?? 0))) continue
+    if (r.year && r.semester) {
+      items.push({ ...i, key: `r-${i.key}`, year: r.year, semester: r.semester, grade: r.grade ?? '?',
+        fail: FAIL.has(r.grade), before: !FAIL.has(r.grade), manualRetake: true })
+    } else {
+      manual.set(i, { grade: r.grade })
+    }
   }
   for (const c of plan) {
     items.push({ ...c, key: `p-${c.code}`, grade: null, cls: clsOfPlan(c), prog: c.counts_for ?? null, plan: true })
@@ -71,6 +85,7 @@ export function buildTrail({ entryYear, taken, report, plan, startKey, clsOfPlan
       if (n < list.length - 1) i.retakenIn = list[n + 1]
     })
   }
+  for (const [i, prev] of manual) i.retakeOf = prev // 이전 학기를 모름
 
   // 점 범위: 입학 1학기 ~ 4학년 2학기 (계획이 더 길면 그만큼)
   const firstKey = `${entryYear}-1`

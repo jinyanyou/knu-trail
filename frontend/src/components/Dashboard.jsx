@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Meter from './Meter.jsx'
 import TrailPath from './TrailPath.jsx'
 import Mascot from './Mascot.jsx'
@@ -23,7 +24,7 @@ function Badge({ status }) {
 }
 
 function Progress({ r }) {
-  if (r.counseling && r.required == null) return r.earned == null ? null : <span className="numbers"><strong>{r.earned}</strong><span className="of">회 받음</span></span>
+  if (r.replaced) return <span className="numbers"><span className="of">대체 인정</span></span>
   if (r.required == null) {
     // 기준을 모르는 다전공 학점 — 지금까지 모은 학점만 보여준다
     return r.earned == null ? null : (
@@ -85,10 +86,10 @@ function Options({ r, onPlan, planned, rg }) {
   )
 }
 
-// 학생상담지도교수 상담 — 받은 횟수·필요 횟수를 바로 고친다 (필요 횟수는 학과 안내 기준).
+// 학생상담지도교수 상담 — 받은 횟수를 바로 고친다 (필요 횟수는 8회 고정).
 // 계산 결과를 기다리지 않게 입력값은 프로필에서 바로 읽는다
 function CounselingEdit({ profile, onChange }) {
-  const c = { count: profile.counseling_count ?? null, required: profile.counseling_required ?? null, confirmed: !!profile.counseling_done }
+  const c = { count: profile.counseling_count ?? null, confirmed: !!profile.counseling_done }
   const count = c.count ?? 0
   const num = (v) => (v === '' ? null : Math.max(0, Math.min(99, Math.floor(Number(v)) || 0)))
   return (
@@ -101,18 +102,42 @@ function CounselingEdit({ profile, onChange }) {
           value={c.count ?? ''} placeholder="0" onChange={(e) => onChange({ counseling_count: num(e.target.value) })} />
         <button type="button" className="btn btn-sm counsel-step" aria-label="상담 횟수 1 늘리기"
           onClick={() => onChange({ counseling_count: count + 1 })}>+</button>
-        <span className="muted">회</span>
+        <span className="muted">/ 8회</span>
       </div>
-      <label className="counsel-row">
-        <span className="counsel-label">필요 횟수</span>
-        <input type="number" inputMode="numeric" min="1" max="99" className="counsel-input" aria-label="졸업에 필요한 상담 횟수"
-          value={c.required ?? ''} placeholder="입력" onChange={(e) => onChange({ counseling_required: num(e.target.value) || null })} />
-        <span className="muted">회 (학과 안내 기준)</span>
-      </label>
       <label className="check">
         <input type="checkbox" checked={c.confirmed} onChange={(e) => onChange({ counseling_done: e.target.checked })} />
         <span>학과에서 충족 확인받음</span>
       </label>
+    </div>
+  )
+}
+
+// 실용영어 대체 — 공인영어 성적 등으로 인정받으면 실용영어 과목을 듣지 않아도 된다.
+// 값은 프로필 english_test 한 칸에 글로 저장 (시험은 '시험명 점수', 나머지는 방법 이름)
+const ENGLISH_OTHER = ['실용영어진단평가 700점 이상', '원어민 영어회화과정 120시간 이상', '영어권 어학연수·인턴십·교환학생 3학점 이상', 'TOPIK 4급 이상 (외국인 학생)']
+function EnglishEdit({ profile, onChange }) {
+  const v = profile.english_test ?? ''
+  const [on, setOn] = useState(!!v)
+  const mode = ENGLISH_OTHER.includes(v) ? v : 'test'
+  const set = (val) => onChange({ english_test: val || null })
+  return (
+    <div className="counsel-edit">
+      <label className="check">
+        <input type="checkbox" checked={on} onChange={(e) => { setOn(e.target.checked); if (!e.target.checked) set(null) }} />
+        <span>실용영어를 공인영어 성적 등으로 대체했어요</span>
+      </label>
+      {on && (
+        <div className="english-edit">
+          <select aria-label="대체 방법" value={mode} onChange={(e) => set(e.target.value === 'test' ? '' : e.target.value)}>
+            <option value="test">공인영어시험 (TOEIC 700 등)</option>
+            {ENGLISH_OTHER.map((o) => <option key={o} value={o}>{o}</option>)}
+          </select>
+          {mode === 'test' && (
+            <input type="text" maxLength={50} placeholder="예: TOEIC 750" aria-label="시험과 점수"
+              value={v} onChange={(e) => set(e.target.value)} />
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -131,8 +156,9 @@ function Requirement({ r, onPlan, planned, onOpen, rg, profile, onProfile }) {
         <Progress r={r} />
         <Badge status={r.status} />
       </div>
-      {r.counseling && onProfile && <CounselingEdit profile={profile} onChange={onProfile} />}
-      {r.required != null && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={r.label} />}
+      {r.counseling && r.status !== 'waived' && onProfile && <CounselingEdit profile={profile} onChange={onProfile} />}
+      {r.id === 'practical_english' && r.status !== 'waived' && onProfile && <EnglishEdit profile={profile} onChange={onProfile} />}
+      {r.required != null && !r.replaced && !(r.group === '졸업자격인정' && r.status === 'waived') && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={r.label} />}
 
       {r.missing?.length > 0 && (
         <ul className="missing">
@@ -156,6 +182,16 @@ function Requirement({ r, onPlan, planned, onOpen, rg, profile, onProfile }) {
         <details className="alts">
           <summary>다른 인정 방법</summary>
           <ul>{r.alternatives.map((a) => <li key={a}>{a}</li>)}</ul>
+          {r.certificates && (
+            <div className="cert-list">
+              <p className="muted">인정 전산 자격증 ({r.certificates.label} 입학생 목록)</p>
+              <dl>
+                {r.certificates.list.map(([org, names]) => (
+                  <div key={org}><dt>{org}</dt><dd>{names}</dd></div>
+                ))}
+              </dl>
+            </div>
+          )}
         </details>
       )}
     </li>

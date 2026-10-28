@@ -538,6 +538,12 @@ a.btn.btn-primary { color: #fff; }
 .roadmap-course-edit select { min-height: 32px; padding: 2px 6px; font-size: 12.5px; background: #fff; }
 .roadmap-course-edit .btn-sm { align-self: flex-start; }
 .tc-empty { padding: 4px 2px; }
+/* 카드 안 묶음: 주전공 / 다전공 / 교양·일반선택 */
+.tc-group { display: flex; flex-direction: column; gap: 5px; }
+.tc-group + .tc-group { padding-top: 8px; border-top: 1.5px dashed #d8d4c8; }
+.tc-group-head { margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-size: 12.5px; font-weight: 800; color: var(--ink); }
+.tc-group-head small { font-size: 10.5px; font-weight: 700; color: #67645d; }
+.tc-group-head .muted { flex: none; font-size: 11.5px; font-weight: 700; }
 .tc-add { align-self: stretch; margin-top: auto; }
 
 
@@ -723,6 +729,15 @@ h3.with-mascot { gap: 8px; }
 .counsel-label { width: 64px; font-size: 13px; font-weight: 600; color: var(--text-2); }
 .counsel-step { width: 36px; padding: 0; font-size: 18px; line-height: 1; }
 .counsel-input { width: 64px; text-align: center; }
+.cert-list { margin-top: 8px; font-size: 12.5px; }
+.cert-list dl { margin: 4px 0 0; display: flex; flex-direction: column; gap: 4px; }
+.cert-list dt { font-weight: 700; }
+.cert-list dd { margin: 0 0 0 10px; color: #4b4842; line-height: 1.5; }
+.retake-toggle { align-self: flex-start; font-size: 12px; }
+.retake-edit { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 12px; }
+.retake-edit select { min-height: 30px; padding: 2px 4px; font-size: 12px; }
+.english-edit { display: flex; flex-wrap: wrap; gap: 6px; }
+.english-edit select, .english-edit input { flex: 1 1 180px; min-width: 0; min-height: 36px; }
 
 /* 공지 · 업데이트 */
 .notice-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none; font-size: 14px; min-width: 0; }

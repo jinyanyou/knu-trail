@@ -33,6 +33,11 @@
       "title": "경북대 학사안내 - 졸업자격인정제",
       "url": "https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu/academic03_05&menu_idx=44"
     },
+    "knu_sw_substitutes": {
+      "title": "소프트웨어교육원 - 소프트웨어영역 학과별 대체과목·전산관련 자격증 (입학년도 기준)",
+      "url": "https://swedu.knu.ac.kr/02_sub/03_sub.html?no=1&bbs_cmd=view&bbs_code=Site_BBS_8",
+      "local": "data/rules/software_substitutes.json"
+    },
     "diagnostic_test_notice": {
       "title": "전자공학부 공지 - 2025학년도 신입생 기초학력 진단평가",
       "url": "https://see.knu.ac.kr/mobile/content/notice.html?fidx=103650",
@@ -251,6 +256,18 @@
       },
       "graduation_qualification": {
         "note": "미충족 시 졸업이 아니라 '수료' 처리. 졸업 마지막 학기에 통합정보시스템에서 직접 신청.",
+        "exemptions": [
+          {
+            "flags": ["transfer", "qualification_exempt"],
+            "items": ["practical_english", "software", "advisor_counseling"],
+            "label": "편입생·장애학생(장애학생지원센터 등록)은 실용영어·소프트웨어·학생상담지도교수 상담 일괄 면제"
+          },
+          {
+            "flags": ["foreign_student"],
+            "items": ["software"],
+            "label": "2022학년도 이후 입학 외국인 학생(편입생 제외)은 소프트웨어만 면제 — 실용영어는 TOPIK 4급 이상으로 대체"
+          }
+        ],
         "items": [
           {
             "id": "practical_english",
@@ -266,7 +283,7 @@
               },
               {
                 "type": "english_test",
-                "label": "공인영어시험 (입학 이후 취득, 제출일 기준 2년 이내)",
+                "label": "공인영어시험 TOEIC 700 이상 또는 상응 점수 (언어교육센터 모의TOEIC 포함, 입학 이후 취득, 제출일 기준 2년 이내)",
                 "min_scores": {
                   "TOEIC": "700",
                   "TOEIC Speaking": "120",
@@ -283,6 +300,12 @@
                 "note": "시험명-점수 대응은 원문 표를 옮긴 것이라 화면에 쓰기 전 원문과 한 번 더 대조할 것"
               },
               {
+                "type": "program",
+                "codes": ["1102", "1903"],
+                "kinds": ["double", "minor"],
+                "label": "영어영문학과·영어교육과를 복수전공·부전공으로 이수"
+              },
+              {
                 "type": "manual",
                 "label": "신입생 실용영어진단평가 700점 이상"
               },
@@ -293,6 +316,10 @@
               {
                 "type": "manual",
                 "label": "영어권 국가 어학연수·인턴십·교환학생으로 3학점 이상"
+              },
+              {
+                "type": "manual",
+                "label": "(2022학번 이후 외국인 학생) TOPIK 4급 이상, 시험일로부터 4년 이내"
               }
             ],
             "source": [
@@ -313,22 +340,27 @@
               },
               {
                 "type": "dept_substitute",
-                "label": "학과 지정·소프트웨어교육원 인정 대체과목 3학점 이상",
-                "courses": [],
-                "status": "unknown"
+                "label": "소프트웨어교육원 지정 대체과목 3학점 이상 (입학년도별 목록)",
+                "list": "software_substitutes.json"
               },
               {
                 "type": "manual",
-                "label": "정보화본부 교육과정 45시간 이상 / 총장이 인정하는 전산 자격증(입학 이후 취득)"
+                "label": "정보화본부 교육과정 45시간 이상 / 입학년도별 지정 전산 자격증(입학 이후 취득)"
+              },
+              {
+                "type": "manual",
+                "label": "그 밖의 총장이 인정하는 컴퓨터 관련 교육과정 이수 (이수증 제출)"
               }
             ],
             "source": [
-              "knu_graduation_qualification"
+              "knu_graduation_qualification",
+              "knu_sw_substitutes"
             ]
           },
           {
             "id": "advisor_counseling",
             "label": "학생상담지도교수 상담",
+            "required_count": 8,
             "any_of": [
               {
                 "type": "manual",

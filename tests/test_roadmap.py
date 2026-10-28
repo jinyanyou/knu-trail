@@ -27,7 +27,7 @@ def test_freshman_plan_fits_8_semesters_and_graduates(entry_year, profile):
                **({"counts_for": c["counts_for"]} if c.get("counts_for") else {})}
                for t in out["terms"] for c in t["courses"]]
     rep = evaluate(entry_year, planned, profile)
-    assert not [r for r in rep["requirements"] if r["status"] == "unmet"]
+    assert not [r for r in rep["requirements"] if r["status"] == "unmet" and not r.get("counseling")]  # 상담은 과목으로 못 채움
 
 
 def test_required_courses_follow_recommended_semester():
@@ -72,7 +72,7 @@ def test_timeline_reports_the_term_each_requirement_is_met():
     tl = roadmap.timeline(2025, planned, {})
     assert tl["met_at"]["total"] == "2028-2"                      # 총 학점은 마지막 학기에 채워짐
     assert all(v is None or v == "now" or v[:4].isdigit() for v in tl["met_at"].values())
-    assert not [r for r in tl["report"]["requirements"] if r["status"] == "unmet"]
+    assert not [r for r in tl["report"]["requirements"] if r["status"] == "unmet" and not r.get("counseling")]  # 상담은 과목으로 못 채움
     # 이미 들은 과목만으로 채운 요건은 'now'
     done = [dict(c, grade="A0") for c in planned]
     assert roadmap.timeline(2025, done, {})["met_at"]["total"] == "now"
