@@ -493,7 +493,7 @@ a.btn.btn-primary { color: #fff; }
 
 .rm-prog { margin-bottom: 14px; }
 .rm-prog-head { display: flex; align-items: baseline; gap: 6px 14px; flex-wrap: wrap; margin: 0 4px 6px; }
-.rm-prog-head h2 { margin: 0; font-size: 20px; color: #8f3a00; }
+.rm-prog-head h2 { margin: 0; font-size: 20px; color: #1c3aa9; }
 .rm-prog-strip { background: #fff; border: 2px solid var(--ink); border-radius: 20px; padding: 4px 0; }
 
 /* 학기 카드 (짐 꾸러미) */
@@ -614,10 +614,10 @@ h3.with-mascot { gap: 8px; }
 
 
 /* 과목 분류 색 (로드맵) */
-.k-req { --k: #3b5bdb; --k-bg: #e6ecff; --k-ink: #1c3aa9; }
-.k-major { --k: #d6336c; --k-bg: #fde8ef; --k-ink: #a61e4d; }
-.k-prog { --k: #e8821a; --k-bg: #fff0df; --k-ink: #8f3a00; }
-.k-la { --k: #8b5e3c; --k-bg: #f3ebe3; --k-ink: #5e3b21; }
+.k-req { --k: #d6336c; --k-bg: #fde8ef; --k-ink: #a61e4d; }
+.k-major { --k: #e8821a; --k-bg: #fff0df; --k-ink: #8f3a00; }
+.k-prog { --k: #3b5bdb; --k-bg: #e6ecff; --k-ink: #1c3aa9; }
+.k-la { --k: #e0a800; --k-bg: #fff7d6; --k-ink: #7a5a00; }
 .k-free { --k: #cfcbc0; --k-bg: #fff; --k-ink: #67645d; }
 .kind-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
 .chip-btn { font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; }
