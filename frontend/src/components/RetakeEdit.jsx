@@ -10,9 +10,11 @@ export default function RetakeEdit({ course, entryYear, onChange }) {
   const r = course.retake
   if (!r) {
     return (
-      <button type="button" className="btn-link retake-toggle" onClick={() => onChange({ retake: { year: null, semester: null, grade: null } })}>
-        재수강한 과목이면 표시
-      </button>
+      <div className="retake-row">
+        <button type="button" className="btn-link retake-toggle" onClick={() => onChange({ retake: { year: null, semester: null, grade: null } })}>
+          재수강한 과목이면 표시
+        </button>
+      </div>
     )
   }
   const set = (patch) => onChange({ retake: { ...r, ...patch } })
@@ -20,9 +22,8 @@ export default function RetakeEdit({ course, entryYear, onChange }) {
   const years = Array.from({ length: Math.max(1, (course.year ?? entryYear) - entryYear + 1) }, (_, i) => entryYear + i)
   const sems = SEMESTERS.filter((s) => r.year !== course.year || ORDER[s] < (ORDER[course.semester] ?? 4))
   return (
-    <div className="retake-edit">
-      <span className="tc-flag tc-flag-after">재수강</span>
-      <span className="muted">이전 수강</span>
+    <div className="retake-row retake-edit">
+      <span className="retake-title"><span className="tc-flag tc-flag-after">재수강</span> 재수강 전 수강 (성적표엔 없음)</span>
       <select aria-label="이전 수강 연도" value={r.year ?? ''} onChange={(e) => set({ year: e.target.value ? Number(e.target.value) : null })}>
         <option value="">연도 모름</option>
         {years.map((y) => <option key={y} value={y}>{y}</option>)}

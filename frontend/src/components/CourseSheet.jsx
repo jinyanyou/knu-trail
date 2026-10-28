@@ -62,7 +62,6 @@ export default function CourseSheet({ req, report, taken, onChange, onClose }) {
                     <span className="c-meta">{c?.credits ?? t.credits ?? '?'}학점{c?.program ? ` · ${c.program}` : ''}</span>
                     <CategoryPicker course={t} info={c} areas={report.liberal_areas} programs={report.programs}
                       onChange={(patch) => setRow(t.id, patch)} />
-                    <RetakeEdit course={t} entryYear={report.entry_year} onChange={(patch) => setRow(t.id, patch)} />
                   </div>
                   <select aria-label="연도" value={t.year} onChange={(e) => setRow(t.id, { year: Number(e.target.value) })}>
                     {years.map((y) => <option key={y} value={y}>{y}</option>)}
@@ -75,6 +74,7 @@ export default function CourseSheet({ req, report, taken, onChange, onClose }) {
                     <option value="">예정</option>
                   </select>
                   <button type="button" className="icon-btn" aria-label={`${c?.name ?? t.code} 삭제`} onClick={() => remove(t.id)}>✕</button>
+                  <RetakeEdit course={t} entryYear={report.entry_year} onChange={(patch) => setRow(t.id, patch)} />
                 </li>
               )
             })}

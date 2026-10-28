@@ -234,13 +234,13 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
                         </span>
                         <CategoryPicker course={t} info={info} areas={report?.liberal_areas} programs={report?.programs}
                           onChange={(patch) => setRow(t.id, patch)} />
-                        <RetakeEdit course={t} entryYear={entryYear} onChange={(patch) => setRow(t.id, patch)} />
                       </div>
                       <select aria-label="성적" value={t.grade ?? PLANNED} onChange={(e) => setRow(t.id, { grade: e.target.value || null })}>
                         {GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
                         <option value={PLANNED}>예정</option>
                       </select>
                       <button type="button" className="icon-btn" aria-label={`${info?.name ?? t.code} 삭제`} onClick={() => remove(t.id)}>✕</button>
+                      <RetakeEdit course={t} entryYear={entryYear} onChange={(patch) => setRow(t.id, patch)} />
                     </li>
                   )
                 })}

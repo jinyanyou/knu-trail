@@ -63,7 +63,8 @@ export function buildTrail({ entryYear, taken, report, plan, startKey, clsOfPlan
     const r = i.retake
     if (!r || !i.grade) continue
     if (items.some((o) => o !== i && o.code === i.code && o.grade && o.year * 4 + (ORDER[o.semester] ?? 0) < i.year * 4 + (ORDER[i.semester] ?? 0))) continue
-    if (r.year && r.semester) {
+    // 이전 수강 학기가 이 과목보다 앞일 때만 (과목 학기를 나중에 고쳐 순서가 어긋나면 '학기 모름'으로)
+    if (r.year && r.semester && r.year * 4 + (ORDER[r.semester] ?? 0) < i.year * 4 + (ORDER[i.semester] ?? 0)) {
       items.push({ ...i, key: `r-${i.key}`, year: r.year, semester: r.semester, grade: r.grade ?? '?',
         fail: FAIL.has(r.grade), before: !FAIL.has(r.grade), manualRetake: true })
     } else {
