@@ -7,8 +7,9 @@ import scene from '../assets/trail-scene.svg'
 // 그림은 비율을 지킨 채 폭에 맞춰 커지고 작아진다 — 다람쥐·말풍선은 글씨 크기를 지키려고 HTML로 겹쳐 그린다
 const W = 880
 const H = 210
-// 앞 언덕을 지나 오른쪽 산 경사면으로 올라 정상(깃발)에 닿는다 — 나무·능선 선과 겹치거나 나란히 붙지 않게 (그림의 나무도 길 밖으로 옮김)
-const PATH = 'M16 197 C120 196 220 196 300 184 C380 171 450 164 525 156 C578 148 612 104 640 56'
+// 왼쪽 끝에서 조금 들어와 앞 언덕을 지나, 정상 산의 완만한 왼쪽 비탈을 타고 정상(깃발)까지 고르게 오른다
+// (그림의 정상 산 왼쪽 골짜기를 얕게 고치고 나무를 길 밖으로 옮김)
+const PATH = 'M70 197 C170 196 260 192 340 180 C440 165 520 140 562 112 C594 91 618 74 640 56'
 const TOP = { x: 640, y: 56 }
 const at = (pt) => ({ left: `${(pt.x / W) * 100}%`, top: `${(pt.y / H) * 100}%` })
 
@@ -47,7 +48,7 @@ export default function TrailPath({ earned, planned = 0, required, label = '총 
         </svg>
         <span className="trail-goal" style={at({ x: 684, y: 23 })}>졸업 {required}학점{e >= 1 ? ' 달성' : ''}</span>
         {me && (
-          <span className={`trail-me${me.x < 90 ? ' at-start' : me.x > 560 ? ' at-end' : ''}`} style={at(me)}>
+          <span className={`trail-me${me.x < 130 ? ' at-start' : me.x > 560 ? ' at-end' : ''}`} style={at(me)}>
             <Mascot pose={e >= 1 ? 'cheer' : 'walk'} size={60} className="trail-me-img" />
             {/* 정상에 닿으면 '졸업 … 달성' 말풍선 하나로 (위로 잘리지 않게) */}
             {e < 1 && <span className="trail-me-label">지금 {earned}학점</span>}
