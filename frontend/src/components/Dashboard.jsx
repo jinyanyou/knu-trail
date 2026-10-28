@@ -24,7 +24,7 @@ function Badge({ status }) {
 }
 
 function Progress({ r }) {
-  if (r.replaced) return <span className="numbers"><span className="of">대체 인정</span></span>
+  if (r.replaced) return <span className="numbers"><span className="of">{r.replaced_planned ? '대체 예정' : '대체 인정'}</span></span>
   if (r.required == null) {
     // 기준을 모르는 다전공 학점 — 지금까지 모은 학점만 보여준다
     return r.earned == null ? null : (
@@ -142,6 +142,51 @@ function EnglishEdit({ profile, onChange }) {
   )
 }
 
+// 소프트웨어 다른 인정 방법 — 받았거나 받을 예정이면 과목을 더 듣지 않아도 된다 (예정이면 '예정 포함 충족').
+// 값: software_alternative = 방법 글 (자격증은 자격증 이름) / software_alternative_planned = 아직 받기 전
+const SW_OTHER = ['정보화본부 교육과정 45시간 이상', '그 밖의 컴퓨터 관련 교육과정 (이수증)']
+function SoftwareEdit({ profile, onChange }) {
+  const v = profile.software_alternative
+  const text = typeof v === 'string' ? v : ''
+  const [on, setOn] = useState(!!v)
+  const mode = SW_OTHER.includes(text) ? text : 'cert'
+  const planned = !!profile.software_alternative_planned
+  // 체크만 하고 아직 고르지 않았으면 true(본인 확인)로 둔다
+  const set = (val) => onChange({ software_alternative: val || true })
+  return (
+    <div className="counsel-edit">
+      <label className="check">
+        <input type="checkbox" checked={on} onChange={(e) => {
+          setOn(e.target.checked)
+          onChange(e.target.checked ? { software_alternative: true } : { software_alternative: false, software_alternative_planned: false })
+        }} />
+        <span>다른 방법으로 인정받았거나 받을 예정이에요</span>
+      </label>
+      {on && (
+        <>
+          <div className="english-edit">
+            <select aria-label="인정 방법" value={mode} onChange={(e) => set(e.target.value === 'cert' ? '' : e.target.value)}>
+              <option value="cert">전산 자격증</option>
+              {SW_OTHER.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
+            {mode === 'cert' && (
+              <input type="text" maxLength={50} placeholder="자격증 이름 (예: 정보처리기사)" aria-label="자격증 이름"
+                value={text} onChange={(e) => set(e.target.value)} />
+            )}
+          </div>
+          <div className="seg" role="radiogroup" aria-label="인정 상태">
+            <label className="check"><input type="radio" name="sw-planned" checked={!planned}
+              onChange={() => onChange({ software_alternative_planned: false })} /><span>이미 받았어요</span></label>
+            <label className="check"><input type="radio" name="sw-planned" checked={planned}
+              onChange={() => onChange({ software_alternative_planned: true })} /><span>받을 예정이에요</span></label>
+          </div>
+          {mode === 'cert' && <p className="muted">입학 이후 딴 자격증만 인정돼요. 인정 자격증은 아래 '다른 인정 방법'에서 볼 수 있어요.</p>}
+        </>
+      )}
+    </div>
+  )
+}
+
 function Requirement({ r, onPlan, planned, onOpen, rg, profile, onProfile }) {
   return (
     <li className="req">
@@ -158,6 +203,7 @@ function Requirement({ r, onPlan, planned, onOpen, rg, profile, onProfile }) {
       </div>
       {r.counseling && r.status !== 'waived' && onProfile && <CounselingEdit profile={profile} onChange={onProfile} />}
       {r.id === 'practical_english' && r.status !== 'waived' && onProfile && <EnglishEdit profile={profile} onChange={onProfile} />}
+      {r.id === 'software' && r.status !== 'waived' && onProfile && <SoftwareEdit profile={profile} onChange={onProfile} />}
       {r.required != null && !r.replaced && !(r.group === '졸업자격인정' && r.status === 'waived') && <Meter earned={r.earned} planned={r.planned} required={r.required} unit={r.unit} label={r.label} />}
 
       {r.missing?.length > 0 && (

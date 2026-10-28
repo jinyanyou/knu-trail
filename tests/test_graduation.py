@@ -251,3 +251,12 @@ def test_graduation_qualification_exemptions(flag, waived):
 def test_english_department_program_counts_as_practical_english(kind, ok):
     rep = evaluate(2025, [], {"programs": [{"kind": kind, "code": "1102"}]})
     assert (req(rep, "practical_english")["status"] == MET) is ok
+
+
+def test_software_alternative_done_or_planned():
+    """홈에서 고른 다른 인정 방법: 받았으면 충족, 받을 예정이면 '예정 포함 충족' (로드맵이 과목을 넣지 않게)"""
+    r = req(evaluate(2025, [], {"software_alternative": "정보처리기사"}), "software")
+    assert r["status"] == MET and r["replaced"] == "정보처리기사" and not r["replaced_planned"]
+    r = req(evaluate(2025, [], {"software_alternative": "정보처리기사", "software_alternative_planned": True}), "software")
+    assert r["status"] == "planned" and r["note"] == "대체 예정: 정보처리기사"
+    assert req(evaluate(2025, [], {"software_alternative": True}), "software")["status"] == MET
