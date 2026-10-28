@@ -21,7 +21,9 @@ export const CLS_LABEL = { req: '전공필수', major: '전공선택', prog: '�
 export const CLS_TAG = { req: '전필', major: '전선', prog: '다전공', la: '교양', free: '자선' }
 const CLS_COLOR = { req: '#3b5bdb', major: '#8c8a82', prog: '#e8821a', la: '#8a5bd6', free: '#cfcbc0' }
 const CAT_CLS = { 전공필수: 'req', 전공: 'major', 교양: 'la' }
-const clsOfReport = (rc) => (!rc ? 'free' : rc.counts_for ? 'prog' : CAT_CLS[rc.category] ?? 'free')
+// counts_for: 'primary'(주전공에 인정) 또는 다전공 학과 코드 — 'primary'는 다전공이 아니다
+const progOf = (cf) => (cf && cf !== 'primary' ? cf : null)
+const clsOfReport = (rc) => (!rc ? 'free' : progOf(rc.counts_for) ? 'prog' : CAT_CLS[rc.category] ?? 'free')
 
 // 다전공 꼬리표: 융합전공 → 융합, 복수전공 → 복수 (부전공은 그대로)
 export const progTag = (label) => (label === '부전공' ? '부전공' : (label ?? '다전공').replace(/전공$/, ''))
@@ -51,7 +53,7 @@ export function buildTrail({ entryYear, taken, report, plan, startKey, clsOfPlan
     const rc = kept.get(at(x)) ?? byCode.get(x.code)
     items.push({
       key: `t-${t.id ?? at(x)}`, code: x.code, name: rc?.name ?? x.name ?? x.code, credits: rc?.credits ?? x.credits ?? 0,
-      year: x.year, semester: x.semester, grade: x.grade || null, cls: clsOfReport(rc), prog: rc?.counts_for ?? null,
+      year: x.year, semester: x.semester, grade: x.grade || null, cls: clsOfReport(rc), prog: progOf(rc?.counts_for),
       fail: why.startsWith('성적'), before: why.startsWith('재이수'), retake: t.retake ?? null,
     })
   }
@@ -69,7 +71,7 @@ export function buildTrail({ entryYear, taken, report, plan, startKey, clsOfPlan
     }
   }
   for (const c of plan) {
-    items.push({ ...c, key: `p-${c.code}`, grade: null, cls: clsOfPlan(c), prog: c.counts_for ?? null, plan: true })
+    items.push({ ...c, key: `p-${c.code}`, grade: null, cls: clsOfPlan(c), prog: progOf(c.counts_for), plan: true })
   }
 
   // 재수강: 같은 과목의 성적 있는 수강을 학기 순으로 이어 앞뒤를 알려 준다
