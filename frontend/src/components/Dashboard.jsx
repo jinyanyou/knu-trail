@@ -112,6 +112,18 @@ function CounselingEdit({ profile, onChange }) {
   )
 }
 
+// 다른 인정 방법을 이미 받았는지 / 받을 예정인지 (예정이면 엔진이 '예정 포함 충족')
+function PlannedChoice({ name, planned, onChange }) {
+  return (
+    <div className="seg" role="radiogroup" aria-label="인정 상태">
+      <label className="check"><input type="radio" name={name} checked={!planned}
+        onChange={() => onChange(false)} /><span>이미 받았어요</span></label>
+      <label className="check"><input type="radio" name={name} checked={planned}
+        onChange={() => onChange(true)} /><span>받을 예정이에요</span></label>
+    </div>
+  )
+}
+
 // 실용영어 대체 — 공인영어 성적 등으로 인정받으면 실용영어 과목을 듣지 않아도 된다.
 // 값은 프로필 english_test 한 칸에 글로 저장 (시험은 '시험명 점수', 나머지는 방법 이름)
 const ENGLISH_OTHER = ['실용영어진단평가 700점 이상', '원어민 영어회화과정 120시간 이상', '영어권 어학연수·인턴십·교환학생 3학점 이상', 'TOPIK 4급 이상 (외국인 학생)']
@@ -123,10 +135,14 @@ function EnglishEdit({ profile, onChange }) {
   return (
     <div className="counsel-edit">
       <label className="check">
-        <input type="checkbox" checked={on} onChange={(e) => { setOn(e.target.checked); if (!e.target.checked) set(null) }} />
-        <span>실용영어를 공인영어 성적 등으로 대체했어요</span>
+        <input type="checkbox" checked={on} onChange={(e) => {
+          setOn(e.target.checked)
+          if (!e.target.checked) onChange({ english_test: null, english_test_planned: false })
+        }} />
+        <span>실용영어를 공인영어 성적 등으로 대체했거나 할 예정이에요</span>
       </label>
       {on && (
+        <>
         <div className="english-edit">
           <select aria-label="대체 방법" value={mode} onChange={(e) => set(e.target.value === 'test' ? '' : e.target.value)}>
             <option value="test">공인영어시험 (TOEIC 700 등)</option>
@@ -137,6 +153,10 @@ function EnglishEdit({ profile, onChange }) {
               value={v} onChange={(e) => set(e.target.value)} />
           )}
         </div>
+        <PlannedChoice name="en-planned" planned={!!profile.english_test_planned}
+          onChange={(p) => onChange({ english_test_planned: p })} />
+        {mode === 'test' && <p className="muted">입학 이후 성적, 졸업자격인정 신청일 기준 2년 이내만 인정돼요.</p>}
+        </>
       )}
     </div>
   )
@@ -174,12 +194,7 @@ function SoftwareEdit({ profile, onChange }) {
                 value={text} onChange={(e) => set(e.target.value)} />
             )}
           </div>
-          <div className="seg" role="radiogroup" aria-label="인정 상태">
-            <label className="check"><input type="radio" name="sw-planned" checked={!planned}
-              onChange={() => onChange({ software_alternative_planned: false })} /><span>이미 받았어요</span></label>
-            <label className="check"><input type="radio" name="sw-planned" checked={planned}
-              onChange={() => onChange({ software_alternative_planned: true })} /><span>받을 예정이에요</span></label>
-          </div>
+          <PlannedChoice name="sw-planned" planned={planned} onChange={(v) => onChange({ software_alternative_planned: v })} />
           {mode === 'cert' && <p className="muted">입학 이후 딴 자격증만 인정돼요. 인정 자격증은 아래 '다른 인정 방법'에서 볼 수 있어요.</p>}
         </>
       )}

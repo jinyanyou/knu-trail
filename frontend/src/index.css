@@ -614,7 +614,7 @@ h3.with-mascot { gap: 8px; }
 
 
 /* 과목 분류 색 (로드맵) */
-.k-req { --k: #d6336c; --k-bg: #fde8ef; --k-ink: #a61e4d; }
+.k-req { --k: #910000; --k-bg: #f7e3e3; --k-ink: #910000; }
 .k-major { --k: #e8821a; --k-bg: #fff0df; --k-ink: #8f3a00; }
 .k-prog { --k: #3b5bdb; --k-bg: #e6ecff; --k-ink: #1c3aa9; }
 .k-la { --k: #e0a800; --k-bg: #fff7d6; --k-ink: #7a5a00; }

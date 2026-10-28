@@ -68,6 +68,7 @@ class Profile(BaseModel):
     teaching_course: bool = False
     math_science_waived: bool = False
     english_test: str | None = Field(default=None, max_length=50)
+    english_test_planned: bool = False  # 대체 성적·이수를 아직 받기 전(예정)
     # True(프로필 체크) 또는 인정 방법 글 (예: "정보처리기사"), _planned = 아직 받기 전(예정)
     software_alternative: bool | Annotated[str, Field(max_length=50)] = False
     software_alternative_planned: bool = False
