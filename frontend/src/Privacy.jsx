@@ -3,7 +3,7 @@ import LoginShell from './components/LoginShell.jsx'
 
 // 내용을 바꾸면 버전을 올린다 → 기존 사용자도 다음 접속 때 다시 동의를 받는다
 export const PRIVACY_VERSION = '2026-10-23'
-const OFFICER = { name: '연다(Open)', contact: 'yummyday007@gmail.com' }
+export const OFFICER = { name: '연다(Open)', contact: 'yummyday007@gmail.com' }
 
 export const consentRecord = () => ({ version: PRIVACY_VERSION, agreedAt: new Date().toISOString() })
 export const hasConsent = (state) => state?.consent?.version === PRIVACY_VERSION
