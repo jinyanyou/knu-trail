@@ -327,7 +327,9 @@ select.invalid { border-color: var(--critical); }
 .flag-cloth { fill: #167a43; stroke: #1b1a17; stroke-width: 2.6; stroke-linejoin: round; }
 /* 말풍선: 그림이 작아져도 글씨는 읽히는 크기로 */
 .trail-goal, .trail-me-label { position: absolute; white-space: nowrap; font-size: 13px; font-weight: 700; color: #1b1a17; background: #fff; border: 2px solid #1b1a17; border-radius: 999px; padding: 1px 10px; line-height: 1.5; }
-.trail-goal { transform: translateY(-50%); }
+.trail-goal { transform: translate(-100%, -50%); }
+/* 정상에 닿으면 다람쥐가 깃대 옆에 서므로 말풍선은 더 왼쪽으로 */
+.trail.done .trail-goal { transform: translate(calc(-100% - 40px), -50%); }
 .trail-me { position: absolute; width: 0; height: 0; }
 .trail-me-img { position: absolute; left: 0; bottom: -8px; transform: translateX(-50%); width: clamp(36px, 7vw, 64px); height: auto; }
 .trail-me-label { bottom: clamp(34px, 6.6vw, 62px); left: 0; transform: translateX(-50%); }
@@ -707,12 +709,15 @@ h3.with-mascot { gap: 8px; }
 /* 폰: 산 그림 양옆을 조금 잘라 크게 (깃발까지는 보이게) */
 @media (max-width: 560px) {
   .trail { overflow: hidden; }
-  .trail-plot { width: 135%; margin-left: -4%; }
-  .trail-goal { left: auto !important; right: 28%; top: 7% !important; transform: none; }
+  /* 정상(오른쪽 끝 가까이)까지 보이게 덜 확대 */
+  .trail-plot { width: 116%; margin-left: -7%; }
+  /* 폰은 '졸업' 말풍선을 그림 맨 위에 붙여 '지금' 말풍선과 겹치지 않게 */
+  .trail-goal { top: 2% !important; transform: translateX(-100%); }
+  .trail.done .trail-goal { transform: translateX(calc(-100% - 30px)); }
+  /* 정상 가까이에선 '지금' 말풍선을 다람쥐 왼쪽 옆으로 (위의 '졸업' 말풍선과 겹치지 않게) */
+  .trail-me.near-top .trail-me-label { bottom: 8px; transform: translateX(calc(-100% - 22px)); }
   .trail-me.at-start .trail-me-img { transform: translateX(4px); }
   .trail-me.at-start .trail-me-label { transform: translateX(6px); }
-  /* 정상에 닿으면 다람쥐가 깃발 자리에 서므로 말풍선은 왼쪽으로 비킨다 */
-  .trail.done .trail-goal { right: 36%; }
 }
 
 /* 로그인 / 회원가입 탭 */
