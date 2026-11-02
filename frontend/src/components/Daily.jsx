@@ -76,10 +76,10 @@ function Quiz({ quiz, records, onAnswer }) {
 
 // 홈 위쪽: 하루에 하나씩 바뀌는 전공 뉴스와 퀴즈. 퀴즈 기록은 계정(state.daily)에 저장
 export default function Daily({ records = {}, onChange }) {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(() => api.cached('daily'))
   useEffect(() => {
     let alive = true
-    api.getDaily().then((d) => alive && setData(d)).catch(() => alive && setData({ news: null, quiz: null, failed: true }))
+    api.getDaily().then((d) => alive && setData(d)).catch(() => alive && setData((prev) => prev ?? { news: null, quiz: null, failed: true }))
     return () => {
       alive = false
     }

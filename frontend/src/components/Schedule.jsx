@@ -8,7 +8,7 @@ function dday(e) {
 
 // 홈 위쪽 한 줄: 경북대 학사일정 중 진행 중·다가오는 학부 일정 (수강신청·시험·휴학 마감 등)
 export default function Schedule() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(() => api.cached('schedule'))
   useEffect(() => {
     let alive = true
     api.getSchedule().then((d) => alive && setData(d)).catch(() => {})

@@ -11,6 +11,23 @@ async function request(path, options) {
 
 export const getMeta = () => request('/api/meta')
 
+// 마지막으로 받은 응답 — 다시 들어왔을 때 서버 응답을 기다리지 않고 먼저 보여 준다 (같은 날짜 것만)
+export function cached(key) {
+  try {
+    const hit = JSON.parse(localStorage.getItem(`trail:cache-${key}`))
+    return hit?.date === new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' }) ? hit : null
+  } catch {
+    return null
+  }
+}
+
+function remember(key) {
+  return (body) => {
+    try { localStorage.setItem(`trail:cache-${key}`, JSON.stringify(body)) } catch { /* 저장 불가 환경 */ }
+    return body
+  }
+}
+
 export const getPrograms = (entryYear) => request(`/api/programs?entry_year=${entryYear}`)
 
 // programs: 고른 다전공 학과 코드 배열 — 그 학과 과목도 검색·인식되게 한다
@@ -59,7 +76,7 @@ export const importFile = (entryYear, file, defaults, programs = []) => {
 }
 
 // 오늘의 전공 뉴스·퀴즈 (한국 시간 하루에 하나)
-export const getDaily = () => request('/api/daily')
+export const getDaily = () => request('/api/daily').then(remember('daily'))
 
 // 남은 졸업요건을 채우는 학기별 계획 (규칙 기반, 졸업 가능 여부까지 검증)
 // exclude: 로드맵에서 뺀 과목 코드 — 다시 추천하지 않는다
@@ -71,7 +88,7 @@ export const roadmap = (entryYear, taken, profile, maxCredits, exclude = []) =>
   })
 
 // 경북대 학사일정 중 진행 중·다가오는 학부 일정
-export const getSchedule = () => request('/api/schedule')
+export const getSchedule = () => request('/api/schedule').then(remember('schedule'))
 
 // 상대평가 권장 과목(A 최대 50%) 지정 내역 — 과목마다 내 학과(주전공·다전공)가 연 분반이 해당되는지
 export const getRelativeGrading = (entryYear, programs = []) =>
