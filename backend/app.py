@@ -7,6 +7,8 @@ frontend/dist 가 있으면 같은 서버에서 화면까지 제공한다(배포
 """
 import io
 import re
+import threading
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Annotated, Literal
 
@@ -24,7 +26,30 @@ from engine.rules import load_rules_doc, supported_entry_years
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 Semester = Literal["1학기", "2학기", "여름계절", "겨울계절"]
 
-app = FastAPI(title="trAIl API", version="0.1.0")
+WARM_EVERY = 10 * 60  # 초
+
+
+def _warm_loop(stop):
+    """학사일정·뉴스를 미리 받아 둔다 — 날이 바뀐 뒤 첫 방문자가 학교·언론사 사이트를 기다리지 않게.
+    오늘 것이 이미 캐시에 있으면 접속 없이 바로 끝나므로 자주 돌아도 부담이 없다."""
+    while not stop.is_set():
+        for warm in (schedule.upcoming, daily.news):
+            try:
+                warm()
+            except Exception:
+                pass
+        stop.wait(WARM_EVERY)
+
+
+@asynccontextmanager
+async def lifespan(app):
+    stop = threading.Event()
+    threading.Thread(target=_warm_loop, args=(stop,), daemon=True).start()
+    yield
+    stop.set()
+
+
+app = FastAPI(title="trAIl API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 TIMETABLE = Path(__file__).resolve().parent.parent / "data" / "timetable"
 
