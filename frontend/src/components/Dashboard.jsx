@@ -313,19 +313,6 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
             <p className="hero-figure">
               {total.earned}<span className="hero-of">/{total.required}학점</span>
             </p>
-            <p className="credit-breakdown">
-              {creditBreakdown(report).map((b, i) => (
-                <span key={b.key}>
-                  {i > 0 && ' · '}
-                  {b.key === 'general' ? (
-                    <button type="button" className="btn-link" onClick={() => onOpen('general')}
-                      title="전공·교양으로 인정되지 않은 학점 (학점교류·교육과정 밖 과목 등) — 따로 채울 최소학점은 없어요">
-                      일반선택 {b.credits} ›
-                    </button>
-                  ) : <>{b.label} {b.credits}</>}
-                </span>
-              ))}
-            </p>
             <p className="muted">
               {total.planned > 0 && <>수강 예정 {total.planned}학점 포함 시 {total.earned + total.planned}학점 · </>}
               졸업까지 {remaining}학점
@@ -345,6 +332,19 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
           <span><i className="sw sw-planned-solid" />수강 예정</span>
           <span><i className="sw sw-rest" />남은 길</span>
         </div>
+        <p className="credit-breakdown">
+          {creditBreakdown(report).map((b, i) => (
+            <span key={b.key}>
+              {i > 0 && ' · '}
+              {b.key === 'general' ? (
+                <button type="button" className="btn-link" onClick={() => onOpen('general')}
+                  title="전공·교양으로 인정되지 않은 학점 (학점교류·교육과정 밖 과목 등) — 따로 채울 최소학점은 없어요">
+                  일반선택 {b.credits} ›
+                </button>
+              ) : <>{b.label} {b.credits}</>}
+            </span>
+          ))}
+        </p>
         {blocking.length > 0 && (
           <p className="blocking">
             <span className="muted">아직 부족:</span> {blocking.map(shortLabel).join(' · ')}
