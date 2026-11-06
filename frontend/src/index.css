@@ -142,6 +142,8 @@ select:focus-visible, input:focus-visible, button:focus-visible, summary:focus-v
 .eyebrow { font-size: 13px; color: var(--text-2); font-weight: 600; }
 .hero-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
 .hero-figure { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.credit-breakdown { font-size: 14px; color: var(--text-2); margin: 2px 0 4px; word-break: keep-all; }
+.credit-breakdown .btn-link { font-size: inherit; padding: 0; font-weight: 600; }
 .hero-of { font-size: 20px; font-weight: 600; color: var(--text-2); margin-left: 4px; }
 .hero-status .count { font-size: 15px; color: var(--text-2); }
 .hero-status .count strong { font-size: 22px; color: var(--text); }

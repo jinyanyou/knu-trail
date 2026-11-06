@@ -3,7 +3,7 @@ import * as api from './api.js'
 import { deleteAccount, displayName, dropSignupConsent, loadUserState, saveUserState, signOut, takeSignupConsent } from './auth.js'
 import { useHash } from './hash.js'
 import { consentRecord, ConsentScreen, hasConsent, PRIVACY_VERSION, OFFICER } from './Privacy.jsx'
-import Dashboard from './components/Dashboard.jsx'
+import Dashboard, { generalElectiveReq } from './components/Dashboard.jsx'
 import Mascot from './components/Mascot.jsx'
 import LoginShell from './components/LoginShell.jsx'
 import Setup from './components/Setup.jsx'
@@ -415,8 +415,9 @@ function Navi({ user, initial }) {
           onProfile={(patch) => edit((s) => ({ ...s, profile: { ...s.profile, ...patch } }))} /> : <div className="panel empty">계산 중…</div>}
       </main>
       </div>
-      {sheet && report?.requirements.some((r) => r.id === sheet) && (
-        <CourseSheet req={report.requirements.find((r) => r.id === sheet)} report={report} taken={taken}
+      {sheet && report && (sheet === 'general' || report.requirements.some((r) => r.id === sheet)) && (
+        <CourseSheet req={sheet === 'general' ? generalElectiveReq(report) : report.requirements.find((r) => r.id === sheet)}
+          report={report} taken={taken}
           onChange={(t) => update({ taken: t })} onClose={() => setSheet(null)} />
       )}
 

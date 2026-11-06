@@ -44,6 +44,26 @@ function Progress({ r }) {
   )
 }
 
+// 총 이수학점이 어디로 갔는지: 과목마다 배정된 곳(주전공·다전공) 또는 분류(교양)로 나누고, 나머지는 일반선택.
+// 일반선택은 따로 채울 최소학점이 없어 카드가 아니라 총 학점 아래 한 줄로만 보여준다.
+const isGeneral = (c) => !c.counts_for && c.category !== '교양'
+export function generalElectiveReq(report) {
+  const mine = report.courses.filter(isGeneral)
+  const sum = (planned) => mine.filter((c) => c.planned === planned).reduce((s, c) => s + (c.credits || 0), 0)
+  return { id: 'general', label: '일반선택', earned: sum(false), planned: sum(true), required: null, unit: '학점',
+    counted: mine.map(({ code, year, semester }) => ({ code, year, semester })) }
+}
+
+function creditBreakdown(report) {
+  const earned = (pred) => report.courses.filter((c) => !c.planned && pred(c)).reduce((s, c) => s + (c.credits || 0), 0)
+  return [
+    { key: 'major', label: '전공', credits: earned((c) => c.counts_for === 'primary') },
+    ...report.programs.map((p) => ({ key: `program:${p.code}`, label: p.label, credits: earned((c) => c.counts_for === p.code) })),
+    { key: 'liberal', label: '교양', credits: earned((c) => !c.counts_for && c.category === '교양') },
+    { key: 'general', label: '일반선택', credits: earned(isGeneral) },
+  ]
+}
+
 // 'program:1403:credits' → '1403' (다전공 과목은 그 전공에 인정되도록 표시해서 추가)
 const poolOf = (r) => (r.id.startsWith('program:') ? r.id.split(':')[1] : null)
 
@@ -292,6 +312,19 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
             </p>
             <p className="hero-figure">
               {total.earned}<span className="hero-of">/{total.required}학점</span>
+            </p>
+            <p className="credit-breakdown">
+              {creditBreakdown(report).map((b, i) => (
+                <span key={b.key}>
+                  {i > 0 && ' · '}
+                  {b.key === 'general' ? (
+                    <button type="button" className="btn-link" onClick={() => onOpen('general')}
+                      title="전공·교양으로 인정되지 않은 학점 (학점교류·교육과정 밖 과목 등) — 따로 채울 최소학점은 없어요">
+                      일반선택 {b.credits} ›
+                    </button>
+                  ) : <>{b.label} {b.credits}</>}
+                </span>
+              ))}
             </p>
             <p className="muted">
               {total.planned > 0 && <>수강 예정 {total.planned}학점 포함 시 {total.earned + total.planned}학점 · </>}
