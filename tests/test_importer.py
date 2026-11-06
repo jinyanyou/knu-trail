@@ -65,6 +65,56 @@ def test_certificate_pdf_terms_grades_and_wrapped_names():
     assert [h["name"] for h in parse_text(CERTIFICATE, 2024)["program_hints"]] == ["AI로봇융합전공"]
 
 
+def test_certificate_credit_exchange_with_note_is_not_matched_to_our_course():
+    # 제보: '일반선택 인공지능(전남대학교 학점교류)'가 빠지거나 우리 학교 '인공지능'으로 잘못 인식됨
+    for kind in ("일선", "일반선택"):
+        text = f"<<2025학년도 2학기>>\n{kind} 인공지능(전남대학교 학점\n교류) 3 A0취득학점: 3"
+        [c] = parse_text(text, 2024)["candidates"]
+        assert (c["name"], c["method"], c["matched"], c["credits"], c["grade"]) == (
+            "인공지능(전남대학교 학점교류)", "other_school", False, 3, "A0")
+
+
+def test_other_school_course_in_plain_text_is_not_our_course():
+    # 제보: '일선 인공지능(전남대학교) 3 A0'가 우리 학교 '인공지능'으로 인식됨 (학기 제목이 <<>> 형식이 아닐 때)
+    text = "2025학년도 2학기\n일선\t인공지능(전남대학교)\t3\tA0\n전필\t이산수학\t3\tB0"
+    rows = by_name(parse_text(text, 2024))
+    c = rows["인공지능(전남대학교)"]
+    assert (c["method"], c["matched"], c["code"], c["credits"], c["grade"]) == ("other_school", False, None, 3, "A0")
+    assert (c["year"], c["semester"]) == (2025, "2학기")
+    assert rows["이산수학"]["grade"] == "B0"
+    assert "인공지능" not in rows
+
+
+def test_two_column_transcript_copy_is_split_per_course():
+    # 2단 성적표를 복사하면 왼쪽·오른쪽 단 과목이 한 줄에 붙어 온다 — 성적이 옆 과목 것으로 섞이면 안 된다
+    text = ("2025학년도 2학기\n"
+            "구분\t이수과목\t학점\t성적\t구분\t이수과목\t학점\t성적\n"
+            "전필\t기계학습입문\t3\tB0\t전공\t뇌인지공학개론\t3\tC+\n"
+            "전필\t문제해결과 알고리즘\t3\tB0\t일선\t인공지능(전남대학교)\t3\tA-\n"
+            "전필\t이산수학\t3\tB0")
+    result = parse_text(text, 2024)
+    rows = by_name(result)
+    assert {n: c["grade"] for n, c in rows.items()} == {
+        "기계학습입문": "B0", "뇌인지공학개론": "C+", "문제해결과 알고리즘": "B0",
+        "인공지능(전남대학교)": "A-", "이산수학": "B0"}
+    assert rows["인공지능(전남대학교)"]["method"] == "other_school" and rows["인공지능(전남대학교)"]["credits"] == 3
+    assert result["unmatched_lines"] == []
+
+
+def test_match_course_rejects_other_school_name():
+    from engine.importer import match_course
+    assert match_course(2024, name="인공지능(전남대학교)") == (None, "other_school")
+    assert match_course(2024, name="인공지능")[0]["code"]
+
+
+def test_certificate_other_school_without_space_before_credits():
+    # PDF에서 ')' 뒤 띄어쓰기가 빠져도 과목이 사라지면 안 된다
+    text = "<<2025학년도 2학기>>\n일선 인공지능(전남대학교)3 A0전필 이산수학 3 B0취득학점: 6"
+    rows = by_name(parse_text(text, 2024))
+    assert (rows["인공지능(전남대학교)"]["method"], rows["인공지능(전남대학교)"]["credits"]) == ("other_school", 3)
+    assert rows["이산수학"]["grade"] == "B0"
+
+
 def test_certificate_recognizes_courses_of_chosen_convergence_major():
     text = "<<2026학년도 1학기>>\n일선 계측공학 3 B+취득학점: 3"
     assert not parse_text(text, 2024)["candidates"][0]["matched"]

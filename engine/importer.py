@@ -122,6 +122,9 @@ def match_course(entry_year, name=None, code=None, programs=()):
     courses = catalog.recognizable(entry_year, programs)
     if code and code.upper() in courses:
         return courses[code.upper()], "code"
+    # '인공지능(전남대학교)'처럼 다른 학교에서 들은 과목은 이름이 같아도 우리 학교 과목이 아니다
+    if name and OTHER_SCHOOL_RE.search(name.strip()):
+        return None, "other_school"
     if name:
         hits = _match_names(name, entry_year, programs)
         if len(hits) == 1:
@@ -137,12 +140,21 @@ CONFIDENCE = {"code": "high", "name_exact": "high", "name_contains": "medium", "
 
 # ── 성적증명서(써드피아) ──
 CERT_TERM_RE = re.compile(r"<<\s*(20\d{2})\s*학년도\s*(?:(1|2)\s*학기|계절\s*학기\s*\(\s*(하계|동계|여름|겨울)\s*\))\s*>>")
-CERT_KINDS = "전필|전선|전공|전기|전심|전교|전반|교양|일선|자선|공학|교직|선수|기공|융합|복수|부전|연계|마크"
+# 줄임말 앞에 풀네임을 둔다 (정규식은 왼쪽부터 시도하므로 '전공필수'가 '전공'보다 먼저 와야 한다)
+CERT_KINDS = ("전공필수|전공선택|전공기초|전공심화|교양필수|교양선택|일반선택|자유선택|"
+              "전필|전선|전공|전기|전심|전교|전반|교양|일선|자선|공학|교직|선수|기공|융합|복수|부전|연계|마크")
 CERT_GRADES = r"A\+|A0|A-|B\+|B0|B-|C\+|C0|C-|D\+|D0|D-|NP|F|P|S|U|W"
 CERT_ROW_RE = re.compile(
-    rf"({CERT_KINDS})\s+(.+?)\s+(\d{{1,2}})\s+({CERT_GRADES})(?=\s*(?:{CERT_KINDS})\s|\s*취득학점|\s*$)"
+    # 과목명이 ')'로 끝나면 PDF에서 학점 앞 띄어쓰기가 빠지기도 한다: '인공지능(전남대학교)3 A0'
+    rf"({CERT_KINDS})\s+(.+?)(?:\s+|(?<=\)))(\d{{1,2}})\s+({CERT_GRADES})(?=\s*(?:{CERT_KINDS})\s|\s*취득학점|\s*$)"
 )
-OTHER_SCHOOL_RE = re.compile(r"\(([^()]*대학교?)\)\s*$")
+# '(서울시립대학교)', '(전남대학교 학점교류)', '(학점교류)'처럼 끝 괄호에 다른 학교·학점교류 표시가 있는 과목
+OTHER_SCHOOL_RE = re.compile(r"\([^()]*(?:대학교?(?=[\s)])|학점\s*교류)[^()]*\)\s*$")
+# 일반 텍스트 줄 안에서 '과목명(○○대학교)' 덩어리를 찾는다 (구분자·괄호 없는 앞부분이 과목명)
+OTHER_SCHOOL_IN_LINE_RE = re.compile(
+    r"[^\t,|;·\n()\s][^\t,|;·\n()]*?\s*\([^()]*(?:대학교?(?=[\s)])|학점\s*교류)[^()]*\)")
+# 탭으로 구분된 '구분 과목명 학점 성적' 한 묶음 (2단 성적표 복사본 나누기용)
+TAB_ROW_RE = re.compile(rf"(?:{CERT_KINDS})\t+[^\t]+\t+\d{{1,2}}\t+(?:{CERT_GRADES})(?=\t|\s*$)")
 ENTRY_RE = re.compile(r"입학일자\s*:\s*(20\d{2})\s*년")
 
 
@@ -227,6 +239,18 @@ def dedupe(cands):
     return list(seen.values())
 
 
+def _split_columns(text):
+    """2단 성적표를 복사하면 '구분 과목 학점 성적'이 한 줄에 두 묶음씩 붙어 온다 → 과목마다 한 줄로 나눈다.
+
+    예) '전필\\t문제해결과 알고리즘\\t3\\tB0\\t일선\\t인공지능(전남대학교)\\t3\\tA-' → 두 줄
+    """
+    lines = []
+    for raw in text.splitlines():
+        rows = [m.group(0) for m in TAB_ROW_RE.finditer(raw)]
+        lines.extend(rows if len(rows) >= 2 else [raw])
+    return lines
+
+
 def parse_text(text, entry_year, default_year=None, default_semester=None, programs=()):
     """programs: 학생이 고른 다전공 학과 코드 — 그 학과 과목도 인식한다."""
     programs = tuple(programs)
@@ -237,7 +261,7 @@ def parse_text(text, entry_year, default_year=None, default_semester=None, progr
     cur_term = (default_year, default_semester) if default_year or default_semester else None
     cands, unmatched = [], []
 
-    for raw in text.splitlines():
+    for raw in _split_columns(text):
         line = raw.strip()
         if not line:
             continue
@@ -245,6 +269,18 @@ def parse_text(text, entry_year, default_year=None, default_semester=None, progr
         if term:
             cur_term = term
         year, semester = cur_term or (None, None)
+
+        others = list(OTHER_SCHOOL_IN_LINE_RE.finditer(line))
+        if others:
+            rest = OTHER_SCHOOL_IN_LINE_RE.sub("  ", line)
+            only = len(others) == 1 and not CODE_RE.search(rest) and not _match_names(rest, entry_year, programs)
+            for m in others:
+                name = re.sub(rf"^(?:{CERT_KINDS})\s+", "", m.group(0).strip())
+                credits = re.search(r"(?<![\d.])([1-9])(?![\d.])", TERM_RE.sub(" ", rest)) if only else None
+                extra = {"name": name, "credits": int(credits.group(1)) if credits else None}
+                grade = _grade(rest, []) if only else None
+                cands.append(candidate(None, "other_school", year, semester, grade, line, extra))
+            line = rest
 
         hits = []
         for code in CODE_RE.findall(line):
@@ -255,6 +291,8 @@ def parse_text(text, entry_year, default_year=None, default_semester=None, progr
 
         if not hits:
             leftover = TERM_RE.sub("", line)
+            # 학점교류 과목을 떼고 남은 '구분·학점·성적'이나 표 머리글은 '인식 못 한 줄'로 보이지 않는다
+            leftover = re.sub(rf"\b(?:{CERT_KINDS}|구분|이수과목|과목명|학점|성적)\b", " ", leftover)
             if re.search(r"[가-힣]{2,}", leftover) and not term:
                 unmatched.append(line[:200])
             continue

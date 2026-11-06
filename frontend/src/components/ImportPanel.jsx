@@ -54,7 +54,8 @@ export default function ImportPanel({ entryYear, aiEnabled, programCodes = [], t
       setResult(r)
       // 성적증명서는 학교가 발급한 기록이라 교육과정에 없는 과목(학점교류·일반선택)도 기본으로 넣는다
       const certified = r.format === 'certificate'
-      setRows(r.candidates.map((c) => ({ ...c, id: newId(), include: c.matched || certified })))
+      // 다른 대학 학점교류 과목('인공지능(전남대학교)')도 실제 수강 기록이라 기본으로 넣는다
+      setRows(r.candidates.map((c) => ({ ...c, id: newId(), include: c.matched || certified || !!c.method?.endsWith('other_school') })))
     } catch (e) {
       setError(e.message)
     } finally {
