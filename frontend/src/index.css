@@ -151,6 +151,12 @@ select:focus-visible, input:focus-visible, button:focus-visible, summary:focus-v
 
 .legend { display: flex; gap: 14px; margin-top: 8px; font-size: 12px; color: var(--text-2); }
 .legend span { display: inline-flex; align-items: center; gap: 5px; }
+/* PC: 홈 산길 아래 한 줄 — 왼쪽 학점 구성, 오른쪽 범례. 폰은 범례·학점 구성 두 줄 그대로 */
+@media (min-width: 561px) {
+  .hero-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; margin-top: 8px; }
+  .hero-foot .legend { order: 2; margin-top: 0; margin-left: auto; }
+  .hero-foot .credit-breakdown { order: 1; margin: 0; }
+}
 .sw { display: inline-block; width: 14px; height: 8px; border-radius: 2px; }
 .sw-earned { background: var(--meter-earned); }
 .sw-planned { background: repeating-linear-gradient(45deg, var(--meter-planned) 0 3px, var(--meter-hatch) 3px 4px); }
