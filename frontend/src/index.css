@@ -103,6 +103,8 @@ select:focus-visible, input:focus-visible, button:focus-visible, summary:focus-v
 .quick-fill { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: var(--surface-2); border-radius: 10px; margin-bottom: 14px; }
 .quick-fill .field { margin: 0; }
 .quick-fill .btn { align-self: flex-start; background: var(--surface); }
+.quick-fill details summary { cursor: pointer; color: var(--accent-ink); font-size: 13px; }
+.quick-fill details p { margin: 6px 0 0; word-break: keep-all; line-height: 1.6; }
 
 .add-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
 .tabs { display: flex; gap: 4px; }

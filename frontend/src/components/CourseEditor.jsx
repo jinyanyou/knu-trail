@@ -135,6 +135,14 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
             ))}
           </select>
         </label>
+        <details className="hint">
+          <summary>표준 이수 모형이 뭔가요?</summary>
+          <p>
+            학과 교육과정에 실린 <b>학년·학기별 권장 수강 과목표</b>예요.
+            고른 학기까지의 전공·지정 교양 과목을 '이수'로 한꺼번에 넣어요. 자유롭게 고른 교양은 들어가지 않아요.
+            실제로 다르게 들었다면 아래 목록에서 지우거나 고쳐 주세요.
+          </p>
+        </details>
         <label className="check">
           <input type="checkbox" checked={fillNextPlanned} onChange={(e) => setFillNextPlanned(e.target.checked)} />
           <span>다음 학기 과목은 수강 예정으로 추가</span>
