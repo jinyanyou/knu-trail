@@ -33,6 +33,7 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
   const [catalog, setCatalog] = useState([])
   const [fillUntil, setFillUntil] = useState(0)
   const [fillNextPlanned, setFillNextPlanned] = useState(true)
+  const [showFill, setShowFill] = useState(false) // 빠르게 채우기는 버튼을 눌러야 펼친다
 
   useEffect(() => setYear(entryYear), [entryYear])
 
@@ -126,6 +127,11 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
         </button>
       )}
 
+      {!showFill ? (
+        <button type="button" className="btn btn-import" onClick={() => setShowFill(true)}>
+          표준 이수 모형으로 빠르게 채우기
+        </button>
+      ) : (
       <div className="quick-fill">
         <label className="field">
           <span>빠르게 채우기: 표준 이수 모형대로</span>
@@ -147,8 +153,12 @@ export default function CourseEditor({ entryYear, aiEnabled, programs = [], prog
           <input type="checkbox" checked={fillNextPlanned} onChange={(e) => setFillNextPlanned(e.target.checked)} />
           <span>다음 학기 과목은 수강 예정으로 추가</span>
         </label>
-        <button type="button" className="btn" onClick={fillStandardPlan}>채우기</button>
+        <div className="row">
+          <button type="button" className="btn" onClick={async () => { await fillStandardPlan(); setShowFill(false) }}>채우기</button>
+          <button type="button" className="btn" onClick={() => setShowFill(false)}>닫기</button>
+        </div>
       </div>
+      )}
 
       <form className="add-form" onSubmit={addPicked}>
         <div className="tabs" role="tablist">
