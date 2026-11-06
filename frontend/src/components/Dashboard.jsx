@@ -327,6 +327,8 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
           </div>
         </div>
         <TrailPath earned={total.earned} planned={total.planned} required={total.required} />
+        {/* PC: 왼쪽 학점 구성 · 오른쪽 범례 한 줄 / 폰: 범례 → 학점 구성 두 줄 */}
+        <div className="hero-foot">
         <div className="legend" aria-hidden="true">
           <span><i className="sw sw-earned" />걸어온 길 (이수)</span>
           <span><i className="sw sw-planned-solid" />수강 예정</span>
@@ -345,6 +347,7 @@ export default function Dashboard({ report, onPlan, onOpen, profile = {}, onProf
             </span>
           ))}
         </p>
+        </div>
         {blocking.length > 0 && (
           <p className="blocking">
             <span className="muted">아직 부족:</span> {blocking.map(shortLabel).join(' · ')}
