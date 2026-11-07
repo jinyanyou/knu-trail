@@ -210,10 +210,21 @@ def parse_certificate(text, entry_year, programs=()):
             "program_hints": program_hints(text, entry_year, programs)}
 
 
+def clean_name(name):
+    """문서에서 옮긴 과목명의 띄어쓰기를 정리한다: '인공지능(전남대학교 )' → '인공지능(전남대학교)'.
+
+    PDF에서 괄호 안이 줄바꿈으로 잘리면 끝 공백이 남은 채로 이어 붙는다.
+    """
+    if not name:
+        return name
+    name = re.sub(r"\s+", " ", name).strip()
+    return re.sub(r"\(\s+", "(", re.sub(r"\s+\)", ")", name))
+
+
 def candidate(course, method, year, semester, grade, source, extra=None):
     return {
         "code": course["code"] if course else None,
-        "name": course["name"] if course else (extra or {}).get("name"),
+        "name": course["name"] if course else clean_name((extra or {}).get("name")),
         "credits": course["credits"] if course else (extra or {}).get("credits"),
         "category": course["category"] if course else None,
         "area": course.get("area") if course else None,

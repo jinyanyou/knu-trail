@@ -29,7 +29,13 @@ function normalize(saved) {
   const merged = { ...DEFAULT_STATE, setupDone: saved?.setupDone ?? (saved?.taken?.length > 0), ...saved }
   // 예전 '이수 형태' 선택값은 다전공 목록으로 대체됨
   const { major_track, ...profile } = merged.profile ?? {}
-  return { ...merged, profile: { programs: [], ...profile } }
+  // 예전에 가져온 과목명에 남은 공백 정리: '인공지능(전남대학교 )' → '인공지능(전남대학교)' (engine/importer.clean_name)
+  const taken = (merged.taken ?? []).map((t) => (typeof t.name === 'string' ? { ...t, name: cleanName(t.name) } : t))
+  return { ...merged, taken, profile: { programs: [], ...profile } }
+}
+
+function cleanName(name) {
+  return name.replace(/\s+/g, ' ').trim().replace(/\s+\)/g, ')').replace(/\(\s+/g, '(')
 }
 
 function readLocal() {

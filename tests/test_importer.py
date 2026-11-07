@@ -75,6 +75,11 @@ def test_certificate_credit_exchange_with_note_is_not_matched_to_our_course():
 
 
 def test_other_school_course_in_plain_text_is_not_our_course():
+    # 제보: 괄호 안이 줄바꿈으로 잘린 PDF에서 '인공지능(전남대학교 )'처럼 공백이 남아 보임
+    for text in ("<<2025학년도 2학기>>\n일선 인공지능(전남대학교 \n) 3 A0취득학점: 3",
+                 "2025학년도 2학기\n일선 인공지능(전남대학교 ) 3 A0"):
+        assert [c["name"] for c in parse_text(text, 2024)["candidates"]] == ["인공지능(전남대학교)"]
+
     # 제보: '일선 인공지능(전남대학교) 3 A0'가 우리 학교 '인공지능'으로 인식됨 (학기 제목이 <<>> 형식이 아닐 때)
     text = "2025학년도 2학기\n일선\t인공지능(전남대학교)\t3\tA0\n전필\t이산수학\t3\tB0"
     rows = by_name(parse_text(text, 2024))
